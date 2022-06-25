@@ -18,6 +18,7 @@ public:
     for(uint8_t i= 0; i < 4; i++) mDNS[i] = EEPROM.read(EEPROM_DNS+i);
     for(uint8_t i= 0; i < 6; i++) mMAC[i] = EEPROM.read(EEPROM_MAC+i);
 
+    delay(3000); // hw needs some time
     Ethernet.begin(mMAC, mIP, mDNS, mGateway, mNetmask);
     while (Ethernet.hardwareStatus() == EthernetNoHardware);
  }

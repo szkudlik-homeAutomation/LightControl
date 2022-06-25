@@ -70,21 +70,33 @@ void setup() {
 #ifdef DEBUG_SERIAL
   DEBUG_SERIAL.begin(115200);
   while (!DEBUG_SERIAL);
+  DEBUG_SERIAL.println("START");
 #endif
-
   CommSender.add();
   CommReciever.add();
   Worker.add();
   WatchdogProcess.add(true);
+#ifdef DEBUG_SERIAL
+  DEBUG_SERIAL.println("START 1");
+#endif
 
 #ifdef CONTROLLER
   Network.init();
   TcpServerProcess.add(true);
-#else  
+#ifdef DEBUG_SERIAL
+  DEBUG_SERIAL.println("START 2");
+#endif
+#else   
   DigitalInput.add(true);
+#ifdef DEBUG_SERIAL
+  DEBUG_SERIAL.println("START 2a");
+#endif
 #endif
 
   OutputProcess.add(true);
+#ifdef DEBUG_SERIAL
+  DEBUG_SERIAL.println("START 3");
+#endif
 }
 
 void loop() {
