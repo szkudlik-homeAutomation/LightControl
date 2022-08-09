@@ -22,7 +22,7 @@
  
 Scheduler sched;
 CommRecieverProcess CommReciever(sched);
-CommSenderProcess CommSender(sched);
+CommSenderProcess CommSender(sched,EEPROM.read(EEPROM_DEVICE_ID_OFFSET),EEPROM.read(EEPROM_DEVICE_ID_OFFSET));
 WorkerProcess Worker(sched);
 
 #ifdef CONTROLLER

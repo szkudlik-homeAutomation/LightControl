@@ -18,7 +18,7 @@ typedef struct __tEeprom
   uint8_t CANNARY;   // a cannary, if is not set to EEPROM_CANNARY the eeprom should be set to default
   uint8_t DoubleClickTime;    // an externally provided double click time
   uint8_t NumOfRetransmissions;
-  uint8_t MaxNumOfRetransmissions;
+  uint8_t MaxNumOfRetransmissions;  //!!! depreciated
 #ifdef CONTROLLER
   uint8_t IP[4];
   uint8_t IPMask[4];

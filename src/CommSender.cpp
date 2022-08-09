@@ -4,20 +4,19 @@
 #include <AceCRC.h>
 #include "CommSender.h"
 #include "CommReciever.h"
-#include "Eeprom.h"
 
 #define htons(x) ( ((x)<< 8 & 0xFF00) | \
                    ((x)>> 8 & 0x00FF) )
                    
 using namespace ace_crc::crc16ccitt_nibble;
 
-CommSenderProcess::CommSenderProcess(Scheduler &manager) : 
+CommSenderProcess::CommSenderProcess(Scheduler &manager, uint8_t RandomSeed, uint8_t SenderDevId) :
     Process(manager,MEDIUM_PRIORITY,SERVICE_CONSTANTLY), 
-    mRandom(EEPROM.read(EEPROM_DEVICE_ID_OFFSET)),
+    mRandom(RandomSeed),
     mQueue(OUTPUT_QUEUE_SIZE),
     isSending(false)
     {
-      mFrame.SenderDevId = EEPROM.read(EEPROM_DEVICE_ID_OFFSET); 
+      mFrame.SenderDevId = SenderDevId;
       mFrame.Seq = 0;
     };
 
@@ -63,7 +62,7 @@ void CommSenderProcess::service()
     // prepare another frame
     if (DequeueFrame())
     {
-      mRetransLeft = EEPROM.read(EEPROM_MAX_NUM_OF_RETRANSMISSIONS);
+      mRetransLeft = MAX_NUM_OF_RETRANSMISSIONS;
       CommReciever.clearSelfFrameMark();
       isSending = true;
     }

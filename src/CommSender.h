@@ -18,7 +18,7 @@
 class CommSenderProcess : public Process
 {
   public:
-  CommSenderProcess(Scheduler &manager);
+  CommSenderProcess(Scheduler &manager, uint8_t RandomSeed, uint8_t SenderDevId);
 
   void Enqueue(uint8_t DstDevId, uint8_t MessageType, uint8_t DataSize, void *pData);
   
