@@ -1,5 +1,5 @@
 #include "WorkerProcess.h"
-#include "CommSender.h"
+#include "TLE8457_serial_lib.h"
 #include "OutputProcess.h"
 #include "version.h"
 #include "Eeprom.h"

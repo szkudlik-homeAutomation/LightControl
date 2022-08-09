@@ -3,7 +3,7 @@
 
 #include "src/common.h"
 #include "src/CommReciever.h"
-#include "src/CommSender.h"
+#include "src/TLE8457_serial_lib.h"
 #include "src/Eeprom.h"
 #include "src/WorkerProcess.h"
 #include "src/DigitalInputProcess.h"
