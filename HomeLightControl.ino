@@ -1,21 +1,21 @@
-#include "common.h"
-
 #include <ProcessScheduler.h>
-#include "CommReciever.h"
-#include "CommSender.h"
 #include <Arduino.h>
-#include "Eeprom.h"
-#include "WorkerProcess.h"
-#include "DigitalInputProcess.h"
-#include "OutputProcess.h"
-#include "WatchdogProcess.h"
+
+#include "src/common.h"
+#include "src/CommReciever.h"
+#include "src/CommSender.h"
+#include "src/Eeprom.h"
+#include "src/WorkerProcess.h"
+#include "src/DigitalInputProcess.h"
+#include "src/OutputProcess.h"
+#include "src/WatchdogProcess.h"
 
 #ifdef CONTROLLER
-#include "servlets.h"
-#include "network.h"
-#include "TelnetServer.h"
-#include "HttpServer.h"
-#include "LightWebControl.h"
+#include "src/servlets.h"
+#include "src/network.h"
+#include "src/TelnetServer.h"
+#include "src/HttpServer.h"
+#include "src/LightWebControl.h"
 #endif
 
 
