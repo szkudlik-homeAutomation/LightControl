@@ -2,8 +2,8 @@
 #define VERSION_H
 
 #define FW_VERSION_MAJOR 1
-#define FW_VERSION_MINOR 2
-#define FW_VERSION_PATCH 12
+#define FW_VERSION_MINOR 3
+#define FW_VERSION_PATCH 1
 
 #define stringify_literal( x ) # x
 #define stringify_expanded( x ) stringify_literal( x )
