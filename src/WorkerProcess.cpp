@@ -352,25 +352,6 @@ void WorkerProcess::HandleMsgVersionResponse(uint8_t SenderID, tMessageTypeFwVes
 #endif
 }
 
-
-bool WorkerProcess::SendMsgSetParams(uint8_t RecieverID, uint8_t DoubleClickTime, uint8_t NumOfRetransmissions,uint8_t MaxNumOfRetransmissions )
-{
-#ifdef CONTROLLER
-  tMessageTypeSetParams Msg;
-  Msg.DoubleClickTime = DoubleClickTime;
-  Msg.NumOfRetransmissions = NumOfRetransmissions;
-  Msg.MaxNumOfRetransmissions = MaxNumOfRetransmissions;
-  CommSender.Enqueue(RecieverID,MESSAGE_TYPE_SET_PARAMS,sizeof(Msg),&Msg);
-#endif
-};
-
-void WorkerProcess::HandleMsgSetParams(uint8_t SenderID, tMessageTypeSetParams *Message)
-{
-  EEPROM.write(EEPROM_DOUBLE_CLICK_TIME_OFFSET,Message->DoubleClickTime);
-  EEPROM.write(EEPROM_NUM_OF_RETRANSMISSIONS,Message->NumOfRetransmissions);  
-  EEPROM.write(EEPROM_MAX_NUM_OF_RETRANSMISSIONS,Message->MaxNumOfRetransmissions);  
-}
-
 bool WorkerProcess::SendMsgReset(uint8_t RecieverID)
 {
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_FORCE_RESET");

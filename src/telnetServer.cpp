@@ -10,7 +10,6 @@ bool send_ClearActions(Commander &Cmdr);
 bool send_addAction(Commander &Cmdr);
 bool send_GetEepromCrc(Commander &Cmdr);
 bool send_GetVersion(Commander &Cmdr);
-bool send_SetParams(Commander &Cmdr);
 bool send_Reset(Commander &Cmdr);
 bool enableLogs(Commander &Cmdr);
 bool disableLogs(Commander &Cmdr);
@@ -32,7 +31,6 @@ const commandList_t masterCommands[] = {
   {"ClearActions",    send_ClearActions,            "MESSAGE_TYPE_CLEAR_ACTIONS dev_id"},
   {"GetEepromCrc",    send_GetEepromCrc,            "MESSAGE_TYPE_EEPROM_CRC_REQUEST dev_id"},
   {"GetVersion",      send_GetVersion,              "MESSAGE_TYPE_FW_VERSION_REQUEST dev_id"},  
-  {"SetParams",       send_SetParams,               "MESSAGE_TYPE_SET_PARAMS dev_id DoubleClickTime NumOfRetransmissions MaxNumOfRetransmissions"},  
   {"SetDefTimer",     send_SetDefaultTimer,         "MESSAGE_TYPE_SET_DEFAULT_TIMER dev_id out_id defTimerValue (0=no timer)"},
   {"GetDefTimer",     send_GetDefaultTimer,         "MESSAGE_TYPE_DEFAULT_TIMER_REQUEST dev_id out_id"},
   {"Reset",           send_Reset,                   "MESSAGE_TYPE_FORCE_RESET dev_id (may be 255 - broadcast)"},
@@ -261,38 +259,6 @@ bool send_GetVersion(Commander &Cmdr)
   }
 
   return true;  
-}
-
-bool send_SetParams(Commander &Cmdr)
-{
-  int Dst;
-  int DoubleClickTime;  
-  int NumOfRetransmissions;
-  int MaxNumOfRetransmissions;
-  
-  if(!Cmdr.getInt(Dst))
-  {
-    goto error;
-  }
-  if (! Cmdr.getInt(DoubleClickTime))
-  {
-    goto error;
-  }
-  if (! Cmdr.getInt(NumOfRetransmissions))
-  {
-    goto error;
-  }
-  if (! Cmdr.getInt(MaxNumOfRetransmissions))
-  {
-    goto error;
-  }
-  
-   Worker.SendMsgSetParams(Dst,DoubleClickTime,NumOfRetransmissions,MaxNumOfRetransmissions);
-
-  return true;
-error:
-  Cmdr.println(F("Usage: SetParams dst_dev_id DoubleClickTime NumOfRetransmissions MaxNumOfRetransmissions"));
-  return false;
 }
 
 bool send_Reset(Commander &Cmdr)
