@@ -16,9 +16,9 @@ typedef struct __tEeprom
   uint8_t  OutputPolarity;     // 0 means active low, 1 active high
 #endif
   uint8_t CANNARY;   // a cannary, if is not set to EEPROM_CANNARY the eeprom should be set to default
-  uint8_t DoubleClickTime;    // an externally provided double click time
-  uint8_t NumOfRetransmissions;
-  uint8_t MaxNumOfRetransmissions;
+  uint8_t Reserved1;       //!!! depreciated, to be removed
+  uint8_t Reserved2;     //!!! depreciated, to be removed
+  uint8_t Reserved3;  //!!! depreciated, to be removed (left for bck compatibility)
 #ifdef CONTROLLER
   uint8_t IP[4];
   uint8_t IPMask[4];
@@ -42,9 +42,6 @@ typedef struct __tEeprom
 #endif
 
 #define EEPROM_CANNARY_OFFSET offsetof(__tEeprom,CANNARY)
-#define EEPROM_DOUBLE_CLICK_TIME_OFFSET offsetof(__tEeprom,DoubleClickTime)
-#define EEPROM_NUM_OF_RETRANSMISSIONS offsetof(__tEeprom,NumOfRetransmissions)
-#define EEPROM_MAX_NUM_OF_RETRANSMISSIONS offsetof(__tEeprom,MaxNumOfRetransmissions)
 
 #ifdef CONTROLLER
 #define EEPROM_IP offsetof(__tEeprom,IP[0])

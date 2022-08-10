@@ -10,6 +10,8 @@
 #error unknown board
 #endif
 
+#define CONTROLLER_DEVICE_ID 1
+#define DEVICE_ID_BROADCAST 0xFF
 
 
 
@@ -40,13 +42,13 @@
 
 
 #ifdef DEBUG_1
-#define DEBUG_PRINTLN_1(x) DEBUG_SERIAL.println(F(x));
+#define DEBUG_PRINTLN_1(x) RespHandler.println(F(x));
 #else
 #define DEBUG_PRINTLN_1(x)
 #endif
 
 #ifdef DEBUG_2
-#define DEBUG_PRINTLN_2(x) DEBUG_SERIAL.println(F(x));
+#define DEBUG_PRINTLN_2(x) RespHandler.println(F(x));
 #else
 #define DEBUG_PRINTLN_2(x)
 #endif

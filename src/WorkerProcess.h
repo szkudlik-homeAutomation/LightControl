@@ -39,28 +39,6 @@ class WorkerProcess: public Process, public ResponseHandler
 {
   public:
   WorkerProcess(Scheduler &manager) : Process(manager,LOW_PRIORITY,SERVICE_SECONDLY,RUNTIME_FOREVER), pCurrentWorkerTask(NULL) {}
-  
-// handlers of all incoming frames
-
-  void HandleMsgOverviewStateRequest(uint8_t SenderID);
-  void HandleMsgOverviewStateResponse(uint8_t SenderID, tMessageTypeOverviewStateResponse* Message);
-  void HandleMsgOutputStateRequest(uint8_t SenderID, tMessageTypeOutputStateRequest* Message);
-  void HandleMsgOutputStateResponse(uint8_t SenderID, tMessageTypeOutputStateResponse* Message);
-  void HandleMsgSetOutput(uint8_t SenderID, tMessageTypeSetOutput* Message);
-  void HandleMsgButtonPress(uint8_t SenderID, tMessageTypeButtonPress *Message);
-  void HandleMsgSetAction(uint8_t SenderID, tMessageTypeSetAction* Message);
-  void HandleMsgClearAllActions(uint8_t SenderID);
-  void HandleMsgVersionRequest(uint8_t SenderID);
-  void HandleMsgVersionResponse(uint8_t SenderID, tMessageTypeFwVesionResponse *Message);
-  void HandleMsgEepromCrcRequest(uint8_t SenderID);
-  void HandleMsgEepromCrcResponse(uint8_t SenderID, tMessageTypeEepromCRCResponse* Message);
-  void HandleMsgSetParams(uint8_t SenderID, tMessageTypeSetParams *Message);
-  void HandleMsgSetDefaultTimer(uint8_t SenderID, tMessageTypeSetDefaultTimer *Message);
-  void HandleMsgDefaultTimerRequest(uint8_t SenderID, tMessageTypeDefaultTimerRequest *Message);
-  void HandleMsgDefaultTimerResponse(uint8_t SenderID, tMessageTypeDefaultTimerResponse *Message);
-
-
- 
 
 // trigger of all outgoing frames 
 
@@ -76,7 +54,6 @@ class WorkerProcess: public Process, public ResponseHandler
   bool SendMsgVersionResponse(uint8_t RecieverID, uint8_t Major, uint8_t Minor, uint8_t Patch);
   bool SendMsgEepromCrcRequest(uint8_t RecieverID);
   bool SendMsgEepromCrcResponse(uint8_t RecieverID,  uint8_t NumOfActions, uint16_t EepromCRC);
-  bool SendMsgSetParams(uint8_t RecieverID, uint8_t DoubleClickTime, uint8_t NumOfRetransmissions,uint8_t MaxNumOfRetransmissions );
   bool SendMsgReset(uint8_t RecieverID);
   bool SendMsgSetDefaultTimer(uint8_t RecieverID, uint8_t OutputID, uint16_t DefTimerValue);
   bool SendMsgDefaultTimerRequest(uint8_t RecieverID,uint8_t OutputID);

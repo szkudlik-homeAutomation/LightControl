@@ -1,28 +1,29 @@
-#include "common.h"
-
 #include <ProcessScheduler.h>
-#include "CommReciever.h"
-#include "CommSender.h"
 #include <Arduino.h>
-#include "Eeprom.h"
-#include "WorkerProcess.h"
-#include "DigitalInputProcess.h"
-#include "OutputProcess.h"
-#include "WatchdogProcess.h"
+
+#include "src/common.h"
+#include "src/TLE8457_serial_lib.h"
+#include "src/Eeprom.h"
+#include "src/WorkerProcess.h"
+#include "src/DigitalInputProcess.h"
+#include "src/OutputProcess.h"
+#include "src/WatchdogProcess.h"
+#include "src/IncomingFrameHandler.h"
 
 #ifdef CONTROLLER
-#include "servlets.h"
-#include "network.h"
-#include "TelnetServer.h"
-#include "HttpServer.h"
-#include "LightWebControl.h"
+#include "src/servlets.h"
+#include "src/network.h"
+#include "src/TelnetServer.h"
+#include "src/HttpServer.h"
+#include "src/LightWebControl.h"
 #endif
 
 
  
 Scheduler sched;
-CommRecieverProcess CommReciever(sched);
-CommSenderProcess CommSender(sched);
+IncomingFrameHandler IncomingFrameHandlerCallback;
+CommRecieverProcess CommReciever(sched,EEPROM.read(EEPROM_DEVICE_ID_OFFSET),&IncomingFrameHandlerCallback);
+CommSenderProcess CommSender(sched,EEPROM.read(EEPROM_DEVICE_ID_OFFSET),EEPROM.read(EEPROM_DEVICE_ID_OFFSET));
 WorkerProcess Worker(sched);
 
 #ifdef CONTROLLER

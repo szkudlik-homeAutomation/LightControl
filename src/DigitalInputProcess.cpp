@@ -1,5 +1,5 @@
 #include "DigitalInputProcess.h"
-#include "CommSender.h"
+#include "TLE8457_serial_lib.h"
 #include "WorkerProcess.h"
 #include "Eeprom.h"
  
@@ -80,7 +80,7 @@ uint8_t Button::Process()
   if (mLastClickTime < 255) mLastClickTime += 1;
   if (State == STATE_CLICK)
   {
-      if (mLastClickTime <= EEPROM.read(EEPROM_DOUBLE_CLICK_TIME_OFFSET))
+      if (mLastClickTime <= DOUBLE_CLICK_TICKS_MAX )
       {
             State = STATE_DOUBLECLICK;
       }
