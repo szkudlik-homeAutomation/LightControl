@@ -17,7 +17,11 @@ public:
 
   void Set(uint8_t State, uint16_t Timer, bool timerLongerOnly)
   {
-     if (timerLongerOnly && (mTimer > Timer))
+     if (timerLongerOnly && mState && (mTimer != 0) && (mTimer > Timer))
+        // if we don't want to make the timer shorter
+        //    and the timer is active (mState, mTimer != 0)
+        //    and the new time is shorter than current time
+        //        ==> don't change the timer value
            Timer = mTimer;
 
      if (State) mTimer = Timer; else mTimer = 0;
