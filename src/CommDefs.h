@@ -3,30 +3,6 @@
 
 #include "common.h"
 
-/**
- * PROTOCOL
- * 
- * 1) choose new seq number (increase)
- * 2) send a frame
- *      listen for a clear wire
- * 		CSMA/CR - listen to the wire and in case of incorrect reading stop transmission. The lower ID device should win
- * 3) wait random time - random seed is a device ID 
- * 4) repeat steps 2-4 given number of times
- * 
- * recieve:
- * 1) frame witj incorrect CRC => reject
- * 2) check if pair SenderDevId/Seq was recently seen (keep a list of last pairs). If yes => reject
- * 3) execute
- */
-
-#define CONTROLLER_DEVICE_ID 1
-#define DEVICE_ID_BROADCAST 0xFF
-
-#define NUMBER_OF_RETRANSMISSIONS 1
-#define MAX_NUM_OF_RETRANSMISSIONS 5
-
-#define FRAME_TRANSMISSION_TIME 20
-
 // a double click - two short clicks occur before max time
 #define DOUBLE_CLICK_TICKS_MAX   8   // 400ms 
 
@@ -167,18 +143,6 @@ typedef struct
 } tMessageTypeEepromCRCResponse;
 
 /**
- * set runtime parameters
- */
-#define MESSAGE_TYPE_SET_PARAMS 0x0D
-typedef struct 
-{
-  uint8_t DoubleClickTime;              // max number of 50ms ticks for double click
-  uint8_t NumOfRetransmissions;         // number of retransmissions
-  uint8_t MaxNumOfRetransmissions;      // max number of retransmissions in case of collisions
-} tMessageTypeSetParams;
-
-
-/**
  * force the note to reset. May be sent as a broadcast
  */
 #define MESSAGE_TYPE_FORCE_RESET 0x0E
@@ -205,22 +169,5 @@ typedef struct
 } tMessageTypeDefaultTimerResponse;
 
 
-
-
-#define COMMUNICATION_PAYLOAD_DATA_SIZE 8
-/**
- * Communication frame
- */
-typedef struct
-{
-  uint8_t SenderDevId;    // id of the sender
-  uint8_t DstDevId;       // device ID the message is sent to or broadcast
-  uint8_t Seq;            // seq number. Retransmitted frame should have the same seq
-  uint8_t MessageType;    // MESSAGE_TYPE*
-
-  uint8_t Data[COMMUNICATION_PAYLOAD_DATA_SIZE];  // data structure, to be mapped on tMessageType* structure
-
-  uint16_t crc;   // CRC, frame will be rejected if CRC is incorrect
-} tCommunicationFrame;
 
 #endif

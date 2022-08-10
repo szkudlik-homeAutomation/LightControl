@@ -10,6 +10,8 @@
 #error unknown board
 #endif
 
+#define CONTROLLER_DEVICE_ID 1
+#define DEVICE_ID_BROADCAST 0xFF
 
 
 
