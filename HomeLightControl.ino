@@ -20,7 +20,7 @@
 
  
 Scheduler sched;
-CommRecieverProcess CommReciever(sched);
+CommRecieverProcess CommReciever(sched,EEPROM.read(EEPROM_DEVICE_ID_OFFSET));
 CommSenderProcess CommSender(sched,EEPROM.read(EEPROM_DEVICE_ID_OFFSET),EEPROM.read(EEPROM_DEVICE_ID_OFFSET));
 WorkerProcess Worker(sched);
 
