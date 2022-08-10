@@ -8,6 +8,7 @@
 #include "src/DigitalInputProcess.h"
 #include "src/OutputProcess.h"
 #include "src/WatchdogProcess.h"
+#include "src/IncomingFrameHandler.h"
 
 #ifdef CONTROLLER
 #include "src/servlets.h"
@@ -20,7 +21,8 @@
 
  
 Scheduler sched;
-CommRecieverProcess CommReciever(sched,EEPROM.read(EEPROM_DEVICE_ID_OFFSET));
+IncomingFrameHandler IncomingFrameHandlerCallback;
+CommRecieverProcess CommReciever(sched,EEPROM.read(EEPROM_DEVICE_ID_OFFSET),&IncomingFrameHandlerCallback);
 CommSenderProcess CommSender(sched,EEPROM.read(EEPROM_DEVICE_ID_OFFSET),EEPROM.read(EEPROM_DEVICE_ID_OFFSET));
 WorkerProcess Worker(sched);
 
