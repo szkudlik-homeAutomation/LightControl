@@ -9,6 +9,7 @@
 #include "src/OutputProcess.h"
 #include "src/WatchdogProcess.h"
 #include "src/IncomingFrameHandler.h"
+#include "src/version.h"
 
 #ifdef CONTROLLER
 #include "src/servlets.h"
@@ -71,32 +72,34 @@ void setup() {
 #ifdef DEBUG_SERIAL
   DEBUG_SERIAL.begin(115200);
   while (!DEBUG_SERIAL);
-  DEBUG_SERIAL.println("START");
+  DEBUG_SERIAL.print("START, v");
+  DEBUG_SERIAL.println(FW_VERSION);
+
 #endif
   CommSender.add();
   CommReciever.add();
   Worker.add();
   WatchdogProcess.add(true);
 #ifdef DEBUG_SERIAL
-  DEBUG_SERIAL.println("START 1");
+  DEBUG_SERIAL.println("START internals");
 #endif
 
 #ifdef CONTROLLER
   Network.init();
   TcpServerProcess.add(true);
 #ifdef DEBUG_SERIAL
-  DEBUG_SERIAL.println("START 2");
+  DEBUG_SERIAL.println("START Tcp ");
 #endif
 #else   
   DigitalInput.add(true);
 #ifdef DEBUG_SERIAL
-  DEBUG_SERIAL.println("START 2a");
+  DEBUG_SERIAL.println("START digital input");
 #endif
 #endif
 
   OutputProcess.add(true);
 #ifdef DEBUG_SERIAL
-  DEBUG_SERIAL.println("START 3");
+  DEBUG_SERIAL.println("SYSTEM INITIALIZED");
 #endif
 }
 
