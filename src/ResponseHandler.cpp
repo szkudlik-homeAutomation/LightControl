@@ -2,10 +2,14 @@
 
 ResponseHandler* ResponseHandler::pFirst = NULL;
 bool ResponseHandler::mLogsForced = false;
+
+#ifdef CONTROLLER
+#ifdef DEBUG_SERIAL
 ResponseHandlerSerial RespHandler;
+#endif
+#endif
 
-
-ResponseHandler::~ResponseHandler() 
+ResponseHandler::~ResponseHandler()
 {
   ResponseHandler *i = pFirst;
   ResponseHandler *prev = NULL;
@@ -32,17 +36,17 @@ ResponseHandler::~ResponseHandler()
   }
 }
 
-size_t ResponseHandler::write(uint8_t str) 
-{ 
-	for (ResponseHandler * i = pFirst; i != NULL ; i = i->pNext) 
+size_t ResponseHandler::write(uint8_t str)
+{
+	for (ResponseHandler * i = pFirst; i != NULL ; i = i->pNext)
 	{
 		if ((i->mLogEnbabled) | mLogsForced) i->vLog(str);
 	}
 }
 
 
-void ResponseHandler::OverviewStateResponseHandler(uint8_t SenderID, uint8_t PowerState, uint8_t  TimerState) 
-{	
+void ResponseHandler::OverviewStateResponseHandler(uint8_t SenderID, uint8_t PowerState, uint8_t  TimerState)
+{
 	EnableLogsForce();
 	RespHandler.print(F("PowerStateBitmap for device "));
 	RespHandler.print(SenderID,HEX);
@@ -56,7 +60,7 @@ void ResponseHandler::OverviewStateResponseHandler(uint8_t SenderID, uint8_t Pow
 }
 
 void ResponseHandler::OutputStateResponseHandler(uint8_t SenderID, uint8_t OutputID, uint8_t PowerState, uint16_t  TimerValue, uint16_t DefaultTimer)
-{	
+{
 	EnableLogsForce();
 	RespHandler.print(F("PowerState for device "));
 	RespHandler.print(SenderID,HEX);
@@ -68,14 +72,14 @@ void ResponseHandler::OutputStateResponseHandler(uint8_t SenderID, uint8_t Outpu
 	RespHandler.print(TimerValue,DEC);
   RespHandler.print(F(" default timer = "));
   RespHandler.print(DefaultTimer,DEC);
-  
+
 	RespHandler.println();
 	DisableLogsForce();
 	for (ResponseHandler * i = pFirst; i != NULL ; i = i->pNext)  i->vOutputStateResponseHandler(SenderID,OutputID,PowerState,TimerValue,DefaultTimer);
 }
 
 void ResponseHandler::EepromCRCResponseHandler(uint8_t SenderID, uint8_t NumOfActions, uint16_t EepromCRC)
-{	
+{
 	EnableLogsForce();
 	RespHandler.print(F("Eeprom CRC for device "));
 	RespHandler.print(SenderID,HEX);
@@ -89,30 +93,30 @@ void ResponseHandler::EepromCRCResponseHandler(uint8_t SenderID, uint8_t NumOfAc
 }
 
 void ResponseHandler::VersionResponseHandler(uint8_t SenderID, uint8_t Major, uint8_t Minor, uint8_t Patch)
-{	
+{
 	EnableLogsForce();
 	RespHandler.print(F("FW Version for device "));
 	RespHandler.print(SenderID,HEX);
 	RespHandler.print(F("="));
-	RespHandler.print(Major,DEC);    
+	RespHandler.print(Major,DEC);
 	RespHandler.print(F("."));
-	RespHandler.print(Minor,DEC);    
+	RespHandler.print(Minor,DEC);
 	RespHandler.print(F("."));
-	RespHandler.print(Patch,DEC);    
+	RespHandler.print(Patch,DEC);
 	RespHandler.println();
 	DisableLogsForce();
 
-	for (ResponseHandler * i = pFirst; i != NULL ; i = i->pNext) i->vVersionResponseHandler(SenderID,Major,Minor,Patch); 
+	for (ResponseHandler * i = pFirst; i != NULL ; i = i->pNext) i->vVersionResponseHandler(SenderID,Major,Minor,Patch);
 }
 
-void ResponseHandler::NodeScanResponse(uint32_t ActiveNodesMap) 
+void ResponseHandler::NodeScanResponse(uint32_t ActiveNodesMap)
 {
 	EnableLogsForce();
 	RespHandler.print(F("Active node map: "));
 	RespHandler.println(ActiveNodesMap,BIN);
 	DisableLogsForce();
 
-	for (ResponseHandler * i = pFirst; i != NULL ; i = i->pNext) i->vNodeScanResponse(ActiveNodesMap);     
+	for (ResponseHandler * i = pFirst; i != NULL ; i = i->pNext) i->vNodeScanResponse(ActiveNodesMap);
 }
 
 void ResponseHandler::DefaultTimerResponseHandler(uint8_t SenderID,uint8_t OutputID,uint16_t DefTimerValue)
@@ -121,11 +125,11 @@ void ResponseHandler::DefaultTimerResponseHandler(uint8_t SenderID,uint8_t Outpu
 	RespHandler.print(F("Default timer for device "));
 	RespHandler.print(SenderID,HEX);
 	RespHandler.print(F(" outId "));
-	RespHandler.print(OutputID,DEC);    
+	RespHandler.print(OutputID,DEC);
 	RespHandler.print(F("="));
-	RespHandler.print(DefTimerValue,DEC);    
+	RespHandler.print(DefTimerValue,DEC);
 	RespHandler.println();
 	DisableLogsForce();
 
-	for (ResponseHandler * i = pFirst; i != NULL ; i = i->pNext) i->vDefaultTimerResponseHandler(SenderID,OutputID,DefTimerValue);       
+	for (ResponseHandler * i = pFirst; i != NULL ; i = i->pNext) i->vDefaultTimerResponseHandler(SenderID,OutputID,DefTimerValue);
 }
