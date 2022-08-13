@@ -18,68 +18,68 @@ using namespace ace_crc::crc16ccitt_nibble;
 #include "Eeprom.h"
 
 
-void IncomingFrameHandler::onFrame(tCommunicationFrame *pFrame)
+void IncomingFrameHandler::onFrame(void *pData, uint8_t MessageType, uint8_t SenderDevId)
 {
-      switch (pFrame->MessageType)
+      switch (MessageType)
       {
        case MESSAGE_TYPE_OVERVIEW_STATE_REQUEST:
            DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_OVERVIEW_STATE_REQUEST");
-           HandleMsgOverviewStateRequest(pFrame->SenderDevId);
+           HandleMsgOverviewStateRequest(SenderDevId);
            break;
 
        case MESSAGE_TYPE_OVERVIEW_STATE_RESPONSE:
            DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_OVERVIEW_STATE_RESPONSE");
-           HandleMsgOverviewStateResponse(pFrame->SenderDevId,(tMessageTypeOverviewStateResponse*) (pFrame->Data));
+           HandleMsgOverviewStateResponse(SenderDevId,(tMessageTypeOverviewStateResponse*) (pData));
            break;
 
        case MESSAGE_TYPE_OUTPUT_STATE_REQUEST:
            DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_OUTPUT_STATE_REQUEST");
-           HandleMsgOutputStateRequest(pFrame->SenderDevId,(tMessageTypeOutputStateRequest*)(pFrame->Data));
+           HandleMsgOutputStateRequest(SenderDevId,(tMessageTypeOutputStateRequest*)(pData));
            break;
 
        case MESSAGE_TYPE_OUTPUT_STATE_RESPONSE:
            DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_OUTPUT_STATE_RESPONSE");
-           HandleMsgOutputStateResponse(pFrame->SenderDevId,(tMessageTypeOutputStateResponse*) (pFrame->Data));
+           HandleMsgOutputStateResponse(SenderDevId,(tMessageTypeOutputStateResponse*) (pData));
            break;
 
        case MESSAGE_TYPE_SET_OUTPUT:
            DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_SET_OUTPUT");
-           HandleMsgSetOutput(pFrame->SenderDevId,(tMessageTypeSetOutput*)(pFrame->Data));
+           HandleMsgSetOutput(SenderDevId,(tMessageTypeSetOutput*)(pData));
            break;
 
        case MESSAGE_BUTTON_PRESS:
            DEBUG_PRINTLN_3("===================>MESSAGE_BUTTON_PRESS");
-           HandleMsgButtonPress(pFrame->SenderDevId, (tMessageTypeButtonPress*)(pFrame->Data));
+           HandleMsgButtonPress(SenderDevId, (tMessageTypeButtonPress*)(pData));
            break;
 
        case MESSAGE_TYPE_SET_ACTION:
              DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_SET_ACTION");
-             HandleMsgSetAction(pFrame->SenderDevId, (tMessageTypeSetAction*)(pFrame->Data));
+             HandleMsgSetAction(SenderDevId, (tMessageTypeSetAction*)(pData));
            break;
 
        case MESSAGE_TYPE_CLEAR_ACTIONS:
              DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_CLEAR_ACTIONS");
-             HandleMsgClearAllActions(pFrame->SenderDevId);
+             HandleMsgClearAllActions(SenderDevId);
            break;
 
        case MESSAGE_TYPE_FW_VERSION_REQUEST:
              DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_FW_VERSION_REQUEST");
-             HandleMsgVersionRequest(pFrame->SenderDevId);
+             HandleMsgVersionRequest(SenderDevId);
            break;
 
        case MESSAGE_TYPE_FW_VERSION_RESPONSE:
              DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_FW_VERSION_RESPONSE");
-             HandleMsgVersionResponse(pFrame->SenderDevId,(tMessageTypeFwVesionResponse*)(pFrame->Data));
+             HandleMsgVersionResponse(SenderDevId,(tMessageTypeFwVesionResponse*)(pData));
            break;
 
        case MESSAGE_TYPE_EEPROM_CRC_REQUEST:
              DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_EEPROM_CRC_REQUEST");
-             HandleMsgEepromCrcRequest(pFrame->SenderDevId);
+             HandleMsgEepromCrcRequest(SenderDevId);
            break;
 
        case MESSAGE_TYPE_EEPROM_CRC_RESPONSE:
              DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_EEPROM_CRC_RESPONSE");
-             HandleMsgEepromCrcResponse(pFrame->SenderDevId,(tMessageTypeEepromCRCResponse*)(pFrame->Data));
+             HandleMsgEepromCrcResponse(SenderDevId,(tMessageTypeEepromCRCResponse*)(pData));
            break;
 
        case MESSAGE_TYPE_FORCE_RESET:
@@ -90,17 +90,17 @@ void IncomingFrameHandler::onFrame(tCommunicationFrame *pFrame)
 
        case MESSAGE_TYPE_SET_DEFAULT_TIMER:
              DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_SET_DEFAULT_TIMER");
-             HandleMsgSetDefaultTimer(pFrame->SenderDevId,(tMessageTypeSetDefaultTimer*)(pFrame->Data));
+             HandleMsgSetDefaultTimer(SenderDevId,(tMessageTypeSetDefaultTimer*)(pData));
            break;
 
        case MESSAGE_TYPE_DEFAULT_TIMER_REQUEST:
              DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_DEFAULT_TIMER_REQUEST");
-             HandleMsgDefaultTimerRequest(pFrame->SenderDevId,(tMessageTypeDefaultTimerRequest*)(pFrame->Data));
+             HandleMsgDefaultTimerRequest(SenderDevId,(tMessageTypeDefaultTimerRequest*)(pData));
            break;
 
        case MESSAGE_TYPE_DEFAULT_TIMER_RESPONSE:
              DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_DEFAULT_TIMER_RESPONSE");
-             HandleMsgDefaultTimerResponse(pFrame->SenderDevId,(tMessageTypeDefaultTimerResponse*)(pFrame->Data));
+             HandleMsgDefaultTimerResponse(SenderDevId,(tMessageTypeDefaultTimerResponse*)(pData));
            break;
 
 

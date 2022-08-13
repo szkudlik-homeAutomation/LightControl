@@ -15,7 +15,7 @@ class IncomingFrameHandler: public CommRecieverProcessCallback {
 public:
    IncomingFrameHandler() {};
 
-   virtual void onFrame(tCommunicationFrame *pFrame);
+   virtual void onFrame(void *pData, uint8_t MessageType, uint8_t SenderDevId);
 
 private:
    // handlers of all incoming frames
