@@ -2,7 +2,6 @@
 #define HTTP_SERVER
 #include "common.h"
 #include "TCP_Communication_lib/tcpServer.h"
-#include "ResponseHandler.h"
 
 class tHttpSession;
 
@@ -31,7 +30,7 @@ class tHttpServlet
 };
 
 
-class tHttpSession : public tTcpSession, public ResponseHandler
+class tHttpSession : public tTcpSession
 {
 public:
   tHttpSession(EthernetClient aEthernetClient);
