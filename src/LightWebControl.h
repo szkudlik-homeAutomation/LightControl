@@ -1,7 +1,7 @@
 #ifndef LIGHT_WEB_CONTROL_APP
 #define LIGHT_WEB_CONTROL_APP
 
-#include "httpServer.h"
+#include "TCP_Communication_lib/httpServer.h"
 #include "http_binaries.h"
 #include "WorkerProcess.h"
 
@@ -12,7 +12,7 @@ class tLightWebControl : public tHttpServlet
 {
 public:
   tLightWebControl() : tHttpServlet() {}
-  
+
 protected:
 
   void SendSetupFooter()

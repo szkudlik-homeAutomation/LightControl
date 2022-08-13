@@ -1,7 +1,7 @@
 #ifndef SERVLETS
 #define SERVLETS
 
-#include "httpServer.h"
+#include "TCP_Communication_lib/httpServer.h"
 #include "http_binaries.h"
 #include "WorkerProcess.h"
 #include "ResponseHandler.h"
@@ -25,7 +25,7 @@ public:
   tOutputSetServlet() : tHttpServlet() {}
   virtual ~tOutputSetServlet() {}
 
-  virtual bool ProcessAndResponse();  
+  virtual bool ProcessAndResponse();
 };
 
 /**
@@ -49,7 +49,7 @@ public:
   tSetTimerServlet() : tHttpServlet() {}
   virtual ~tSetTimerServlet() {}
 
-  virtual bool ProcessAndResponse();  
+  virtual bool ProcessAndResponse();
 };
 
 class tOutputStateServlet : public tHttpServlet, public ResponseHandler
@@ -57,10 +57,10 @@ class tOutputStateServlet : public tHttpServlet, public ResponseHandler
   public:
    tOutputStateServlet() :  tHttpServlet(),ResponseHandler(), mRequestSent(false) {};
   virtual ~tOutputStateServlet() {}
-  
+
   virtual void vOutputStateResponseHandler(uint8_t DevID, uint8_t OutputID, uint8_t PowerState, uint16_t  TimerValue, uint16_t DefaultTimer);
   virtual bool ProcessAndResponse();
-  
+
 protected:
   uint8_t mExpectedDevID;
   uint8_t mExpectedOutputID;

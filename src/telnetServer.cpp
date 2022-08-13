@@ -24,13 +24,13 @@ Commander cmd;
 const commandList_t masterCommands[] = {
   {"enableLogs",      enableLogs,                   "enable logs on telnet console"},
   {"disableLogs",     disableLogs,                  "enable logs on telnet console"},
-  {"StateOverview",   send_stateOverviewHandler,    "MESSAGE_TYPE_REQUEST_OVERVIEW_STATE dev_id"},  
+  {"StateOverview",   send_stateOverviewHandler,    "MESSAGE_TYPE_REQUEST_OVERVIEW_STATE dev_id"},
   {"OutputState",     send_OutputStateHandler,      "MESSAGE_TYPE_OUTPUT_STATE_REQUEST dev_id out_id"},
   {"SetOutput",       send_SetOutputHandler,        "MESSAGE_TYPE_OUTPUT_STATE_REQUEST dev_id out_id state timer"},
   {"ButtonPress",     send_ButtonPress,             "MESSAGE_BUTTON_PRESS with a forced src id"},
   {"ClearActions",    send_ClearActions,            "MESSAGE_TYPE_CLEAR_ACTIONS dev_id"},
   {"GetEepromCrc",    send_GetEepromCrc,            "MESSAGE_TYPE_EEPROM_CRC_REQUEST dev_id"},
-  {"GetVersion",      send_GetVersion,              "MESSAGE_TYPE_FW_VERSION_REQUEST dev_id"},  
+  {"GetVersion",      send_GetVersion,              "MESSAGE_TYPE_FW_VERSION_REQUEST dev_id"},
   {"SetDefTimer",     send_SetDefaultTimer,         "MESSAGE_TYPE_SET_DEFAULT_TIMER dev_id out_id defTimerValue (0=no timer)"},
   {"GetDefTimer",     send_GetDefaultTimer,         "MESSAGE_TYPE_DEFAULT_TIMER_REQUEST dev_id out_id"},
   {"Reset",           send_Reset,                   "MESSAGE_TYPE_FORCE_RESET dev_id (may be 255 - broadcast)"},
@@ -73,8 +73,8 @@ tTelnetSession::tTelnetSession(EthernetClient aEthernetClient) : tTcpSession(aEt
   pTelnetSession = this;
   DisableLogs();
 }
- 
-bool tTelnetSession::doProcess() 
+
+bool tTelnetSession::doProcess()
 {
   cmd.update();
   return true;
@@ -95,12 +95,12 @@ bool send_ClearActions(Commander &Cmdr)
     return false;
   }
 
-  return true;  
+  return true;
 }
 
 bool send_stateOverviewHandler(Commander &Cmdr)
 {
-    
+
   int Dst;
   if(Cmdr.getInt(Dst))
   {
@@ -117,9 +117,9 @@ bool send_stateOverviewHandler(Commander &Cmdr)
 
 bool send_OutputStateHandler(Commander &Cmdr)
 {
-    
+
   int Dst;
-  int OutId;  
+  int OutId;
   if(!Cmdr.getInt(Dst))
   {
     goto error;
@@ -128,7 +128,7 @@ bool send_OutputStateHandler(Commander &Cmdr)
   {
     goto error;
   }
-  
+
    Worker.SendMsgOutputStateRequest(Dst,OutId);
 
   return true;
@@ -140,10 +140,10 @@ error:
 bool send_SetOutputHandler(Commander &Cmdr)
 {
   int Dst;
-  int OutId;  
+  int OutId;
   int State;
-  int Timer = 0;  
-  
+  int Timer = 0;
+
   if(!Cmdr.getInt(Dst))
   {
     goto error;
@@ -176,7 +176,7 @@ bool send_addAction(Commander &Cmdr)
   int ButtonId;
   int TriggerType = BUTTON_TRIGGER_TYPE_ANY_CLICK;
   int ActionType = BUTTON_ACTION_TYPE_TOGGLE;
-  int Timer = 0xFFFF; 
+  int Timer = 0xFFFF;
   int OutputsMask = 0;
   int OutputsStates = 0;
 
@@ -220,7 +220,7 @@ bool send_addAction(Commander &Cmdr)
 final:
   Worker.SendMsgAddAction(RecieverID, OutId, SenderDevID, ButtonId, TriggerType, ActionType, Timer, OutputsMask, OutputsStates);
   return true;
-  
+
 error:
   Cmdr.println(F("Usage: addAction dev_id OutId SenderID ButtonId [ Timer TriggerType ActionType OutputsMask OutputsStates ] "));
   Cmdr.println(F("   TriggerType -  0=CLICK,   1=LONG_CLICK,  2=DBL_CLICK    3=ANY_CLICK (default)"));
@@ -258,7 +258,7 @@ bool send_GetVersion(Commander &Cmdr)
     return false;
   }
 
-  return true;  
+  return true;
 }
 
 bool send_Reset(Commander &Cmdr)
@@ -274,7 +274,7 @@ bool send_Reset(Commander &Cmdr)
     return false;
   }
 
-  return true;    
+  return true;
 }
 
 bool trigger_ScanNodes(Commander &Cmdr)
@@ -294,11 +294,11 @@ bool disableLogs(Commander &Cmdr)
 
 bool send_SetDefaultTimer(Commander &Cmdr)
 {
- 
+
   int Dst;
   int OutId;
   int DefTimerValue;
-  
+
   if(!Cmdr.getInt(Dst))
   {
     goto error;
@@ -311,18 +311,18 @@ bool send_SetDefaultTimer(Commander &Cmdr)
   {
     goto error;
   }
-  
+
    Worker.SendMsgSetDefaultTimer(Dst,OutId,DefTimerValue);
 
   return true;
 error:
   Cmdr.println(F("Usage: SetDefTimer dst_dev_id output_id DefaultTimer (0=no timer)"));
-  return false; 
+  return false;
 }
 
 bool send_GetDefaultTimer(Commander &Cmdr)
 {
- 
+
   int Dst;
   int OutId;
   if(!Cmdr.getInt(Dst))
@@ -333,13 +333,13 @@ bool send_GetDefaultTimer(Commander &Cmdr)
   {
     goto error;
   }
-  
+
    Worker.SendMsgDefaultTimerRequest(Dst,OutId);
 
   return true;
 error:
   Cmdr.println(F("Usage: GetDefTimer dst_dev_id output_id"));
-  return false; 
+  return false;
 }
 
 bool send_ButtonPress(Commander &Cmdr)
@@ -357,7 +357,7 @@ bool send_ButtonPress(Commander &Cmdr)
   {
     goto error;
   }
-  
+
   if(!Cmdr.getInt(LongClick))
   {
     goto final;
@@ -373,7 +373,7 @@ final:
 
 error:
   Cmdr.println(F("Usage: ButtonPress forcedSrcID ShortClick [LongClick DoubleClick] (bitmaps)"));
-  return false; 
+  return false;
 }
 
 
