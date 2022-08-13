@@ -21,20 +21,10 @@
 //#define DEBUG_2
 #define DEBUG_3
 
-
 #define DEBUG_SERIAL Serial
 #define DEBUG_SERIAL_EVENT serialEvent
-#define COMM_SERIAL Serial1
-#define COMM_SERIAL_EVENT serialEvent1
-
 
 #include "ResponseHandler.h"
-
-#else //ifdef CONTROLLER
-
-
-#define COMM_SERIAL Serial
-#define COMM_SERIAL_EVENT serialEvent
 
 #endif //ifdef CONTROLLER
 

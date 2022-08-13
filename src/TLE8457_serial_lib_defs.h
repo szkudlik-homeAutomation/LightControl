@@ -11,8 +11,16 @@
 
 #ifdef CONTROLLER
   #define OUTPUT_QUEUE_SIZE 140
+
+  #define COMM_SERIAL Serial1
+  #define COMM_SERIAL_EVENT serialEvent1
+
 #else
   #define OUTPUT_QUEUE_SIZE 3
+
+  #define COMM_SERIAL Serial
+  #define COMM_SERIAL_EVENT serialEvent
+
 #endif
 
 /**
