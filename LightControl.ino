@@ -2,7 +2,7 @@
 #include <Arduino.h>
 
 #include "src/common.h"
-#include "src/TLE8457_serial_lib.h"
+#include "src/TLE8457_serial_lib_defs.h"
 #include "src/Eeprom.h"
 #include "src/WorkerProcess.h"
 #include "src/DigitalInputProcess.h"
