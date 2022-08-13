@@ -1,7 +1,7 @@
 #ifndef HTTP_SERVER
 #define HTTP_SERVER
 #include "common.h"
-#include "tcpServer.h"
+#include "TCP_Communication_lib/tcpServer.h"
 #include "ResponseHandler.h"
 
 class tHttpSession;
@@ -13,7 +13,7 @@ class tHttpServlet
    virtual ~tHttpServlet() {}
 
    virtual bool ProcessAndResponse() = 0;
- 
+
   protected:
     tHttpSession *pOwner;
 
@@ -42,7 +42,7 @@ public:
 protected:
    virtual bool doProcess();
 
-private:  
+private:
    /**
     * Pointer to servlet providing data
     */

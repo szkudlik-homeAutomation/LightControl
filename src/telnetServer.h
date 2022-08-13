@@ -1,7 +1,7 @@
 #ifndef TELNET_SERVER
 #define TELNET_SERVER
 #include "common.h"
-#include "tcpServer.h"
+#include "TCP_Communication_lib/tcpServer.h"
 #include "ResponseHandler.h"
 #include <Commander.h>
 
