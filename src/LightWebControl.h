@@ -43,6 +43,8 @@ public:
     SendVersionAndPageClose();
     return false;
   }
+
+  virtual ~tDefaultPageServlet() {};
 };
 
 //OutputControl(Device,Output)
@@ -58,6 +60,8 @@ public:
     SendVersionAndPageClose();
     return false;
   }
+
+  virtual ~tGardenLightsServlet() {};
 };
 
 class tIndoorLightsServlet :  public tLightWebControl
@@ -72,6 +76,8 @@ public:
     SendVersionAndPageClose();
     return false;
   }
+
+  virtual ~tIndoorLightsServlet() {};
 };
 
 #endif // LIGHT_WEB_CONTROL_APP
