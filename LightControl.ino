@@ -38,12 +38,11 @@ tHttpServlet * ServletFactory(String *pRequestBuffer)
    if (pRequestBuffer->startsWith("/outputState")) return new tOutputStateServlet();
    if (pRequestBuffer->startsWith("/outputSet")) return new tOutputSetServlet();
    if (pRequestBuffer->startsWith("/timerset")) return new tSetTimerServlet();
+   if (pRequestBuffer->startsWith("/button")) return new tForceButtonPressServlet();
 
    if (pRequestBuffer->startsWith("/1.js")) return new tjavaScriptServlet();
    if (pRequestBuffer->startsWith("/garden")) return new tGardenLightsServlet();
    if (pRequestBuffer->startsWith("/indoorLights")) return new tIndoorLightsServlet();
-   if (pRequestBuffer->startsWith("/button")) return new tForceButtonPressServlet();
-
 
    return new tDefaultPageServlet();
 }
