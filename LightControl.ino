@@ -13,7 +13,7 @@
 
 #ifdef CONTROLLER
 #include "src/servlets.h"
-#include "src/network.h"
+#include "src/TCP_Communication_lib/network.h"
 #include "src/TelnetServer.h"
 #include "src/TCP_Communication_lib/HttpServer.h"
 #include "src/LightWebControl.h"
