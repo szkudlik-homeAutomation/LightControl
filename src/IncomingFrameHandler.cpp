@@ -143,7 +143,18 @@ void IncomingFrameHandler::HandleMsgOutputStateResponse(uint8_t SenderID, tMessa
 
 void IncomingFrameHandler::HandleMsgSetOutput(uint8_t SenderID, tMessageTypeSetOutput* Message)
 {
-  OutputProcess.SetOutput(Message->OutId,Message->State,Message->Timer,tOutputProcess::ForceTimer);
+   if (Message->OutId >= NUM_OF_OUTPUTS)
+   {
+     // drop it
+     return;
+   }
+   uint16_t Timer = Message->Timer;
+   if (DEFAULT_TIMER == Timer)
+   {
+     EEPROM.get(EEPROM_DEFAULT_TIMER_VALUE_OFFSET+Message->OutId*(sizeof(uint16_t)),Timer);
+   }
+
+  OutputProcess.SetOutput(Message->OutId,Message->State,Timer,tOutputProcess::ForceTimer);
 }
 
 

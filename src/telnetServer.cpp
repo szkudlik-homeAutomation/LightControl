@@ -26,7 +26,7 @@ const commandList_t masterCommands[] = {
   {"disableLogs",     disableLogs,                  "enable logs on telnet console"},
   {"StateOverview",   send_stateOverviewHandler,    "MESSAGE_TYPE_REQUEST_OVERVIEW_STATE dev_id"},
   {"OutputState",     send_OutputStateHandler,      "MESSAGE_TYPE_OUTPUT_STATE_REQUEST dev_id out_id"},
-  {"SetOutput",       send_SetOutputHandler,        "MESSAGE_TYPE_OUTPUT_STATE_REQUEST dev_id out_id state timer"},
+  {"SetOutput",       send_SetOutputHandler,        "MESSAGE_TYPE_OUTPUT_STATE_REQUEST dev_id out_id state [timer] (not set=default, 0-forever)"},
   {"ButtonPress",     send_ButtonPress,             "MESSAGE_BUTTON_PRESS with a forced src id"},
   {"ClearActions",    send_ClearActions,            "MESSAGE_TYPE_CLEAR_ACTIONS dev_id"},
   {"GetEepromCrc",    send_GetEepromCrc,            "MESSAGE_TYPE_EEPROM_CRC_REQUEST dev_id"},
@@ -142,7 +142,7 @@ bool send_SetOutputHandler(Commander &Cmdr)
   int Dst;
   int OutId;
   int State;
-  int Timer = 0;
+  int Timer = DEFAULT_TIMER;
 
   if(!Cmdr.getInt(Dst))
   {

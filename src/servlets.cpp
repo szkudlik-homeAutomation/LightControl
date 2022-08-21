@@ -11,10 +11,10 @@ bool tOutputSetServlet::ProcessAndResponse()
 	uint16_t Device;  // device iD
 	uint16_t Output;  // output iD
 	uint16_t State;  // 1 - on, 0 - off
-	uint16_t Timer = 0;  // no timer; TODO: default timer
+	uint16_t Timer = DEFAULT_TIMER;
 	bool ParametersOK = true;
 	ParametersOK &= GetParameter("Dev",&Device);
-	ParametersOK &= GetParameter("Out",&Output);    
+	ParametersOK &= GetParameter("Out",&Output);
 	ParametersOK &= GetParameter("State",&State);
 	GetParameter("Timer",&Timer);    // optional
 
@@ -24,16 +24,16 @@ bool tOutputSetServlet::ProcessAndResponse()
 	  return false;
 	}
 
-	// execute   
+	// execute
 	#ifdef DEBUG_3
 		RespHandler.print(F("==>HTTP set output, dev="));
-		RespHandler.print(Device,DEC);	
+		RespHandler.print(Device,DEC);
 		RespHandler.print(F(" Out="));
-		RespHandler.print(Output,DEC);	
+		RespHandler.print(Output,DEC);
 		RespHandler.print(F(" State="));
-		RespHandler.print(State,DEC);	
+		RespHandler.print(State,DEC);
 		RespHandler.print(F(" Timer="));
-		RespHandler.println(Timer,DEC);	
+		RespHandler.println(Timer,DEC);
 	#endif
 	Worker.SendMsgSetOutput(Device, Output, State, Timer);
 	SendResponse200();
@@ -48,7 +48,7 @@ bool tSetTimerServlet::ProcessAndResponse()
 	uint16_t Timer = 0;  // new timer
 	bool ParametersOK = true;
 	ParametersOK &= GetParameter("Dev",&Device);
-	ParametersOK &= GetParameter("Out",&Output);    
+	ParametersOK &= GetParameter("Out",&Output);
 	GetParameter("Timer",&Timer);    // optional
 
 	if (! ParametersOK)
@@ -61,11 +61,11 @@ bool tSetTimerServlet::ProcessAndResponse()
 
 	#ifdef DEBUG_3
 		RespHandler.print(F("==>HTTP set timer, dev="));
-		RespHandler.print(Device,DEC);	
+		RespHandler.print(Device,DEC);
 		RespHandler.print(F(" Out="));
-		RespHandler.print(Output,DEC);	
+		RespHandler.print(Output,DEC);
 		RespHandler.print(F(" Timer="));
-		RespHandler.println(Timer,DEC);	
+		RespHandler.println(Timer,DEC);
 	#endif
 	Worker.SendMsgSetDefaultTimer(Device, Output, Timer);
 	SendResponse200();
@@ -132,7 +132,7 @@ void tOutputStateServlet::SendOutputStateRequest(uint8_t DevID, uint8_t OutputID
   mStartTimestamp = millis();
   mExpectedDevID = DevID;
   mExpectedOutputID = OutputID;
-  
+
   Worker.SendMsgOutputStateRequest(DevID,OutputID);
 }
 
@@ -140,14 +140,14 @@ void tOutputStateServlet::SendOutputStateRequest(uint8_t DevID, uint8_t OutputID
 bool tOutputStateServlet::ProcessOutputState(const char * caption)
 {
   uint8_t Status = CheckStateRequest();
-  if (STATUS_WAIT == Status)    
+  if (STATUS_WAIT == Status)
      return false; // keep waiting
 
   pOwner->SendFlashString(PSTR("<r>"));
   pOwner->SendFlashString(caption);
   pOwner->SendFlashString(PSTR(" </r>"));
 
-  if (STATUS_TIMEOUT == Status) 
+  if (STATUS_TIMEOUT == Status)
   {
     pOwner->SendFlashString(PSTR("???<br>"));
     return true; // give up
@@ -230,5 +230,5 @@ bool tOutputStateServlet::ProcessAndResponse()
    pOwner->mEthernetClient.print(mDefaultTimer,DEC);
    pOwner->SendFlashString(PSTR("}\r\n"));
 
-   return false;   
+   return false;
 }
