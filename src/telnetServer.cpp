@@ -61,7 +61,7 @@ addAction 3 1 3 0 3 2 0 3 3
 
 tTelnetSession *pTelnetSession = NULL;
 
-tTelnetSession::tTelnetSession(EthernetClient aEthernetClient) : tTcpSession(aEthernetClient), ResponseHandler()
+tTelnetSession::tTelnetSession(EthernetClient aEthernetClient) : tTcpSession(aEthernetClient, TELNET_SESSION_TIMEOUT), ResponseHandler()
 {
   DEBUG_PRINTLN_3("TELNET Session started");
   cmd.begin(&mEthernetClient, masterCommands, sizeof(masterCommands));

@@ -15,6 +15,8 @@ protected:
   virtual bool doProcess();
 
   virtual void vLog(uint8_t str);
+private:
+  static const uint16_t TELNET_SESSION_TIMEOUT = 65535; // 10 minutes
 };
 
 
