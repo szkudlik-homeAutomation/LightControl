@@ -1,0 +1,18 @@
+manifest:
+  defaults:
+    remote: szkudlik-homeAutomation
+
+  remotes:
+    - name: szkudlik-homeAutomation
+      url-base: https://github.com/szkudlik-homeAutomation
+
+  projects:
+    - name: Common_code
+      path: src/Common_code
+      repo-path: Common_code.git
+      import: 
+        path-prefix: LightControl
+      revision: 845ff641227107221e8ff89b0ff5940605f01a71
+
+  self:
+      path: LightControl
