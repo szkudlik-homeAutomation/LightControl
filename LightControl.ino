@@ -1,5 +1,5 @@
-#include <ProcessScheduler.h>
 #include <Arduino.h>
+#include "src/lib/ArduinoProcessScheduler/src/ProcessScheduler.h"
 
 #include "src/common.h"
 #include "src/TLE8457_serial_lib_defs.h"

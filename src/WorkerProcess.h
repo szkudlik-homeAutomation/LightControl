@@ -2,7 +2,7 @@
 #define WORKER_PROCESS
 #include "common.h"
 #include "CommDefs.h"
-#include <ProcessScheduler.h>
+#include "lib/ArduinoProcessScheduler/src/ProcessScheduler.h"
 #include "ResponseHandler.h"
 #include <ArduinoQueue.h>
 

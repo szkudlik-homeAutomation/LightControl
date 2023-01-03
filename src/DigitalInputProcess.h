@@ -2,7 +2,7 @@
 #define DIGITAL_INPUT_PROCESS
 #include "common.h"
 
-#include <ProcessScheduler.h>
+#include "lib/ArduinoProcessScheduler/src/ProcessScheduler.h"
 
 #define DIGITAL_INPUT_PROCESS_SERVICE_TIME 50
 

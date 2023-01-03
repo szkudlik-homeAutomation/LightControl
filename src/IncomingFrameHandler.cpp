@@ -5,7 +5,7 @@
  *      Author: szkud
  */
 
-#include <AceCRC.h>
+#include "lib/AceCRC/src/AceCRC.h"
 using namespace ace_crc::crc16ccitt_nibble;
 
 

@@ -1,6 +1,6 @@
 #include "common.h"
 
-#include <ProcessScheduler.h>
+#include "lib/ArduinoProcessScheduler/src/ProcessScheduler.h"
 #include "CommDefs.h"
 #include <Watchdog.h>
 
