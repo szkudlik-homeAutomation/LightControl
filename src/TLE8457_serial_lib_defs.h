@@ -57,6 +57,6 @@
  */
 #define FRAME_TRANSMISSION_TIME 20
 
-#include "TLE8457_serial_lib/TLE8457_serial_lib.h"
+#include "Common_code/TLE8457_serial/TLE8457_serial_lib.h"
 
 #endif
