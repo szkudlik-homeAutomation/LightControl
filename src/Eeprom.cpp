@@ -1,4 +1,5 @@
-#include "Eeprom.h"
+#include "../global.h"
+#include <EEPROM.h>
 
 void SetDefaultEEPromValues()
 {

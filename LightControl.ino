@@ -1,9 +1,10 @@
+#include "global.h"
+
+
 #include <Arduino.h>
 #include "src/lib/ArduinoProcessScheduler/src/ProcessScheduler.h"
 
-#include "src/common.h"
 #include "src/Common_code/TLE8457_serial/TLE8457_serial_lib.h"
-#include "src/Eeprom.h"
 #include "src/WorkerProcess.h"
 #include "src/DigitalInputProcess.h"
 #include "src/OutputProcess.h"

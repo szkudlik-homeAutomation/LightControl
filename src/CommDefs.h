@@ -1,7 +1,7 @@
 #ifndef COMMDEFS
 #define COMMDEFS
 
-#include "common.h"
+#include "../global.h"
 
 // a double click - two short clicks occur before max time
 #define DOUBLE_CLICK_TICKS_MAX   8   // 400ms 

@@ -1,6 +1,6 @@
 #ifndef OUTPUT_PROCESS
 #define OUTPUT_PROCESS
-#include "common.h"
+#include "../global.h"
 
 #include "lib/ArduinoProcessScheduler/src/ProcessScheduler.h"
 #include "CommDefs.h"

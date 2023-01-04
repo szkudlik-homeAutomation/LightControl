@@ -5,12 +5,13 @@
  *      Author: szkud
  */
 
+#include "../global.h"
+
 #include "lib/AceCRC/src/AceCRC.h"
 using namespace ace_crc::crc16ccitt_nibble;
 
 
 #include "IncomingFrameHandler.h"
-#include "common.h"
 
 #include "WorkerProcess.h"
 #include "OutputProcess.h"

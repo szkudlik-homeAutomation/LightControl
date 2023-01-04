@@ -1,4 +1,4 @@
-#include "common.h"
+#include "../global.h"
 
 #include "lib/ArduinoProcessScheduler/src/ProcessScheduler.h"
 #include "CommDefs.h"

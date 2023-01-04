@@ -2,8 +2,7 @@
 #define EEPROM_DEFS
 
 #include <EEPROM.h>
-#include "common.h"
-#include "CommDefs.h"
+#include "../src/CommDefs.h"
 
 #define ACTION_TABLE_SIZE 139   // eeprom is full
 #define EEPROM_CANNARY 0xAD     // change if update changes EEPROM structure

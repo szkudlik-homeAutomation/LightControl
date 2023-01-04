@@ -1,6 +1,6 @@
 #ifndef DIGITAL_INPUT_PROCESS
 #define DIGITAL_INPUT_PROCESS
-#include "common.h"
+#include "../global.h"
 
 #include "lib/ArduinoProcessScheduler/src/ProcessScheduler.h"
 

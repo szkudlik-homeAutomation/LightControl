@@ -1,6 +1,6 @@
 #ifndef RESPONSE_HANDLER
 #define RESPONSE_HANDLER
-#include "common.h"
+#include "../global.h"
 #include "CommDefs.h"
 #include "Print.h"
 

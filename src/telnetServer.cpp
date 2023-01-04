@@ -1,5 +1,6 @@
+#include "../global.h"
+
 #include "telnetServer.h"
-#include "common.h"
 #include "WorkerProcess.h"
 
 bool helloHandler(Commander &Cmdr);

@@ -1,7 +1,7 @@
 #ifndef TLE8457_SERIAL_DEFS
 #define TLE8457_SERIAL_DEFS
 
-#include "common.h"
+#include "../global.h"
 
 // TLE8457_serial_lib required macros
 
