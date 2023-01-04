@@ -27,12 +27,10 @@
 
 
 
-#include "src/debug.h"
-
 #include "GlobalDefs/version.h"
 #include "GlobalDefs/Eeprom.h"
 //#include "GlobalDefs/outputPins.h"
-//#include "src/Common_code/debug.h"
+#include "src/Common_code/debug.h"
 #include "src/Common_code/helpers.h"
 #include "src/Common_code/status.h"
 

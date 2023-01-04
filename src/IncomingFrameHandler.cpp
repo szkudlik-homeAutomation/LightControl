@@ -118,7 +118,7 @@ void IncomingFrameHandler::HandleMsgOverviewStateRequest(uint8_t SenderID)
 void IncomingFrameHandler::HandleMsgOverviewStateResponse(uint8_t SenderID, tMessageTypeOverviewStateResponse* Message)
 {
 #ifdef CONTROLLER
-      RespHandler.OverviewStateResponseHandler(SenderID,Message->PowerState,Message->TimerState);
+	ResponseHandler::OverviewStateResponseHandler(SenderID,Message->PowerState,Message->TimerState);
 #endif
 }
 
@@ -136,7 +136,7 @@ void IncomingFrameHandler::HandleMsgOutputStateRequest(uint8_t SenderID, tMessag
 void IncomingFrameHandler::HandleMsgOutputStateResponse(uint8_t SenderID, tMessageTypeOutputStateResponse* Message)
 {
 #ifdef CONTROLLER
-  RespHandler.OutputStateResponseHandler(SenderID,Message->OutputID,Message->PowerState,Message->TimerValue,Message->DefaultTimer);
+     ResponseHandler::OutputStateResponseHandler(SenderID,Message->OutputID,Message->PowerState,Message->TimerValue,Message->DefaultTimer);
 #endif
 }
 
@@ -160,18 +160,16 @@ void IncomingFrameHandler::HandleMsgSetOutput(uint8_t SenderID, tMessageTypeSetO
 void IncomingFrameHandler::HandleMsgButtonPress(uint8_t SenderID, tMessageTypeButtonPress *Message)
 {
 #ifdef CONTROLLER
-#ifdef DEBUG_3
-    RespHandler.print(F("Dev ID:"));
-    RespHandler.print(SenderID,HEX);
-    RespHandler.print(F(" ForcedSrc:"));
-    RespHandler.print(Message->ForceSrcId,HEX);
-    RespHandler.print(F(" short:"));
-    RespHandler.print(Message->ShortClick,BIN);
-    RespHandler.print(F(" long:"));
-    RespHandler.print(Message->LongClick,BIN);
-    RespHandler.print(F(" dbl:"));
-    RespHandler.println(Message->DoubleClick,BIN);
-#endif
+	DEBUG_PRINT_3("Dev ID:")
+	DEBUG_3(print(SenderID,HEX));
+	DEBUG_PRINT_3(" ForcedSrc:");
+	DEBUG_3(print(Message->ForceSrcId,HEX));
+    DEBUG_PRINT_3(" short:");
+    DEBUG_3(print(Message->ShortClick,BIN));
+    DEBUG_PRINT_3(" long:");
+    DEBUG_3(print(Message->LongClick,BIN));
+    DEBUG_PRINT_3(" dbl:");
+    DEBUG_3(println(Message->DoubleClick,BIN));
 #endif
 
   if (Message->ForceSrcId)
@@ -271,7 +269,7 @@ void IncomingFrameHandler::HandleMsgEepromCrcRequest(uint8_t SenderID)
 void IncomingFrameHandler::HandleMsgEepromCrcResponse(uint8_t SenderID, tMessageTypeEepromCRCResponse* Message)
 {
 #ifdef CONTROLLER
-  RespHandler.EepromCRCResponseHandler(SenderID,Message->NumOfActions,Message->EepromCRC);
+  ResponseHandler::EepromCRCResponseHandler(SenderID,Message->NumOfActions,Message->EepromCRC);
 #endif
 }
 
@@ -285,7 +283,7 @@ void IncomingFrameHandler::HandleMsgVersionRequest(uint8_t SenderID)
 void IncomingFrameHandler::HandleMsgVersionResponse(uint8_t SenderID, tMessageTypeFwVesionResponse *Message)
 {
 #ifdef CONTROLLER
-  RespHandler.VersionResponseHandler(SenderID,Message->Major,Message->Minor,Message->Patch);
+	ResponseHandler::VersionResponseHandler(SenderID,Message->Major,Message->Minor,Message->Patch);
 #endif
 }
 
@@ -307,7 +305,7 @@ void IncomingFrameHandler::HandleMsgDefaultTimerRequest(uint8_t SenderID, tMessa
 void IncomingFrameHandler::HandleMsgDefaultTimerResponse(uint8_t SenderID, tMessageTypeDefaultTimerResponse *Message)
 {
 #ifdef CONTROLLER
-  RespHandler.DefaultTimerResponseHandler(SenderID,Message->OutputID,Message->DefTimerValue);
+	ResponseHandler::DefaultTimerResponseHandler(SenderID,Message->OutputID,Message->DefTimerValue);
 #endif
 }
 
