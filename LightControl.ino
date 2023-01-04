@@ -10,7 +10,6 @@
 #include "src/OutputProcess.h"
 #include "src/WatchdogProcess.h"
 #include "src/IncomingFrameHandler.h"
-#include "src/version.h"
 
 #ifdef CONTROLLER
 #include "src/servlets.h"

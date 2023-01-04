@@ -1,6 +1,6 @@
+#include "../global.h"
 #include "OutputProcess.h"
 #include "CommDefs.h"
-#include "Eeprom.h"
 
 
 void tOutputProcess::setup()

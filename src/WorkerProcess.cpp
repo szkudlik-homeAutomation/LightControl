@@ -1,7 +1,5 @@
 #include "WorkerProcess.h"
 #include "OutputProcess.h"
-#include "version.h"
-#include "Eeprom.h"
 #include "ResponseHandler.h"
 #include "CommDefs.h"
 #include "TLE8457_serial_lib_defs.h"

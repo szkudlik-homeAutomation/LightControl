@@ -1,6 +1,6 @@
+#include "../global.h"
 #include "DigitalInputProcess.h"
 #include "WorkerProcess.h"
-#include "Eeprom.h"
 #include "TLE8457_serial_lib_defs.h"
  
 
