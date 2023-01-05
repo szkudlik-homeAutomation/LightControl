@@ -1,8 +1,7 @@
 #include "../global.h"
 #include "DigitalInputProcess.h"
 #include "WorkerProcess.h"
-#include "TLE8457_serial_lib_defs.h"
- 
+#include "Common_code/TLE8457_serial/TLE8457_serial_lib.h"
 
 void DigitalInputProcess::setup()
 {
@@ -37,7 +36,7 @@ void DigitalInputProcess::service()
       case Button::STATE_CLICK:
         ShortClick |= (1 << i);
         break;
-        
+
       case Button::STATE_LONGCLICK:
         LongClick |= (1 << i);
         break;

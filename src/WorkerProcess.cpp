@@ -1,8 +1,9 @@
+#include "../global.h"
 #include "WorkerProcess.h"
 #include "OutputProcess.h"
 #include "ResponseHandler.h"
 #include "CommDefs.h"
-#include "TLE8457_serial_lib_defs.h"
+#include "Common_code/TLE8457_serial/TLE8457_serial_lib.h"
 
 bool NodeScanTask::Process(uint32_t * pPeriod)
 {
@@ -38,7 +39,7 @@ void NodeScanTask::vVersionResponseHandler(uint8_t DevID, uint8_t Major, uint8_t
 
 
 // OVERVIEW STATE HANDSHAKE
-bool WorkerProcess::SendMsgOverviewStateRequest(uint8_t RecieverID) 
+bool WorkerProcess::SendMsgOverviewStateRequest(uint8_t RecieverID)
 {
 #ifdef CONTROLLER
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_OVERVIEW_STATE_REQUEST");
@@ -53,12 +54,12 @@ bool WorkerProcess::SendMsgOverviewStateResponse(uint8_t RecieverID, uint8_t  Po
   Msg.PowerState = PowerState;
   Msg.TimerState = TimerState;
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_OVERVIEW_STATE_RESPONSE");
-  CommSender.Enqueue(RecieverID, MESSAGE_TYPE_OVERVIEW_STATE_RESPONSE, sizeof(Msg), &Msg);  
+  CommSender.Enqueue(RecieverID, MESSAGE_TYPE_OVERVIEW_STATE_RESPONSE, sizeof(Msg), &Msg);
   return true;
 }
 
 // GET OUTPUT STATE HANDSHAKE
-bool WorkerProcess::SendMsgOutputStateRequest(uint8_t RecieverID, uint8_t  OutputID) 
+bool WorkerProcess::SendMsgOutputStateRequest(uint8_t RecieverID, uint8_t  OutputID)
 {
 #ifdef CONTROLLER
   tMessageTypeOutputStateRequest Msg;
@@ -77,7 +78,7 @@ bool WorkerProcess::SendMsgOutputStateResponse(uint8_t RecieverID, uint8_t  Outp
   Msg.TimerValue = TimerValue;
   Msg.DefaultTimer = DefaultTimer;
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_OUTPUT_STATE_RESPONSE");
-  CommSender.Enqueue(RecieverID, MESSAGE_TYPE_OUTPUT_STATE_RESPONSE, sizeof(Msg), &Msg);  
+  CommSender.Enqueue(RecieverID, MESSAGE_TYPE_OUTPUT_STATE_RESPONSE, sizeof(Msg), &Msg);
 
   return true;
 };
@@ -91,8 +92,8 @@ bool WorkerProcess::SendMsgSetOutput(uint8_t RecieverID, uint8_t  OutId, uint8_t
   Message.State = State;
   Message.Timer = Timer;
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_SET_OUTPUT");
-  CommSender.Enqueue(RecieverID, MESSAGE_TYPE_SET_OUTPUT, sizeof(Message), &Message); 
-#endif  
+  CommSender.Enqueue(RecieverID, MESSAGE_TYPE_SET_OUTPUT, sizeof(Message), &Message);
+#endif
   return true;
 }
 
@@ -104,7 +105,7 @@ bool WorkerProcess::SendMsgButtonPress(uint8_t RecieverID, uint8_t ForceSrcId, u
   Msg.LongClick  = LongClick;
   Msg.DoubleClick = DoubleClick;
   Msg.ForceSrcId = ForceSrcId;
-  
+
   DEBUG_PRINTLN_3("===================>sending MESSAGE_BUTTON_PRESS");
   CommSender.Enqueue(RecieverID,MESSAGE_BUTTON_PRESS,sizeof(Msg),&Msg);
   return true;
@@ -115,7 +116,7 @@ bool WorkerProcess::SendMsgClearAllActions(uint8_t RecieverID)
 #ifdef CONTROLLER
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_CLEAR_ACTIONS");
   CommSender.Enqueue(RecieverID,MESSAGE_TYPE_CLEAR_ACTIONS,0,NULL);
-#endif  
+#endif
   return true;
 };
 
@@ -131,10 +132,10 @@ bool WorkerProcess::SendMsgAddAction(uint8_t RecieverID, uint8_t OutId, uint8_t 
   Message.Timer = Timer;
   Message.OutputsMask = OutputsMask;
   Message.OutputsStates = OutputsStates;
-  
+
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_SET_ACTION");
   CommSender.Enqueue(RecieverID,MESSAGE_TYPE_SET_ACTION,sizeof(Message),&Message);
-#endif  
+#endif
   return true;
 };
 
@@ -144,7 +145,7 @@ bool WorkerProcess::SendMsgEepromCrcRequest(uint8_t RecieverID)
 #ifdef CONTROLLER
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_EEPROM_CRC_REQUEST");
   CommSender.Enqueue(RecieverID,MESSAGE_TYPE_EEPROM_CRC_REQUEST,0,NULL);
-#endif  
+#endif
   return true;
 }
 
@@ -182,7 +183,7 @@ bool WorkerProcess::SendMsgVersionResponse(uint8_t RecieverID, uint8_t Major, ui
 bool WorkerProcess::SendMsgReset(uint8_t RecieverID)
 {
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_FORCE_RESET");
-  CommSender.Enqueue(RecieverID,MESSAGE_TYPE_FORCE_RESET,0,NULL);  
+  CommSender.Enqueue(RecieverID,MESSAGE_TYPE_FORCE_RESET,0,NULL);
 }
 
 
@@ -200,7 +201,7 @@ bool WorkerProcess::SendMsgDefaultTimerRequest(uint8_t RecieverID, uint8_t Outpu
   tMessageTypeDefaultTimerRequest Msg;
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_DEFAULT_TIMER_REQUEST");
   Msg.OutputID = OutputID;
-  CommSender.Enqueue(RecieverID,MESSAGE_TYPE_DEFAULT_TIMER_REQUEST,sizeof(Msg),&Msg);  
+  CommSender.Enqueue(RecieverID,MESSAGE_TYPE_DEFAULT_TIMER_REQUEST,sizeof(Msg),&Msg);
 }
 
 bool WorkerProcess::SendMsgDefaultTimerResponse(uint8_t RecieverID, uint8_t OutputID, uint16_t DefTimerValue)
@@ -209,7 +210,7 @@ bool WorkerProcess::SendMsgDefaultTimerResponse(uint8_t RecieverID, uint8_t Outp
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_DEFAULT_TIMER_RESPONSE");
   Msg.OutputID = OutputID;
   Msg.DefTimerValue = DefTimerValue;
-  CommSender.Enqueue(RecieverID,MESSAGE_TYPE_DEFAULT_TIMER_RESPONSE,sizeof(Msg),&Msg);  
+  CommSender.Enqueue(RecieverID,MESSAGE_TYPE_DEFAULT_TIMER_RESPONSE,sizeof(Msg),&Msg);
 }
 
 bool WorkerProcess::triggerNodesScan()

@@ -25,8 +25,7 @@
 #define CONTROLLER_DEVICE_ID 1
 #define DEVICE_ID_BROADCAST 0xFF
 
-#include "src/TLE8457_serial_lib_defs.h"
-
+#include "GlobalDefs/TLE8457_serial_lib_defs.h"
 #include "GlobalDefs/version.h"
 #include "GlobalDefs/Eeprom.h"
 //#include "GlobalDefs/outputPins.h"
