@@ -1,5 +1,4 @@
-#ifndef TLE8457_SERIAL_DEFS
-#define TLE8457_SERIAL_DEFS
+#pragma once
 
 #include "../global.h"
 
@@ -56,5 +55,3 @@
  * calculate it based on baud rate and frame size
  */
 #define FRAME_TRANSMISSION_TIME 20
-
-#endif

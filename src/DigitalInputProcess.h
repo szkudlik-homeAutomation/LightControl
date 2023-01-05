@@ -1,5 +1,4 @@
-#ifndef DIGITAL_INPUT_PROCESS
-#define DIGITAL_INPUT_PROCESS
+#pragma once
 #include "../global.h"
 
 #include "lib/ArduinoProcessScheduler/src/ProcessScheduler.h"
@@ -64,7 +63,3 @@ private:
 };
 
 extern DigitalInputProcess DigitalInput;
-
-
-
-#endif  // DIGITAL_INPUT_PROCESS

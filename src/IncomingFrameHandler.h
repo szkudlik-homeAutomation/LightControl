@@ -5,8 +5,7 @@
  *      Author: szkud
  */
 
-#ifndef SRC_INCOMINGFRAMEHANDLER_H_
-#define SRC_INCOMINGFRAMEHANDLER_H_
+#pragma once
 
 #include "../global.h"
 #include "Common_code/TLE8457_serial/TLE8457_serial_lib.h"
@@ -37,6 +36,3 @@ private:
    void HandleMsgDefaultTimerResponse(uint8_t SenderID, tMessageTypeDefaultTimerResponse *Message);
 
 };
-
-
-#endif /* SRC_INCOMINGFRAMEHANDLER_H_ */

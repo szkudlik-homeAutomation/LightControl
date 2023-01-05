@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../global.h"
 
 #include "lib/ArduinoProcessScheduler/src/ProcessScheduler.h"

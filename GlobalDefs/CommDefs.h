@@ -1,5 +1,4 @@
-#ifndef COMMDEFS
-#define COMMDEFS
+#pragma once
 
 #include "../global.h"
 
@@ -168,6 +167,3 @@ typedef struct
   uint16_t DefTimerValue; // default timer. 0 means there's no timer (set forever)
 } tMessageTypeDefaultTimerResponse;
 
-
-
-#endif

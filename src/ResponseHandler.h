@@ -1,5 +1,5 @@
-#ifndef RESPONSE_HANDLER
-#define RESPONSE_HANDLER
+#pragma once
+
 #include "../global.h"
 
 #include "Print.h"
@@ -62,4 +62,3 @@ protected:
 };
 
 extern ResponseHandlerSerial RespHandler;
-#endif // RESPONSE_HANDLER

@@ -1,5 +1,4 @@
-#ifndef SERVLETS
-#define SERVLETS
+#pragma once
 
 #include "../global.h"
 
@@ -83,6 +82,3 @@ protected:
   bool mRequestSent;
 };
 
-
-
-#endif

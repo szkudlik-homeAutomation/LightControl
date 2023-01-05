@@ -1,5 +1,5 @@
-#ifndef WORKER_PROCESS
-#define WORKER_PROCESS
+#pragma once
+
 #include "../global.h"
 
 #include "lib/ArduinoProcessScheduler/src/ProcessScheduler.h"
@@ -73,5 +73,3 @@ private:
 };
 
 extern WorkerProcess Worker;
-
-#endif  // WORKER_PROCESS

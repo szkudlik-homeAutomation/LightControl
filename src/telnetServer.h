@@ -1,5 +1,5 @@
-#ifndef TELNET_SERVER
-#define TELNET_SERVER
+#pragma once
+
 #include "../global.h"
 
 #include "TCP_Communication_lib/tcpServer.h"
@@ -31,6 +31,3 @@ protected:
   virtual tTcpSession* NewSession(EthernetClient aEthernetClient) { return new tTelnetSession(aEthernetClient); }
 };
 
-
-
-#endif  // WORKER_PROCESS

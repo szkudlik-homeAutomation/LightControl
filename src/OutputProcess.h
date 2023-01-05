@@ -1,5 +1,4 @@
-#ifndef OUTPUT_PROCESS
-#define OUTPUT_PROCESS
+#pragma once
 #include "../global.h"
 
 #include "lib/ArduinoProcessScheduler/src/ProcessScheduler.h"
@@ -89,5 +88,3 @@ private:
 };
 
 extern tOutputProcess OutputProcess;
-
-#endif  // OUTPUT_PROCESS

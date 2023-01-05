@@ -1,5 +1,4 @@
-#ifndef LIGHT_WEB_CONTROL_APP
-#define LIGHT_WEB_CONTROL_APP
+#pragma once
 
 #include "../global.h"
 
@@ -81,5 +80,3 @@ public:
 
   virtual ~tIndoorLightsServlet() {};
 };
-
-#endif // LIGHT_WEB_CONTROL_APP

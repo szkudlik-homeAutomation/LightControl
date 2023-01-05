@@ -1,5 +1,4 @@
-#ifndef EEPROM_DEFS
-#define EEPROM_DEFS
+#pragma once
 
 #include <EEPROM.h>
 
@@ -61,5 +60,3 @@ typedef struct __tEeprom
 #define EEPROM_ACTION_TABLE_SIZE sizeof(tMessageTypeSetAction)
 
 void SetDefaultEEPromValues();
-
-#endif //EEPROM_DEFS
