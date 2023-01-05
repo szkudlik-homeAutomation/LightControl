@@ -1,7 +1,6 @@
 #include "../global.h"
 
 #include "lib/ArduinoProcessScheduler/src/ProcessScheduler.h"
-#include "CommDefs.h"
 #include <Watchdog.h>
 
 class tWatchdogProcess : public  Process

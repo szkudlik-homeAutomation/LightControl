@@ -1,8 +1,8 @@
 #include "../global.h"
+
 #include "WorkerProcess.h"
 #include "OutputProcess.h"
 #include "ResponseHandler.h"
-#include "CommDefs.h"
 #include "Common_code/TLE8457_serial/TLE8457_serial_lib.h"
 
 bool NodeScanTask::Process(uint32_t * pPeriod)

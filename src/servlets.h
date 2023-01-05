@@ -1,6 +1,8 @@
 #ifndef SERVLETS
 #define SERVLETS
 
+#include "../global.h"
+
 #include "TCP_Communication_lib/httpServer.h"
 #include "http_binaries.h"
 #include "WorkerProcess.h"

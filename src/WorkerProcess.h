@@ -1,7 +1,7 @@
 #ifndef WORKER_PROCESS
 #define WORKER_PROCESS
 #include "../global.h"
-#include "CommDefs.h"
+
 #include "lib/ArduinoProcessScheduler/src/ProcessScheduler.h"
 #include "ResponseHandler.h"
 #include <ArduinoQueue.h>

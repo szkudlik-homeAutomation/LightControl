@@ -1,6 +1,6 @@
 #include "../global.h"
+
 #include "OutputProcess.h"
-#include "CommDefs.h"
 
 
 void tOutputProcess::setup()

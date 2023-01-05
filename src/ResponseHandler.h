@@ -1,7 +1,7 @@
 #ifndef RESPONSE_HANDLER
 #define RESPONSE_HANDLER
 #include "../global.h"
-#include "CommDefs.h"
+
 #include "Print.h"
 
 class ResponseHandler : public Print

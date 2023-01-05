@@ -1,3 +1,5 @@
+#include "../global.h"
+
 #include "servlets.h"
 
 bool tjavaScriptServlet::ProcessAndResponse()

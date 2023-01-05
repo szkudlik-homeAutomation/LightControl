@@ -10,7 +10,6 @@
 
 #include "../global.h"
 #include "Common_code/TLE8457_serial/TLE8457_serial_lib.h"
-#include "CommDefs.h"
 
 class IncomingFrameHandler: public CommRecieverProcessCallback {
 public:

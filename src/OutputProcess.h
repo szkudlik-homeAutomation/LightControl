@@ -3,7 +3,6 @@
 #include "../global.h"
 
 #include "lib/ArduinoProcessScheduler/src/ProcessScheduler.h"
-#include "CommDefs.h"
 
 #define OUTPUT_SERVICE_TIME 1000  // 1 second
 
