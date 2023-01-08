@@ -1,8 +1,7 @@
 #pragma once
 
 #include "../global.h"
-
-#include "TCP_Communication_lib/tcpServer.h"
+#include "Common_code/Network/tcpServer.h"
 #include "ResponseHandler.h"
 #include <Commander.h>
 

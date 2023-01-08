@@ -13,13 +13,14 @@
 
 #ifdef CONTROLLER
 #include "src/servlets.h"
-#include "src/TCP_Communication_lib/network.h"
+#include "src/Common_code/Network/network.h"
 #include "src/TelnetServer.h"
-#include "src/TCP_Communication_lib/HttpServer.h"
+#include "src/Common_code/Network/httpServer.h"
 #include "src/LightWebControl.h"
 #endif
 
-
+// restart if no connection for 5 minutes
+#define TCP_WATCHDOG_TIMEOUT 300 
  
 Scheduler sched;
 IncomingFrameHandler IncomingFrameHandlerCallback;
@@ -29,7 +30,7 @@ WorkerProcess Worker(sched);
 
 #ifdef CONTROLLER
 tNetwork Network;
-tTcpServerProcess TcpServerProcess(sched);
+tTcpServerProcess TcpServerProcess(sched,TCP_WATCHDOG_TIMEOUT);
 tTelnetServer TelnetServer;
 tHttpServer HttpServer;
 

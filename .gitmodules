@@ -16,9 +16,3 @@
 [submodule "lib/Watchdog"]
 	path = lib/Watchdog
 	url = https://github.com/janelia-arduino/Watchdog.git
-[submodule "src/TLE8457_serial_lib"]
-	path = src/TLE8457_serial_lib
-	url = https://github.com/szkudlik-homeAutomation/TLE8457_serial_lib.git
-[submodule "src/TCP_Communication_lib"]
-	path = src/TCP_Communication_lib
-	url = https://github.com/szkudlik-homeAutomation/TCP_Communication_lib.git

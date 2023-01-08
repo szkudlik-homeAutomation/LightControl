@@ -26,6 +26,12 @@
 #define DEVICE_ID_BROADCAST 0xFF
 
 #include "GlobalDefs/CommDefs.h"
+
+
+#define CONFIG_NETWORK 1
+#define CONFIG_HTTP_SERVER 1
+
+
 #include "GlobalDefs/TLE8457_serial_lib_defs.h"
 #include "GlobalDefs/version.h"
 #include "GlobalDefs/Eeprom.h"
