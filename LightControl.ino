@@ -5,10 +5,10 @@
 #include "src/lib/ArduinoProcessScheduler/src/ProcessScheduler.h"
 
 #include "src/Common_code/TLE8457_serial/TLE8457_serial_lib.h"
+#include "src/Common_code/WatchdogProcess.h"
 #include "src/WorkerProcess.h"
 #include "src/DigitalInputProcess.h"
 #include "src/OutputProcess.h"
-#include "src/WatchdogProcess.h"
 #include "src/IncomingFrameHandler.h"
 
 #ifdef CONTROLLER
