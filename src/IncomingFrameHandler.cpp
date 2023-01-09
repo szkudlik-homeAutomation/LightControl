@@ -14,7 +14,7 @@ using namespace ace_crc::crc16ccitt_nibble;
 #include "IncomingFrameHandler.h"
 
 #include "WorkerProcess.h"
-#include "OutputProcess.h"
+#include "tOutputProcess_lightControl.h"
 
 
 void IncomingFrameHandler::onFrame(void *pData, uint8_t MessageType, uint8_t SenderDevId)

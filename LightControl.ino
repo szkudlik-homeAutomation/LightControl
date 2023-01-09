@@ -8,7 +8,7 @@
 #include "src/Common_code/WatchdogProcess.h"
 #include "src/WorkerProcess.h"
 #include "src/DigitalInputProcess.h"
-#include "src/OutputProcess.h"
+#include "src/tOutputProcess_lightControl.h"
 #include "src/IncomingFrameHandler.h"
 
 #ifdef CONTROLLER
@@ -21,7 +21,7 @@
 
 // restart if no connection for 5 minutes
 #define TCP_WATCHDOG_TIMEOUT 300 
- 
+
 Scheduler sched;
 IncomingFrameHandler IncomingFrameHandlerCallback;
 CommRecieverProcess CommReciever(sched,EEPROM.read(EEPROM_DEVICE_ID_OFFSET),&IncomingFrameHandlerCallback);
@@ -52,7 +52,7 @@ tHttpServlet * ServletFactory(String *pRequestBuffer)
 DigitalInputProcess DigitalInput(sched);
 #endif
 
-tOutputProcess OutputProcess(sched);
+tOutputProcess_lightControl OutputProcess(sched);
 tWatchdogProcess  WatchdogProcess(sched);
 
 void COMM_SERIAL_EVENT() {

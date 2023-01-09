@@ -1,7 +1,7 @@
 #include "../global.h"
 
 #include "WorkerProcess.h"
-#include "OutputProcess.h"
+#include "tOutputProcess_lightControl.h"
 #include "ResponseHandler.h"
 #include "Common_code/TLE8457_serial/TLE8457_serial_lib.h"
 
