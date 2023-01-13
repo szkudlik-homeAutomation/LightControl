@@ -62,7 +62,7 @@ addAction 3 1 3 0 3 2 0 3 3
 
 tTelnetSession *pTelnetSession = NULL;
 
-tTelnetSession::tTelnetSession(EthernetClient aEthernetClient) : tTcpSession(aEthernetClient, TELNET_SESSION_TIMEOUT), ResponseHandler()
+tTelnetSession::tTelnetSession(EthernetClient aEthernetClient) : tTcpSession(aEthernetClient, TELNET_SESSION_TIMEOUT), tLogTransport()
 {
   DEBUG_PRINTLN_3("TELNET Session started");
   cmd.begin(&mEthernetClient, masterCommands, sizeof(masterCommands));
@@ -378,7 +378,7 @@ error:
 }
 
 
-void tTelnetSession::vLog(uint8_t str)
+void tTelnetSession::Log(uint8_t str)
 {
     if (NULL != cmd.getOutputPort())
       cmd.getOutputPort()->write(str);

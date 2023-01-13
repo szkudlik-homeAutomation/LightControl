@@ -21,6 +21,18 @@
 
 #include <Arduino.h>
 
+
+#if CONFIG_CENTRAL_NODE
+
+//#define DEBUG_1_ENABLE
+//#define DEBUG_2_ENABLE
+#define DEBUG_3_ENABLE
+
+#define DEBUG_SERIAL Serial
+#define DEBUG_SERIAL_EVENT serialEvent
+
+#endif CONFIG_CENTRAL_NODE
+
 //todo: move
 #define CONTROLLER_DEVICE_ID 1
 #define DEVICE_ID_BROADCAST 0xFF
@@ -30,6 +42,7 @@
 
 #define CONFIG_NETWORK 1
 #define CONFIG_HTTP_SERVER 1
+#define CONFIG_LOGGER 1
 
 
 #include "GlobalDefs/TLE8457_serial_lib_defs.h"

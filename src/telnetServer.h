@@ -2,10 +2,10 @@
 
 #include "../global.h"
 #include "Common_code/Network/tcpServer.h"
-#include "ResponseHandler.h"
+#include "Common_code/Logger.h"
 #include <Commander.h>
 
-class tTelnetSession : public tTcpSession, public ResponseHandler
+class tTelnetSession : public tTcpSession, public tLogTransport
 {
 public:
   tTelnetSession(EthernetClient aEthernetClient);
@@ -14,7 +14,7 @@ public:
 protected:
   virtual bool doProcess();
 
-  virtual void vLog(uint8_t str);
+  virtual void Log(uint8_t str);
 private:
   static const uint16_t TELNET_SESSION_TIMEOUT = 65535; // 10 minutes
 };

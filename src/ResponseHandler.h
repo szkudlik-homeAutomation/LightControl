@@ -4,19 +4,12 @@
 
 #include "Print.h"
 
-class ResponseHandler : public Print
+class ResponseHandler
 {
 public:
-  ResponseHandler() : mLogEnbabled(true) { pNext = pFirst ; pFirst = this; }
+  ResponseHandler() { pNext = pFirst ; pFirst = this; }
 
   virtual ~ResponseHandler();
-
-  void EnableLogs() { mLogEnbabled = true; }
-  void DisableLogs() { mLogEnbabled = false; }
-  static void EnableLogsForce() { mLogsForced = true; }
-  static void DisableLogsForce() { mLogsForced = false; }
-
-  virtual size_t write(uint8_t str);
 
   static void OverviewStateResponseHandler(uint8_t SenderID, uint8_t PowerState, uint8_t  TimerState);
   static void OutputStateResponseHandler(uint8_t SenderID, uint8_t OutputID, uint8_t PowerState, uint16_t  TimerValue, uint16_t DefaultTimer);
@@ -34,31 +27,11 @@ protected:
   virtual void vVersionResponseHandler(uint8_t DevID, uint8_t Major, uint8_t Minor, uint8_t Patch) {}
   virtual void vDefaultTimerResponseHandler(uint8_t DevID,uint8_t OutputID,uint16_t DefTimerValue) {}
 
-  virtual void vLog(uint8_t str){}
   virtual void vNodeScanResponse(uint32_t ActiveNodesMap) {}
 
 private:
-  bool mLogEnbabled;
-  static bool mLogsForced;
   static ResponseHandler* pFirst;
   ResponseHandler* pNext;
 };
 
-class ResponseHandlerSerial : public ResponseHandler
-{
-public:
-  ResponseHandlerSerial() : ResponseHandler() {}
-  virtual ~ResponseHandlerSerial() {};
-
-#ifdef CONTROLLER
-protected:
-#ifdef DEBUG_SERIAL
-  virtual void vLog(uint8_t str) { DEBUG_SERIAL.write(str); }
-#else
-  virtual void vLog(uint8_t str) { }
-#endif
-#endif
-
-};
-
-extern ResponseHandlerSerial RespHandler;
+extern ResponseHandler RespHandler;
