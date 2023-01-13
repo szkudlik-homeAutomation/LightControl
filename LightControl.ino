@@ -14,7 +14,6 @@
 #ifdef CONTROLLER
 #include "src/servlets.h"
 #include "src/Common_code/Network/network.h"
-#include "src/TelnetServer.h"
 #include "src/Common_code/Network/httpServer.h"
 #include "src/LightWebControl.h"
 #endif
@@ -31,7 +30,6 @@ WorkerProcess Worker(sched);
 #ifdef CONTROLLER
 tNetwork Network;
 tTcpServerProcess TcpServerProcess(sched,TCP_WATCHDOG_TIMEOUT);
-tTelnetServer TelnetServer;
 tHttpServer HttpServer;
 
 tHttpServlet * ServletFactory(String *pRequestBuffer)

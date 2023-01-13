@@ -1,7 +1,8 @@
 #include "../global.h"
 
-#include "telnetServer.h"
 #include "WorkerProcess.h"
+#include "Common_code/Network/telnetServer.h"
+#include <Commander.h>
 
 bool helloHandler(Commander &Cmdr);
 bool send_stateOverviewHandler(Commander &Cmdr);
@@ -12,19 +13,14 @@ bool send_addAction(Commander &Cmdr);
 bool send_GetEepromCrc(Commander &Cmdr);
 bool send_GetVersion(Commander &Cmdr);
 bool send_Reset(Commander &Cmdr);
-bool enableLogs(Commander &Cmdr);
-bool disableLogs(Commander &Cmdr);
 bool trigger_ScanNodes(Commander &Cmdr);
 bool send_SetDefaultTimer(Commander &Cmdr);
 bool send_GetDefaultTimer(Commander &Cmdr);
 bool send_ButtonPress(Commander &Cmdr);
 
-// must be static-global (why? - only 1 telnet session may be active)
-Commander cmd;
-
-const commandList_t masterCommands[] = {
-  {"enableLogs",      enableLogs,                   "enable logs on telnet console"},
-  {"disableLogs",     disableLogs,                  "enable logs on telnet console"},
+const commandList_t TelnetCommands[] = {
+  {"enableLogs",      TelnetEnableLogs,             "enable logs on telnet console"},
+  {"disableLogs",     TelnetDisableLogs,            "enable logs on telnet console"},
   {"StateOverview",   send_stateOverviewHandler,    "MESSAGE_TYPE_REQUEST_OVERVIEW_STATE dev_id"},
   {"OutputState",     send_OutputStateHandler,      "MESSAGE_TYPE_OUTPUT_STATE_REQUEST dev_id out_id"},
   {"SetOutput",       send_SetOutputHandler,        "MESSAGE_TYPE_OUTPUT_STATE_REQUEST dev_id out_id state [timer] (not set=default, 0-forever)"},
@@ -39,49 +35,7 @@ const commandList_t masterCommands[] = {
   {"addAction",       send_addAction,               "MESSAGE_TYPE_SET_ACTION dev_id OutId SenderID ButtonId [ Timer TriggerType ActionType OutputsMask OutputsStates ]"},
 };
 
-/*
-
-Usage: addAction dev_id OutId SenderID ButtonId [ TriggerType ActionType Timer OutputsMask OutputsStates ]
-   TriggerType -  0=CLICK,   1=LONG_CLICK,  2=DBL_CLICK   3=ANY_CLICK
-   ActionType -   0=TOGGLE,  1=ON,          2=OFF
-
-
-button 0 turn on 0 if 0 = 0 1 = 0
-
-button 0 turn on 1 if 1 = 1 2 = 0
-
-button 0 turn of 0 if 1 = 1 2 = 1
-
-button 0 turn of 1 if 1 = 1 2 = 1
-
-addAction 3 0 3 0 3 1 0 3 0
-addAction 3 1 3 0 3 1 0 3 1
-addAction 3 0 3 0 3 2 0 3 3
-addAction 3 1 3 0 3 2 0 3 3
-*/
-
-tTelnetSession *pTelnetSession = NULL;
-
-tTelnetSession::tTelnetSession(EthernetClient aEthernetClient) : tTcpSession(aEthernetClient, TELNET_SESSION_TIMEOUT), tLogTransport()
-{
-  DEBUG_PRINTLN_3("TELNET Session started");
-  cmd.begin(&mEthernetClient, masterCommands, sizeof(masterCommands));
-  cmd.commandPrompt(ON); //enable the command prompt
-  cmd.echo(false);     //Echo incoming characters to theoutput port
-  cmd.errorMessages(ON); //error messages are enabled - it will tell us if we issue any unrecognised commands
-  cmd.autoChain(ON);
-  cmd.printCommandList();
-  pTelnetSession = this;
-  DisableLogs();
-}
-
-bool tTelnetSession::doProcess()
-{
-  cmd.update();
-  return true;
-}
-
-tTelnetSession::~tTelnetSession() { pTelnetSession = NULL; }
+tTelnetServer TelnetServer(TelnetCommands,sizeof(TelnetCommands));
 
 bool send_ClearActions(Commander &Cmdr)
 {
@@ -283,16 +237,6 @@ bool trigger_ScanNodes(Commander &Cmdr)
   Worker.triggerNodesScan();
 }
 
-bool enableLogs(Commander &Cmdr)
-{
-  pTelnetSession->EnableLogs();
-}
-
-bool disableLogs(Commander &Cmdr)
-{
-  pTelnetSession->DisableLogs();
-}
-
 bool send_SetDefaultTimer(Commander &Cmdr)
 {
 
@@ -375,11 +319,4 @@ final:
 error:
   Cmdr.println(F("Usage: ButtonPress forcedSrcID ShortClick [LongClick DoubleClick] (bitmaps)"));
   return false;
-}
-
-
-void tTelnetSession::Log(uint8_t str)
-{
-    if (NULL != cmd.getOutputPort())
-      cmd.getOutputPort()->write(str);
 }
