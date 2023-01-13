@@ -44,6 +44,7 @@
 #define CONFIG_HTTP_SERVER 1
 #define CONFIG_LOGGER 1
 #define CONFIG_TELNET_SERVER 1
+#define CONFIG_WATCHDOG 1
 
 
 #include "GlobalDefs/TLE8457_serial_lib_defs.h"
