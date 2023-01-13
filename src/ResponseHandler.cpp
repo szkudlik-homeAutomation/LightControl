@@ -103,5 +103,3 @@ void ResponseHandler::DefaultTimerResponseHandler(uint8_t SenderID,uint8_t Outpu
 
 	for (ResponseHandler * i = pFirst; i != NULL ; i = i->pNext) i->vDefaultTimerResponseHandler(SenderID,OutputID,DefTimerValue);
 }
-
-ResponseHandler RespHandler;

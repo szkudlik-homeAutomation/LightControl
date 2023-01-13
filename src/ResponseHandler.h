@@ -2,8 +2,6 @@
 
 #include "../global.h"
 
-#include "Print.h"
-
 class ResponseHandler
 {
 public:
@@ -33,5 +31,3 @@ private:
   static ResponseHandler* pFirst;
   ResponseHandler* pNext;
 };
-
-extern ResponseHandler RespHandler;
