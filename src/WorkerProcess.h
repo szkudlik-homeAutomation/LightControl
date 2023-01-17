@@ -15,6 +15,26 @@ public:
    virtual bool Process(uint32_t * pPeriod) = 0;
 };
 
+
+class WorkerProcess: public Process, public ResponseHandler
+{
+  public:
+  WorkerProcess(Scheduler &manager) : Process(manager,LOW_PRIORITY,SERVICE_SECONDLY,RUNTIME_FOREVER), pCurrentWorkerTask(NULL) {}
+
+  void Enqueue(WorkerTask *pWorkerTask);
+
+protected:
+  virtual void service();
+private:
+
+  ArduinoQueue<WorkerTask *> mQueue;
+  WorkerTask *pCurrentWorkerTask;
+
+};
+
+extern WorkerProcess Worker;
+
+#ifdef CONTROLLER
 class NodeScanTask : public WorkerTask, public ResponseHandler
 {
 public:
@@ -22,6 +42,7 @@ public:
    virtual ~NodeScanTask() {}
 
    virtual bool Process(uint32_t * pPeriod);
+   static void trigger() { Worker.Enqueue(new NodeScanTask()); }
 
 protected:
    virtual void vVersionResponseHandler(uint8_t DevID, uint8_t Major, uint8_t Minor, uint8_t Patch);
@@ -33,24 +54,4 @@ private:
    uint8_t mCurrentNodeID;  // if == MAX_NUM_OF_NODES - waiting for responses
    uint32_t mActiveNodesMap;
 };
-
-
-class WorkerProcess: public Process, public ResponseHandler
-{
-  public:
-  WorkerProcess(Scheduler &manager) : Process(manager,LOW_PRIORITY,SERVICE_SECONDLY,RUNTIME_FOREVER), pCurrentWorkerTask(NULL) {}
-
-//triggers of complex actions
-  bool triggerNodesScan();
-  
-protected:
-  virtual void service();
-private:
-
-  ArduinoQueue<WorkerTask *> mQueue;
-  WorkerTask *pCurrentWorkerTask;
-
-  void Enqueue(WorkerTask *pWorkerTask);
-};
-
-extern WorkerProcess Worker;
+#endif

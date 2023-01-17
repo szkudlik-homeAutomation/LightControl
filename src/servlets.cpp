@@ -1,6 +1,7 @@
 #include "../global.h"
 
 #include "servlets.h"
+#ifdef CONTROLLER
 
 bool tjavaScriptServlet::ProcessAndResponse()
 {
@@ -226,3 +227,4 @@ bool tOutputStateServlet::ProcessAndResponse()
 
    return false;
 }
+#endif

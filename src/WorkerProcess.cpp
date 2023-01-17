@@ -6,6 +6,7 @@
 #include "ResponseHandler.h"
 #include "Common_code/TLE8457_serial/TLE8457_serial_lib.h"
 
+#ifdef CONTROLLER
 bool NodeScanTask::Process(uint32_t * pPeriod)
 {
    *pPeriod = REQUEST_SENDING_PERIOD;
@@ -36,13 +37,7 @@ void NodeScanTask::vVersionResponseHandler(uint8_t DevID, uint8_t Major, uint8_t
    mActiveNodesMap |= 1 << (DevID-1);
 }
 
-bool WorkerProcess::triggerNodesScan()
-{
-#ifdef CONTROLLER
-   Enqueue(new NodeScanTask());
-#endif
-  return true;
-}
+#endif //CONTROLLER
 
 void WorkerProcess::service()
 {

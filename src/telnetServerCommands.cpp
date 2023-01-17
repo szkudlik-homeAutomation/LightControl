@@ -5,6 +5,9 @@
 #include "Common_code/Network/telnetServer.h"
 #include <Commander.h>
 
+#ifdef CONTROLLER
+
+
 bool helloHandler(Commander &Cmdr);
 bool send_stateOverviewHandler(Commander &Cmdr);
 bool send_OutputStateHandler(Commander &Cmdr);
@@ -235,7 +238,7 @@ bool send_Reset(Commander &Cmdr)
 
 bool trigger_ScanNodes(Commander &Cmdr)
 {
-  Worker.triggerNodesScan();
+	NodeScanTask::trigger();
 }
 
 bool send_SetDefaultTimer(Commander &Cmdr)
@@ -321,3 +324,4 @@ error:
   Cmdr.println(F("Usage: ButtonPress forcedSrcID ShortClick [LongClick DoubleClick] (bitmaps)"));
   return false;
 }
+#endif //CONTROLLER

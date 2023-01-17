@@ -39,11 +39,13 @@
 
 #include "GlobalDefs/CommDefs.h"
 
-
+#ifdef CONTROLLER
 #define CONFIG_NETWORK 1
 #define CONFIG_HTTP_SERVER 1
 #define CONFIG_LOGGER 1
 #define CONFIG_TELNET_SERVER 1
+#endif
+
 #define CONFIG_WATCHDOG 1
 
 
