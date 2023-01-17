@@ -4,7 +4,7 @@
 
 #include "Common_code/Network/httpServer.h"
 #include "http_binaries.h"
-#include "WorkerProcess.h"
+#include "OutgoingMessage.h"
 #include "ResponseHandler.h"
 
 class tjavaScriptServlet :  public tHttpServlet

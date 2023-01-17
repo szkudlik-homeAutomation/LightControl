@@ -1,6 +1,7 @@
 #include "../global.h"
 
 #include "WorkerProcess.h"
+#include "OutgoingMessage.h"
 #include "Common_code/Network/telnetServer.h"
 #include <Commander.h>
 
@@ -42,7 +43,7 @@ bool send_ClearActions(Commander &Cmdr)
   int Dst;
   if(Cmdr.getInt(Dst))
   {
-    Worker.SendMsgClearAllActions(Dst);
+    OutgoingMessage::SendMsgClearAllActions(Dst);
   }
   else
   {
@@ -59,7 +60,7 @@ bool send_stateOverviewHandler(Commander &Cmdr)
   int Dst;
   if(Cmdr.getInt(Dst))
   {
-    Worker.SendMsgOverviewStateRequest(Dst);
+    OutgoingMessage::SendMsgOverviewStateRequest(Dst);
   }
   else
   {
@@ -84,7 +85,7 @@ bool send_OutputStateHandler(Commander &Cmdr)
     goto error;
   }
 
-   Worker.SendMsgOutputStateRequest(Dst,OutId);
+   OutgoingMessage::SendMsgOutputStateRequest(Dst,OutId);
 
   return true;
 error:
@@ -116,7 +117,7 @@ bool send_SetOutputHandler(Commander &Cmdr)
     //goto finish;
   }
 
-  Worker.SendMsgSetOutput(Dst, OutId, State, Timer);
+  OutgoingMessage::SendMsgSetOutput(Dst, OutId, State, Timer);
   return true;
 error:
   Cmdr.println(F("Usage: SetOutput dst_dev_id output_id state[0/1] [timer[sec]]"));
@@ -173,7 +174,7 @@ bool send_addAction(Commander &Cmdr)
   }
 
 final:
-  Worker.SendMsgAddAction(RecieverID, OutId, SenderDevID, ButtonId, TriggerType, ActionType, Timer, OutputsMask, OutputsStates);
+  OutgoingMessage::SendMsgAddAction(RecieverID, OutId, SenderDevID, ButtonId, TriggerType, ActionType, Timer, OutputsMask, OutputsStates);
   return true;
 
 error:
@@ -189,7 +190,7 @@ bool send_GetEepromCrc(Commander &Cmdr)
   int Dst;
   if(Cmdr.getInt(Dst))
   {
-    Worker.SendMsgEepromCrcRequest(Dst);
+    OutgoingMessage::SendMsgEepromCrcRequest(Dst);
   }
   else
   {
@@ -205,7 +206,7 @@ bool send_GetVersion(Commander &Cmdr)
   int Dst;
   if(Cmdr.getInt(Dst))
   {
-    Worker.SendMsgVersionRequest(Dst);
+    OutgoingMessage::SendMsgVersionRequest(Dst);
   }
   else
   {
@@ -221,7 +222,7 @@ bool send_Reset(Commander &Cmdr)
   int Dst;
   if(Cmdr.getInt(Dst))
   {
-    Worker.SendMsgReset(Dst);
+    OutgoingMessage::SendMsgReset(Dst);
   }
   else
   {
@@ -257,7 +258,7 @@ bool send_SetDefaultTimer(Commander &Cmdr)
     goto error;
   }
 
-   Worker.SendMsgSetDefaultTimer(Dst,OutId,DefTimerValue);
+   OutgoingMessage::SendMsgSetDefaultTimer(Dst,OutId,DefTimerValue);
 
   return true;
 error:
@@ -279,7 +280,7 @@ bool send_GetDefaultTimer(Commander &Cmdr)
     goto error;
   }
 
-   Worker.SendMsgDefaultTimerRequest(Dst,OutId);
+   OutgoingMessage::SendMsgDefaultTimerRequest(Dst,OutId);
 
   return true;
 error:
@@ -313,7 +314,7 @@ bool send_ButtonPress(Commander &Cmdr)
   }
 
 final:
-  Worker.SendMsgButtonPress(DEVICE_ID_BROADCAST,ForcedSenderId, ShortClick, LongClick, DoubleClick);
+  OutgoingMessage::SendMsgButtonPress(DEVICE_ID_BROADCAST,ForcedSenderId, ShortClick, LongClick, DoubleClick);
   return true;
 
 error:

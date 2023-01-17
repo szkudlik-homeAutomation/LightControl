@@ -14,6 +14,8 @@ using namespace ace_crc::crc16ccitt_nibble;
 #include "IncomingFrameHandler.h"
 
 #include "WorkerProcess.h"
+#include "OutgoingMessage.h"
+#include "ResponseHandler.h"
 #include "tOutputProcess_lightControl.h"
 
 
@@ -111,7 +113,7 @@ void IncomingFrameHandler::onFrame(void *pData, uint8_t MessageType, uint8_t Sen
 
 void IncomingFrameHandler::HandleMsgOverviewStateRequest(uint8_t SenderID)
 {
-   Worker.SendMsgOverviewStateResponse(SenderID,OutputProcess.GetOutputStateMap(),OutputProcess.GetOutputTimersStateMap());
+   OutgoingMessage::SendMsgOverviewStateResponse(SenderID,OutputProcess.GetOutputStateMap(),OutputProcess.GetOutputTimersStateMap());
 }
 
 
@@ -129,7 +131,7 @@ void IncomingFrameHandler::HandleMsgOutputStateRequest(uint8_t SenderID, tMessag
       uint16_t DefTimer;
       EEPROM.get(EEPROM_DEFAULT_TIMER_VALUE_OFFSET+Message->OutputID*(sizeof(uint16_t)),DefTimer);
 
-      Worker.SendMsgOutputStateResponse(SenderID,Message->OutputID, OutputProcess.GetOutputState(Message->OutputID), OutputProcess.GetOutputTimer(Message->OutputID),DefTimer);
+      OutgoingMessage::SendMsgOutputStateResponse(SenderID,Message->OutputID, OutputProcess.GetOutputState(Message->OutputID), OutputProcess.GetOutputTimer(Message->OutputID),DefTimer);
   }
 }
 
@@ -262,7 +264,7 @@ void IncomingFrameHandler::HandleMsgEepromCrcRequest(uint8_t SenderID)
     crc = crc_update(crc, &Action, sizeof(Action));
   }
   crc = crc_finalize(crc);
-  Worker.SendMsgEepromCrcResponse(SenderID,NumOfActions,crc);
+  OutgoingMessage::SendMsgEepromCrcResponse(SenderID,NumOfActions,crc);
 }
 
 
@@ -276,7 +278,7 @@ void IncomingFrameHandler::HandleMsgEepromCrcResponse(uint8_t SenderID, tMessage
 
 void IncomingFrameHandler::HandleMsgVersionRequest(uint8_t SenderID)
 {
-   Worker.SendMsgVersionResponse(SenderID,FW_VERSION_MAJOR,FW_VERSION_MINOR,FW_VERSION_PATCH);
+   OutgoingMessage::SendMsgVersionResponse(SenderID,FW_VERSION_MAJOR,FW_VERSION_MINOR,FW_VERSION_PATCH);
 }
 
 
@@ -299,7 +301,7 @@ void IncomingFrameHandler::HandleMsgDefaultTimerRequest(uint8_t SenderID, tMessa
   if (Message->OutputID >= NUM_OF_OUTPUTS) return;
   uint16_t DefTimer;
   EEPROM.get(EEPROM_DEFAULT_TIMER_VALUE_OFFSET+Message->OutputID*(sizeof(uint16_t)),DefTimer);
-  Worker.SendMsgDefaultTimerResponse(SenderID,Message->OutputID,DefTimer);
+  OutgoingMessage::SendMsgDefaultTimerResponse(SenderID,Message->OutputID,DefTimer);
 }
 
 void IncomingFrameHandler::HandleMsgDefaultTimerResponse(uint8_t SenderID, tMessageTypeDefaultTimerResponse *Message)
