@@ -1,9 +1,9 @@
 #include "../global.h"
 
-#include "WorkerProcess.h"
 #include "OutgoingMessage.h"
 #include "Common_code/Network/telnetServer.h"
 #include <Commander.h>
+#include "NodeScanTask.h"
 
 #ifdef CONTROLLER
 

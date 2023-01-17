@@ -6,33 +6,6 @@
 #include "ResponseHandler.h"
 #include <ArduinoQueue.h>
 
-class WorkerTask
-{
-public:
-   WorkerTask() {}
-   virtual ~WorkerTask() {}
-
-   virtual bool Process(uint32_t * pPeriod) = 0;
-};
-
-
-class WorkerProcess: public Process, public ResponseHandler
-{
-  public:
-  WorkerProcess(Scheduler &manager) : Process(manager,LOW_PRIORITY,SERVICE_SECONDLY,RUNTIME_FOREVER), pCurrentWorkerTask(NULL) {}
-
-  void Enqueue(WorkerTask *pWorkerTask);
-
-protected:
-  virtual void service();
-private:
-
-  ArduinoQueue<WorkerTask *> mQueue;
-  WorkerTask *pCurrentWorkerTask;
-
-};
-
-extern WorkerProcess Worker;
 
 #ifdef CONTROLLER
 class NodeScanTask : public WorkerTask, public ResponseHandler

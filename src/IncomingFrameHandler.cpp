@@ -13,7 +13,7 @@ using namespace ace_crc::crc16ccitt_nibble;
 
 #include "IncomingFrameHandler.h"
 
-#include "WorkerProcess.h"
+#include "NodeScanTask.h"
 #include "OutgoingMessage.h"
 #include "ResponseHandler.h"
 #include "tOutputProcess_lightControl.h"
