@@ -4,7 +4,8 @@
 
 #include "lib/ArduinoProcessScheduler/src/ProcessScheduler.h"
 #include "ResponseHandler.h"
-#include <ArduinoQueue.h>
+#include "lib/ArduinoQueue/ArduinoQueue.h"
+#include "Common_code/WorkerProcess.h"
 
 
 #ifdef CONTROLLER

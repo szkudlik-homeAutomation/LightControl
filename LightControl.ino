@@ -6,12 +6,12 @@
 
 #include "src/Common_code/TLE8457_serial/TLE8457_serial_lib.h"
 #include "src/Common_code/WatchdogProcess.h"
-#include "src/WorkerProcess.h"
 #include "src/DigitalInputProcess.h"
 #include "src/tOutputProcess_lightControl.h"
 #include "src/IncomingFrameHandler.h"
 
 #ifdef CONTROLLER
+#include "src/Common_code/WorkerProcess.h"
 #include "src/servlets.h"
 #include "src/Common_code/Network/network.h"
 #include "src/Common_code/Network/httpServer.h"
@@ -25,9 +25,9 @@ Scheduler sched;
 IncomingFrameHandler IncomingFrameHandlerCallback;
 CommRecieverProcess CommReciever(sched,EEPROM.read(EEPROM_DEVICE_ID_OFFSET),&IncomingFrameHandlerCallback);
 CommSenderProcess CommSender(sched,EEPROM.read(EEPROM_DEVICE_ID_OFFSET),EEPROM.read(EEPROM_DEVICE_ID_OFFSET));
-WorkerProcess Worker(sched);
 
 #ifdef CONTROLLER
+WorkerProcess Worker(sched);
 tNetwork Network;
 tTcpServerProcess TcpServerProcess(sched,TCP_WATCHDOG_TIMEOUT);
 tHttpServer HttpServer;
@@ -76,7 +76,6 @@ void setup() {
 #endif
   CommSender.add();
   CommReciever.add();
-  Worker.add();
   WatchdogProcess.add(true);
 #ifdef DEBUG_SERIAL
   DEBUG_SERIAL.println("START internals");
@@ -85,6 +84,7 @@ void setup() {
 #ifdef CONTROLLER
   Network.init();
   TcpServerProcess.add(true);
+  Worker.add();
 #ifdef DEBUG_SERIAL
   DEBUG_SERIAL.println("START Tcp ");
 #endif
