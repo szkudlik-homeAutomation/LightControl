@@ -18,8 +18,8 @@
 #include "src/LightWebControl.h"
 #endif
 
-// restart if no connection for 5 minutes
-#define TCP_WATCHDOG_TIMEOUT 300 
+// restart if no connection for 10 minutes
+#define TCP_WATCHDOG_TIMEOUT 600 
 
 Scheduler sched;
 IncomingFrameHandler IncomingFrameHandlerCallback;
