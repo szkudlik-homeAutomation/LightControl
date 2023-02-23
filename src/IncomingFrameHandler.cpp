@@ -5,17 +5,18 @@
  *      Author: szkud
  */
 
-#include <AceCRC.h>
+#include "../global.h"
+
+#include "lib/AceCRC/src/AceCRC.h"
 using namespace ace_crc::crc16ccitt_nibble;
 
 
 #include "IncomingFrameHandler.h"
-#include "common.h"
 
-#include "WorkerProcess.h"
-#include "OutputProcess.h"
-#include "version.h"
-#include "Eeprom.h"
+#include "NodeScanTask.h"
+#include "OutgoingMessage.h"
+#include "ResponseHandler.h"
+#include "tOutputProcess_lightControl.h"
 
 
 void IncomingFrameHandler::onFrame(void *pData, uint8_t MessageType, uint8_t SenderDevId)
@@ -112,14 +113,14 @@ void IncomingFrameHandler::onFrame(void *pData, uint8_t MessageType, uint8_t Sen
 
 void IncomingFrameHandler::HandleMsgOverviewStateRequest(uint8_t SenderID)
 {
-   Worker.SendMsgOverviewStateResponse(SenderID,OutputProcess.GetOutputStateMap(),OutputProcess.GetOutputTimersStateMap());
+   OutgoingMessage::SendMsgOverviewStateResponse(SenderID,OutputProcess.GetOutputStateMap(),OutputProcess.GetOutputTimersStateMap());
 }
 
 
 void IncomingFrameHandler::HandleMsgOverviewStateResponse(uint8_t SenderID, tMessageTypeOverviewStateResponse* Message)
 {
 #ifdef CONTROLLER
-      RespHandler.OverviewStateResponseHandler(SenderID,Message->PowerState,Message->TimerState);
+	ResponseHandler::OverviewStateResponseHandler(SenderID,Message->PowerState,Message->TimerState);
 #endif
 }
 
@@ -130,14 +131,14 @@ void IncomingFrameHandler::HandleMsgOutputStateRequest(uint8_t SenderID, tMessag
       uint16_t DefTimer;
       EEPROM.get(EEPROM_DEFAULT_TIMER_VALUE_OFFSET+Message->OutputID*(sizeof(uint16_t)),DefTimer);
 
-      Worker.SendMsgOutputStateResponse(SenderID,Message->OutputID, OutputProcess.GetOutputState(Message->OutputID), OutputProcess.GetOutputTimer(Message->OutputID),DefTimer);
+      OutgoingMessage::SendMsgOutputStateResponse(SenderID,Message->OutputID, OutputProcess.GetOutputState(Message->OutputID), OutputProcess.GetOutputTimer(Message->OutputID),DefTimer);
   }
 }
 
 void IncomingFrameHandler::HandleMsgOutputStateResponse(uint8_t SenderID, tMessageTypeOutputStateResponse* Message)
 {
 #ifdef CONTROLLER
-  RespHandler.OutputStateResponseHandler(SenderID,Message->OutputID,Message->PowerState,Message->TimerValue,Message->DefaultTimer);
+     ResponseHandler::OutputStateResponseHandler(SenderID,Message->OutputID,Message->PowerState,Message->TimerValue,Message->DefaultTimer);
 #endif
 }
 
@@ -161,18 +162,16 @@ void IncomingFrameHandler::HandleMsgSetOutput(uint8_t SenderID, tMessageTypeSetO
 void IncomingFrameHandler::HandleMsgButtonPress(uint8_t SenderID, tMessageTypeButtonPress *Message)
 {
 #ifdef CONTROLLER
-#ifdef DEBUG_3
-    RespHandler.print(F("Dev ID:"));
-    RespHandler.print(SenderID,HEX);
-    RespHandler.print(F(" ForcedSrc:"));
-    RespHandler.print(Message->ForceSrcId,HEX);
-    RespHandler.print(F(" short:"));
-    RespHandler.print(Message->ShortClick,BIN);
-    RespHandler.print(F(" long:"));
-    RespHandler.print(Message->LongClick,BIN);
-    RespHandler.print(F(" dbl:"));
-    RespHandler.println(Message->DoubleClick,BIN);
-#endif
+	DEBUG_PRINT_3("Dev ID:")
+	DEBUG_3(print(SenderID,HEX));
+	DEBUG_PRINT_3(" ForcedSrc:");
+	DEBUG_3(print(Message->ForceSrcId,HEX));
+    DEBUG_PRINT_3(" short:");
+    DEBUG_3(print(Message->ShortClick,BIN));
+    DEBUG_PRINT_3(" long:");
+    DEBUG_3(print(Message->LongClick,BIN));
+    DEBUG_PRINT_3(" dbl:");
+    DEBUG_3(println(Message->DoubleClick,BIN));
 #endif
 
   if (Message->ForceSrcId)
@@ -265,28 +264,28 @@ void IncomingFrameHandler::HandleMsgEepromCrcRequest(uint8_t SenderID)
     crc = crc_update(crc, &Action, sizeof(Action));
   }
   crc = crc_finalize(crc);
-  Worker.SendMsgEepromCrcResponse(SenderID,NumOfActions,crc);
+  OutgoingMessage::SendMsgEepromCrcResponse(SenderID,NumOfActions,crc);
 }
 
 
 void IncomingFrameHandler::HandleMsgEepromCrcResponse(uint8_t SenderID, tMessageTypeEepromCRCResponse* Message)
 {
 #ifdef CONTROLLER
-  RespHandler.EepromCRCResponseHandler(SenderID,Message->NumOfActions,Message->EepromCRC);
+  ResponseHandler::EepromCRCResponseHandler(SenderID,Message->NumOfActions,Message->EepromCRC);
 #endif
 }
 
 
 void IncomingFrameHandler::HandleMsgVersionRequest(uint8_t SenderID)
 {
-   Worker.SendMsgVersionResponse(SenderID,FW_VERSION_MAJOR,FW_VERSION_MINOR,FW_VERSION_PATCH);
+   OutgoingMessage::SendMsgVersionResponse(SenderID,FW_VERSION_MAJOR,FW_VERSION_MINOR,FW_VERSION_PATCH);
 }
 
 
 void IncomingFrameHandler::HandleMsgVersionResponse(uint8_t SenderID, tMessageTypeFwVesionResponse *Message)
 {
 #ifdef CONTROLLER
-  RespHandler.VersionResponseHandler(SenderID,Message->Major,Message->Minor,Message->Patch);
+	ResponseHandler::VersionResponseHandler(SenderID,Message->Major,Message->Minor,Message->Patch);
 #endif
 }
 
@@ -302,13 +301,13 @@ void IncomingFrameHandler::HandleMsgDefaultTimerRequest(uint8_t SenderID, tMessa
   if (Message->OutputID >= NUM_OF_OUTPUTS) return;
   uint16_t DefTimer;
   EEPROM.get(EEPROM_DEFAULT_TIMER_VALUE_OFFSET+Message->OutputID*(sizeof(uint16_t)),DefTimer);
-  Worker.SendMsgDefaultTimerResponse(SenderID,Message->OutputID,DefTimer);
+  OutgoingMessage::SendMsgDefaultTimerResponse(SenderID,Message->OutputID,DefTimer);
 }
 
 void IncomingFrameHandler::HandleMsgDefaultTimerResponse(uint8_t SenderID, tMessageTypeDefaultTimerResponse *Message)
 {
 #ifdef CONTROLLER
-  RespHandler.DefaultTimerResponseHandler(SenderID,Message->OutputID,Message->DefTimerValue);
+	ResponseHandler::DefaultTimerResponseHandler(SenderID,Message->OutputID,Message->DefTimerValue);
 #endif
 }
 

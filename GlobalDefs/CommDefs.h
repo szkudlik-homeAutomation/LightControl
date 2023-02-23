@@ -1,7 +1,6 @@
-#ifndef COMMDEFS
-#define COMMDEFS
+#pragma once
 
-#include "common.h"
+#include "../global.h"
 
 // a double click - two short clicks occur before max time
 #define DOUBLE_CLICK_TICKS_MAX   8   // 400ms 
@@ -168,6 +167,3 @@ typedef struct
   uint16_t DefTimerValue; // default timer. 0 means there's no timer (set forever)
 } tMessageTypeDefaultTimerResponse;
 
-
-
-#endif

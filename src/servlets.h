@@ -1,9 +1,11 @@
-#ifndef SERVLETS
-#define SERVLETS
+#pragma once
 
-#include "TCP_Communication_lib/httpServer.h"
+#include "../global.h"
+#ifdef CONTROLLER
+
+#include "Common_code/Network/httpServer.h"
 #include "http_binaries.h"
-#include "WorkerProcess.h"
+#include "OutgoingMessage.h"
 #include "ResponseHandler.h"
 
 class tjavaScriptServlet :  public tHttpServlet
@@ -81,6 +83,4 @@ protected:
   bool mRequestSent;
 };
 
-
-
-#endif
+#endif // CONTROLLER

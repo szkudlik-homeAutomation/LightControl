@@ -1,4 +1,7 @@
+#include "../global.h"
+
 #include "servlets.h"
+#ifdef CONTROLLER
 
 bool tjavaScriptServlet::ProcessAndResponse()
 {
@@ -25,17 +28,15 @@ bool tOutputSetServlet::ProcessAndResponse()
 	}
 
 	// execute
-	#ifdef DEBUG_3
-		RespHandler.print(F("==>HTTP set output, dev="));
-		RespHandler.print(Device,DEC);
-		RespHandler.print(F(" Out="));
-		RespHandler.print(Output,DEC);
-		RespHandler.print(F(" State="));
-		RespHandler.print(State,DEC);
-		RespHandler.print(F(" Timer="));
-		RespHandler.println(Timer,DEC);
-	#endif
-	Worker.SendMsgSetOutput(Device, Output, State, Timer);
+	DEBUG_PRINT_3("==>HTTP set output, dev=");
+	DEBUG_3(print(Device,DEC));
+	DEBUG_PRINT_3(" Out=");
+	DEBUG_3(print(Output,DEC));
+	DEBUG_PRINT_3(" State=");
+	DEBUG_3(print(State,DEC));
+	DEBUG_PRINT_3(" Timer=");
+	DEBUG_3(println(Timer,DEC));
+	OutgoingMessage::SendMsgSetOutput(Device, Output, State, Timer);
 	SendResponse200();
 
 return false;
@@ -59,15 +60,13 @@ bool tSetTimerServlet::ProcessAndResponse()
 
 	// execute
 
-	#ifdef DEBUG_3
-		RespHandler.print(F("==>HTTP set timer, dev="));
-		RespHandler.print(Device,DEC);
-		RespHandler.print(F(" Out="));
-		RespHandler.print(Output,DEC);
-		RespHandler.print(F(" Timer="));
-		RespHandler.println(Timer,DEC);
-	#endif
-	Worker.SendMsgSetDefaultTimer(Device, Output, Timer);
+	DEBUG_PRINT_3("==>HTTP set timer, dev=");
+	DEBUG_3(print(Device,DEC));
+	DEBUG_PRINT_3(" Out=");
+	DEBUG_3(print(Output,DEC));
+	DEBUG_PRINT_3(" Timer=");
+	DEBUG_3(println(Timer,DEC));
+	OutgoingMessage::SendMsgSetDefaultTimer(Device, Output, Timer);
 	SendResponse200();
 
 	return false;
@@ -96,18 +95,16 @@ bool tForceButtonPressServlet::ProcessAndResponse()
 
    // execute
 
-   #ifdef DEBUG_3
-   RespHandler.print(F("HTTP forced buttom press - forced SRC Dev ID:"));
-   RespHandler.print(Device,HEX);
-   RespHandler.print(F(" short:"));
-   RespHandler.print(ShortClickBitmap,BIN);
-   RespHandler.print(F(" long:"));
-   RespHandler.print(LongClickBitmap,BIN);
-   RespHandler.print(F(" dbl:"));
-   RespHandler.println(DoubleClickBitmap,BIN);
-   #endif
+   DEBUG_PRINT_3("HTTP forced buttom press - forced SRC Dev ID:");
+   DEBUG_3(print(Device,HEX));
+   DEBUG_PRINT_3(" short:");
+   DEBUG_3(print(ShortClickBitmap,BIN));
+   DEBUG_PRINT_3(" long:");
+   DEBUG_3(print(LongClickBitmap,BIN));
+   DEBUG_PRINT_3(" dbl:");
+   DEBUG_3(println(DoubleClickBitmap,BIN));
 
-   Worker.SendMsgButtonPress(DEVICE_ID_BROADCAST, Device, ShortClickBitmap, LongClickBitmap, DoubleClickBitmap);
+   OutgoingMessage::SendMsgButtonPress(DEVICE_ID_BROADCAST, Device, ShortClickBitmap, LongClickBitmap, DoubleClickBitmap);
 
    SendResponse200();
 
@@ -133,7 +130,7 @@ void tOutputStateServlet::SendOutputStateRequest(uint8_t DevID, uint8_t OutputID
   mExpectedDevID = DevID;
   mExpectedOutputID = OutputID;
 
-  Worker.SendMsgOutputStateRequest(DevID,OutputID);
+  OutgoingMessage::SendMsgOutputStateRequest(DevID,OutputID);
 }
 
 
@@ -191,12 +188,10 @@ bool tOutputStateServlet::ProcessAndResponse()
         return false;
       }
 
-      #ifdef DEBUG_3
-         RespHandler.print(F("==>HTTP output state get, Dev="));
-         RespHandler.print(Device,DEC);
-         RespHandler.print(F(" Out="));
-         RespHandler.println(Output,DEC);
-      #endif
+      DEBUG_PRINT_3("==>HTTP output state get, Dev=");
+      DEBUG_3(print(Device,DEC));
+      DEBUG_PRINT_3(" Out=");
+      DEBUG_3(println(Output,DEC));
       SendOutputStateRequest(Device,Output);
       mRequestSent = true;
       return true;   // wait for result
@@ -232,3 +227,4 @@ bool tOutputStateServlet::ProcessAndResponse()
 
    return false;
 }
+#endif

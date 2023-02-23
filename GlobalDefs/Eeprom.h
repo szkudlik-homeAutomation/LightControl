@@ -1,9 +1,6 @@
-#ifndef EEPROM_DEFS
-#define EEPROM_DEFS
+#pragma once
 
 #include <EEPROM.h>
-#include "common.h"
-#include "CommDefs.h"
 
 #define ACTION_TABLE_SIZE 139   // eeprom is full
 #define EEPROM_CANNARY 0xAD     // change if update changes EEPROM structure
@@ -63,5 +60,3 @@ typedef struct __tEeprom
 #define EEPROM_ACTION_TABLE_SIZE sizeof(tMessageTypeSetAction)
 
 void SetDefaultEEPromValues();
-
-#endif //EEPROM_DEFS
