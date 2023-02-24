@@ -7,7 +7,7 @@ public:
 
    virtual void setup()
    {
-     #ifdef CONTROLLER
+     #if CONFIG_CENTRAL_NODE
        Output[0].SetPin(28,0);
        Output[1].SetPin(29,0);
        Output[2].SetPin(30,0);

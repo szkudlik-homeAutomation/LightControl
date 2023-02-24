@@ -1,7 +1,7 @@
 #include "../global.h"
 
 #include "servlets.h"
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
 
 bool tjavaScriptServlet::ProcessAndResponse()
 {

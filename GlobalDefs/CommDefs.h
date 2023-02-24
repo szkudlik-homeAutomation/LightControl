@@ -55,7 +55,7 @@ typedef struct
 } tMessageTypeOutputStateResponse;
 
 /**
- * Sent by the controller - arbitrary set state of a single output
+ * Sent by the central node - arbitrary set state of a single output
  */
 #define MESSAGE_TYPE_SET_OUTPUT 0x05
 typedef struct 
@@ -66,7 +66,7 @@ typedef struct
 } tMessageTypeSetOutput;
 
 /**
- * Sent by the controller - arbitrary set state of a single output
+ * Sent by the central node - arbitrary set state of a single output
  * this is a broadcast frame
  */
 #define MESSAGE_BUTTON_PRESS 0x06
@@ -80,7 +80,7 @@ typedef struct
 
 /**
  * Set a reaction for a button pressed 
- * send by the controller to setup 
+ * send by the central node to setup
  */
 #define MESSAGE_TYPE_SET_ACTION 0x07
 
@@ -113,7 +113,7 @@ typedef struct
 
 
 /**
- * dest node must response with MESSAGE_TYPE_FW_VERSION_RESPONSE  to the controller
+ * dest node must response with MESSAGE_TYPE_FW_VERSION_RESPONSE  to the central node
  * no payload data
  */
 #define MESSAGE_TYPE_FW_VERSION_REQUEST 0x09
@@ -131,7 +131,7 @@ typedef struct
 
 /**
  * get a CRC of all eeprom
- * sent by the controller, the node must respond with MESSAGE_TYPE_EEPROM_CRC_RESPONSE
+ * sent by the central node, the node must respond with MESSAGE_TYPE_EEPROM_CRC_RESPONSE
  */
 #define MESSAGE_TYPE_EEPROM_CRC_REQUEST 0x0B
 #define MESSAGE_TYPE_EEPROM_CRC_RESPONSE 0x0C

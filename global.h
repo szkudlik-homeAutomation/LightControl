@@ -12,7 +12,6 @@
 // #define CONFIG_TLE8457_serial_lib
 
 #ifdef __AVR_ATmega2560__
-#define CONTROLLER
 #define CONFIG_CENTRAL_NODE 1
 #elif __AVR_ATmega328P__
 #else
@@ -34,12 +33,12 @@
 #endif CONFIG_CENTRAL_NODE
 
 //todo: move
-#define CONTROLLER_DEVICE_ID 1
+#define CENTRAL_NODE_DEVICE_ID 1
 #define DEVICE_ID_BROADCAST 0xFF
 
 #include "GlobalDefs/CommDefs.h"
 
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
 #define CONFIG_NETWORK 1
 #define CONFIG_HTTP_SERVER 1
 #define CONFIG_LOGGER 1

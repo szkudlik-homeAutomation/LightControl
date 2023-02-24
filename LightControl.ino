@@ -10,7 +10,7 @@
 #include "src/tOutputProcess_lightControl.h"
 #include "src/IncomingFrameHandler.h"
 
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
 #include "src/Common_code/WorkerProcess.h"
 #include "src/servlets.h"
 #include "src/Common_code/sensors/tSensor.h"
@@ -31,7 +31,7 @@ IncomingFrameHandler IncomingFrameHandlerCallback;
 CommRecieverProcess CommReciever(sched,EEPROM.read(EEPROM_DEVICE_ID_OFFSET),&IncomingFrameHandlerCallback);
 CommSenderProcess CommSender(sched,EEPROM.read(EEPROM_DEVICE_ID_OFFSET),EEPROM.read(EEPROM_DEVICE_ID_OFFSET));
 
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
 WorkerProcess Worker(sched);
 tNetwork Network;
 tTcpServerProcess TcpServerProcess(sched,TCP_WATCHDOG_TIMEOUT);
@@ -90,7 +90,7 @@ void setup() {
   DEBUG_SERIAL.println("START internals");
 #endif
 
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
   Network.init();
   TcpServerProcess.add(true);
   Worker.add();

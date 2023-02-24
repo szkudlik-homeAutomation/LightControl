@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../global.h"
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
 
 #include "Common_code/Network/httpServer.h"
 #include "http_binaries.h"
@@ -83,4 +83,4 @@ protected:
   bool mRequestSent;
 };
 
-#endif // CONTROLLER
+#endif // CENTRAL_NODE

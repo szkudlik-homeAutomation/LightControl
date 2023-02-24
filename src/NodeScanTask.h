@@ -8,7 +8,7 @@
 #include "Common_code/WorkerProcess.h"
 
 
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
 class NodeScanTask : public WorkerTask, public ResponseHandler
 {
 public:

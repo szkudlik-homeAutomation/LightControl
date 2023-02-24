@@ -8,7 +8,7 @@
 typedef struct __tEeprom
 {
   uint8_t DeviceID;  // MUST be at the 1st position
-#ifndef CONTROLLER
+#if !CONFIG_CENTRAL_NODE
   uint16_t InputPolarity;      // 0 means negative trigger, 1 positive trigger
   uint8_t  OutputPolarity;     // 0 means active low, 1 active high
 #endif
@@ -16,7 +16,7 @@ typedef struct __tEeprom
   uint8_t Reserved1;       //!!! depreciated, to be removed
   uint8_t Reserved2;     //!!! depreciated, to be removed
   uint8_t Reserved3;  //!!! depreciated, to be removed (left for bck compatibility)
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
   uint8_t IP[4];
   uint8_t IPMask[4];
   uint8_t Gateway[4];
@@ -30,7 +30,7 @@ typedef struct __tEeprom
 
 #define EEPROM_DEVICE_ID_OFFSET offsetof(__tEeprom,DeviceID)
 
-#ifndef CONTROLLER
+#if !CONFIG_CENTRAL_NODE
 #define EEPROM_INPUT_POLARITY_OFFSET offsetof(__tEeprom,InputPolarity)
 #define EEPROM_OUTPUT_POLARITY_OFFSET offsetof(__tEeprom,OutputPolarity)
 #else
@@ -40,7 +40,7 @@ typedef struct __tEeprom
 
 #define EEPROM_CANNARY_OFFSET offsetof(__tEeprom,CANNARY)
 
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
 #define EEPROM_IP offsetof(__tEeprom,IP[0])
 #define EEPROM_IPMASK offsetof(__tEeprom,IPMask[0])
 #define EEPROM_GATEWAY offsetof(__tEeprom,Gateway[0])

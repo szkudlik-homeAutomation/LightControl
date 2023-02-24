@@ -8,7 +8,7 @@
  * allowed number of frames in output queue
  */
 
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
   #define OUTPUT_QUEUE_SIZE 140
 
   #define COMM_SERIAL Serial1

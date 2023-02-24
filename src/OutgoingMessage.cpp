@@ -12,7 +12,7 @@
 // OVERVIEW STATE HANDSHAKE
 bool OutgoingMessage::SendMsgOverviewStateRequest(uint8_t RecieverID)
 {
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_OVERVIEW_STATE_REQUEST");
   CommSender.Enqueue(RecieverID, MESSAGE_TYPE_OVERVIEW_STATE_REQUEST, 0, NULL);
 #endif
@@ -32,7 +32,7 @@ bool OutgoingMessage::SendMsgOverviewStateResponse(uint8_t RecieverID, uint8_t  
 // GET OUTPUT STATE HANDSHAKE
 bool OutgoingMessage::SendMsgOutputStateRequest(uint8_t RecieverID, uint8_t  OutputID)
 {
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
   tMessageTypeOutputStateRequest Msg;
   Msg.OutputID = OutputID;
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_OUTPUT_STATE_REQUEST");
@@ -57,7 +57,7 @@ bool OutgoingMessage::SendMsgOutputStateResponse(uint8_t RecieverID, uint8_t  Ou
 // SET OUTPUT
 bool OutgoingMessage::SendMsgSetOutput(uint8_t RecieverID, uint8_t  OutId, uint8_t  State, uint16_t Timer)
 {
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
   tMessageTypeSetOutput Message;
   Message.OutId = OutId;
   Message.State = State;
@@ -84,7 +84,7 @@ bool OutgoingMessage::SendMsgButtonPress(uint8_t RecieverID, uint8_t ForceSrcId,
 
 bool OutgoingMessage::SendMsgClearAllActions(uint8_t RecieverID)
 {
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_CLEAR_ACTIONS");
   CommSender.Enqueue(RecieverID,MESSAGE_TYPE_CLEAR_ACTIONS,0,NULL);
 #endif
@@ -93,7 +93,7 @@ bool OutgoingMessage::SendMsgClearAllActions(uint8_t RecieverID)
 
 bool OutgoingMessage::SendMsgAddAction(uint8_t RecieverID, uint8_t OutId, uint8_t SenderDevID, uint8_t ButtonId, uint8_t TriggerType, uint8_t ActionType, uint16_t Timer, uint8_t  OutputsMask, uint8_t  OutputsStates)
 {
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
   tMessageTypeSetAction Message;
   Message.OutId = OutId;
   Message.SenderDevID = SenderDevID;
@@ -113,7 +113,7 @@ bool OutgoingMessage::SendMsgAddAction(uint8_t RecieverID, uint8_t OutId, uint8_
 // EEPROM CRC Handshake
 bool OutgoingMessage::SendMsgEepromCrcRequest(uint8_t RecieverID)
 {
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_EEPROM_CRC_REQUEST");
   CommSender.Enqueue(RecieverID,MESSAGE_TYPE_EEPROM_CRC_REQUEST,0,NULL);
 #endif
@@ -134,7 +134,7 @@ bool OutgoingMessage::SendMsgEepromCrcResponse(uint8_t RecieverID,  uint8_t NumO
 // VERSION HANDSHAKE
 bool OutgoingMessage::SendMsgVersionRequest(uint8_t RecieverID)
 {
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_FW_VERSION_REQUEST");
   CommSender.Enqueue(RecieverID,MESSAGE_TYPE_FW_VERSION_REQUEST,0,NULL);
 #endif

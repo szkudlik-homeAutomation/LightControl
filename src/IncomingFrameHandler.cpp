@@ -119,7 +119,7 @@ void IncomingFrameHandler::HandleMsgOverviewStateRequest(uint8_t SenderID)
 
 void IncomingFrameHandler::HandleMsgOverviewStateResponse(uint8_t SenderID, tMessageTypeOverviewStateResponse* Message)
 {
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
 	ResponseHandler::OverviewStateResponseHandler(SenderID,Message->PowerState,Message->TimerState);
 #endif
 }
@@ -137,7 +137,7 @@ void IncomingFrameHandler::HandleMsgOutputStateRequest(uint8_t SenderID, tMessag
 
 void IncomingFrameHandler::HandleMsgOutputStateResponse(uint8_t SenderID, tMessageTypeOutputStateResponse* Message)
 {
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
      ResponseHandler::OutputStateResponseHandler(SenderID,Message->OutputID,Message->PowerState,Message->TimerValue,Message->DefaultTimer);
 #endif
 }
@@ -161,7 +161,7 @@ void IncomingFrameHandler::HandleMsgSetOutput(uint8_t SenderID, tMessageTypeSetO
 
 void IncomingFrameHandler::HandleMsgButtonPress(uint8_t SenderID, tMessageTypeButtonPress *Message)
 {
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
 	DEBUG_PRINT_3("Dev ID:")
 	DEBUG_3(print(SenderID,HEX));
 	DEBUG_PRINT_3(" ForcedSrc:");
@@ -270,7 +270,7 @@ void IncomingFrameHandler::HandleMsgEepromCrcRequest(uint8_t SenderID)
 
 void IncomingFrameHandler::HandleMsgEepromCrcResponse(uint8_t SenderID, tMessageTypeEepromCRCResponse* Message)
 {
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
   ResponseHandler::EepromCRCResponseHandler(SenderID,Message->NumOfActions,Message->EepromCRC);
 #endif
 }
@@ -284,7 +284,7 @@ void IncomingFrameHandler::HandleMsgVersionRequest(uint8_t SenderID)
 
 void IncomingFrameHandler::HandleMsgVersionResponse(uint8_t SenderID, tMessageTypeFwVesionResponse *Message)
 {
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
 	ResponseHandler::VersionResponseHandler(SenderID,Message->Major,Message->Minor,Message->Patch);
 #endif
 }
@@ -306,7 +306,7 @@ void IncomingFrameHandler::HandleMsgDefaultTimerRequest(uint8_t SenderID, tMessa
 
 void IncomingFrameHandler::HandleMsgDefaultTimerResponse(uint8_t SenderID, tMessageTypeDefaultTimerResponse *Message)
 {
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
 	ResponseHandler::DefaultTimerResponseHandler(SenderID,Message->OutputID,Message->DefTimerValue);
 #endif
 }

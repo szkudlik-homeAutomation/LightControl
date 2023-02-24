@@ -5,7 +5,7 @@
 #include "lib/Commander/src/Commander.h"
 #include "NodeScanTask.h"
 
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
 
 
 bool helloHandler(Commander &Cmdr);
@@ -324,4 +324,4 @@ error:
   Cmdr.println(F("Usage: ButtonPress forcedSrcID ShortClick [LongClick DoubleClick] (bitmaps)"));
   return false;
 }
-#endif //CONTROLLER
+#endif //CENTRAL_NODE

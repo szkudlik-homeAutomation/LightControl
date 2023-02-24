@@ -6,7 +6,7 @@
 #include "Common_code/TLE8457_serial/TLE8457_serial_lib.h"
 #include "NodeScanTask.h"
 
-#ifdef CONTROLLER
+#if CONFIG_CENTRAL_NODE
 bool NodeScanTask::Process(uint32_t * pPeriod)
 {
    *pPeriod = REQUEST_SENDING_PERIOD;
@@ -37,5 +37,5 @@ void NodeScanTask::vVersionResponseHandler(uint8_t DevID, uint8_t Major, uint8_t
    mActiveNodesMap |= 1 << (DevID-1);
 }
 
-#endif //CONTROLLER
+#endif //CENTRAL_NODE
 
