@@ -13,6 +13,11 @@
 #ifdef CONTROLLER
 #include "src/Common_code/WorkerProcess.h"
 #include "src/servlets.h"
+#include "src/Common_code/sensors/tSensor.h"
+#include "src/Common_code/sensors/tSensorHub.h"
+#include "src/Common_code/sensors/tSystemStatusSensor.h"
+#include "src/Common_code/Network/servlets/servlets.h"
+#include "src/Common_code/Network/servlets/tSensorStateServlet.h"
 #include "src/Common_code/Network/network.h"
 #include "src/Common_code/Network/httpServer.h"
 #include "src/LightWebControl.h"
@@ -31,6 +36,8 @@ WorkerProcess Worker(sched);
 tNetwork Network;
 tTcpServerProcess TcpServerProcess(sched,TCP_WATCHDOG_TIMEOUT);
 tHttpServer HttpServer;
+tSensorHub SensorHub;
+tSensorProcess SensorProcess(sched); 
 
 tHttpServlet * ServletFactory(String *pRequestBuffer)
 {
@@ -38,6 +45,7 @@ tHttpServlet * ServletFactory(String *pRequestBuffer)
    if (pRequestBuffer->startsWith("/outputSet")) return new tOutputSetServlet();
    if (pRequestBuffer->startsWith("/timerset")) return new tSetTimerServlet();
    if (pRequestBuffer->startsWith("/button")) return new tForceButtonPressServlet();
+   if (pRequestBuffer->startsWith("/sensorState")) return new tSensorStateServlet();
 
    if (pRequestBuffer->startsWith("/1.js")) return new tjavaScriptServlet();
    if (pRequestBuffer->startsWith("/garden")) return new tGardenLightsServlet();
@@ -60,6 +68,7 @@ void COMM_SERIAL_EVENT() {
 
 
 
+#define SENSOR_ID_SYSTEM_STATUS 1
 
 void setup() {
   if (EEPROM.read(EEPROM_CANNARY_OFFSET) != EEPROM_CANNARY)
@@ -85,6 +94,12 @@ void setup() {
   Network.init();
   TcpServerProcess.add(true);
   Worker.add();
+  
+  SensorProcess.add(true);
+  tSensor *pSensor;
+  pSensor = new tSystemStatusSensor;
+  pSensor->Register(SENSOR_ID_SYSTEM_STATUS,"SystemStatus",NULL,10); //1 sec
+  
 #ifdef DEBUG_SERIAL
   DEBUG_SERIAL.println("START Tcp ");
 #endif
