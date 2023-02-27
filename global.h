@@ -36,6 +36,8 @@
 #define CENTRAL_NODE_DEVICE_ID 1
 #define DEVICE_ID_BROADCAST 0xFF
 
+#define CONFIG_TLE8457_COMM_LIB 1
+
 #include "GlobalDefs/CommDefs.h"
 
 #if CONFIG_CENTRAL_NODE
