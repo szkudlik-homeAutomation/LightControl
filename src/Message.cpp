@@ -64,3 +64,39 @@ static void Message::OutputStateResponseHandler(struct tOutputStateResponse* pOu
     tMessageReciever::Dispatch(OutputStateResponseType,pOutputStateResponse);
 }
 
+
+void Message::OverviewStateResponseHandler(uint8_t SenderID, uint8_t PowerState, uint8_t  TimerState)
+{
+	LOG_PRINT("PowerStateBitmap for device ");
+	LOG(print(SenderID,HEX));
+	LOG_PRINT("=");
+	LOG(print(PowerState,BIN));
+	LOG_PRINT(" with timers map=");
+	LOG(println(TimerState,BIN));
+}
+
+void Message::EepromCRCResponseHandler(uint8_t SenderID, uint8_t NumOfActions, uint16_t EepromCRC)
+{
+	LOG_PRINT("Eeprom CRC for device ");
+	LOG(print(SenderID,HEX));
+	LOG_PRINT(" num of actions=");
+	LOG(print(NumOfActions,DEC));
+	LOG_PRINT(" CRC=");
+	LOG(println(EepromCRC,DEC));
+}
+
+void Message::NodeScanResponse(uint32_t ActiveNodesMap)
+{
+	LOG_PRINT("Active node map: ");
+	LOG(println(ActiveNodesMap,BIN));
+}
+
+void Message::DefaultTimerResponseHandler(uint8_t SenderID,uint8_t OutputID,uint16_t DefTimerValue)
+{
+	LOG_PRINT("Default timer for device ");
+	LOG(print(SenderID,HEX));
+	LOG_PRINT(" outId ");
+	LOG(print(OutputID,DEC));
+	LOG_PRINT("=");
+	LOG(println(DefTimerValue,DEC));
+}

@@ -24,7 +24,7 @@ bool NodeScanTask::Process(uint32_t * pPeriod)
    else
    {
        // send result
-       ResponseHandler::NodeScanResponse(mActiveNodesMap);
+       Message::NodeScanResponse(mActiveNodesMap);
        return false;
    }
 

@@ -4,7 +4,6 @@
 #if CONFIG_CENTRAL_NODE
 
 #include "lib/ArduinoProcessScheduler/src/ProcessScheduler.h"
-#include "ResponseHandler.h"
 #include "lib/ArduinoQueue/ArduinoQueue.h"
 #include "Common_code/WorkerProcess.h"
 #include "Common_code/tMessageReciever.h"

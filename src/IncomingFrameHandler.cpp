@@ -15,7 +15,7 @@ using namespace ace_crc::crc16ccitt_nibble;
 
 #include "NodeScanTask.h"
 #include "OutgoingMessage.h"
-#include "ResponseHandler.h"
+#include "Message.h"
 #include "tOutputProcess_lightControl.h"
 
 
@@ -120,7 +120,7 @@ void IncomingFrameHandler::HandleMsgOverviewStateRequest(uint8_t SenderID)
 void IncomingFrameHandler::HandleMsgOverviewStateResponse(uint8_t SenderID, tMessageTypeOverviewStateResponse* Message)
 {
 #if CONFIG_CENTRAL_NODE
-	ResponseHandler::OverviewStateResponseHandler(SenderID,Message->PowerState,Message->TimerState);
+	Message::OverviewStateResponseHandler(SenderID,Message->PowerState,Message->TimerState);
 #endif
 }
 
@@ -271,7 +271,7 @@ void IncomingFrameHandler::HandleMsgEepromCrcRequest(uint8_t SenderID)
 void IncomingFrameHandler::HandleMsgEepromCrcResponse(uint8_t SenderID, tMessageTypeEepromCRCResponse* Message)
 {
 #if CONFIG_CENTRAL_NODE
-  ResponseHandler::EepromCRCResponseHandler(SenderID,Message->NumOfActions,Message->EepromCRC);
+  Message::EepromCRCResponseHandler(SenderID,Message->NumOfActions,Message->EepromCRC);
 #endif
 }
 
@@ -307,7 +307,7 @@ void IncomingFrameHandler::HandleMsgDefaultTimerRequest(uint8_t SenderID, tMessa
 void IncomingFrameHandler::HandleMsgDefaultTimerResponse(uint8_t SenderID, tMessageTypeDefaultTimerResponse *Message)
 {
 #if CONFIG_CENTRAL_NODE
-	ResponseHandler::DefaultTimerResponseHandler(SenderID,Message->OutputID,Message->DefTimerValue);
+	Message::DefaultTimerResponseHandler(SenderID,Message->OutputID,Message->DefTimerValue);
 #endif
 }
 
