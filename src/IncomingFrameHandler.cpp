@@ -285,7 +285,7 @@ void IncomingFrameHandler::HandleMsgVersionRequest(uint8_t SenderID)
 void IncomingFrameHandler::HandleMsgVersionResponse(uint8_t SenderID, tMessageTypeFwVesionResponse *Message)
 {
 #if CONFIG_CENTRAL_NODE
-	ResponseHandler::VersionResponseHandler(SenderID,Message->Major,Message->Minor,Message->Patch);
+	Message::VersionResponseHandler(SenderID,Message->Major,Message->Minor,Message->Patch);
 #endif
 }
 

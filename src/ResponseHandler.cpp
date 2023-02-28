@@ -2,6 +2,15 @@
 
 #include "ResponseHandler.h"
 #include "Common_code/Logger.h"
+#include "Common_code/tMessageReciever.h"
+
+
+
+
+
+
+
+
 
 ResponseHandler* ResponseHandler::pFirst = NULL;
 
@@ -68,20 +77,6 @@ void ResponseHandler::EepromCRCResponseHandler(uint8_t SenderID, uint8_t NumOfAc
 	LOG_PRINT(" CRC=");
 	LOG(println(EepromCRC,DEC));
 	for (ResponseHandler * i = pFirst; i != NULL ; i = i->pNext)  i->vEepromCRCResponseHandler(SenderID,NumOfActions,EepromCRC);
-}
-
-void ResponseHandler::VersionResponseHandler(uint8_t SenderID, uint8_t Major, uint8_t Minor, uint8_t Patch)
-{
-	LOG_PRINT("FW Version for device ");
-	LOG(print(SenderID,HEX));
-	LOG_PRINT("=");
-	LOG(print(Major,DEC));
-	LOG_PRINT(".");
-	LOG(print(Minor,DEC));
-	LOG_PRINT(".");
-	LOG(println(Patch,DEC));
-
-	for (ResponseHandler * i = pFirst; i != NULL ; i = i->pNext) i->vVersionResponseHandler(SenderID,Major,Minor,Patch);
 }
 
 void ResponseHandler::NodeScanResponse(uint32_t ActiveNodesMap)

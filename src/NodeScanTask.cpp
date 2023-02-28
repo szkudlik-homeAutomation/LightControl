@@ -2,7 +2,6 @@
 
 #include "OutgoingMessage.h"
 #include "tOutputProcess_lightControl.h"
-#include "ResponseHandler.h"
 #include "Common_code/TLE8457_serial/TLE8457_serial_lib.h"
 #include "NodeScanTask.h"
 
@@ -32,9 +31,13 @@ bool NodeScanTask::Process(uint32_t * pPeriod)
    return true;
 }
 
-void NodeScanTask::vVersionResponseHandler(uint8_t DevID, uint8_t Major, uint8_t Minor, uint8_t Patch)
+void NodeScanTask::onMessage(uint8_t type, void *data)
 {
-   mActiveNodesMap |= 1 << (DevID-1);
+	if (type != Message::VersionResponseType)
+		return;
+
+	struct Message::tVersionResponse *pVersionResponse = (struct Message::tVersionResponse *)data;
+	mActiveNodesMap |= 1 << (pVersionResponse->SenderID - 1);
 }
 
 #endif //CENTRAL_NODE
