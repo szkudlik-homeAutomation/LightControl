@@ -138,7 +138,7 @@ void IncomingFrameHandler::HandleMsgOutputStateRequest(uint8_t SenderID, tMessag
 void IncomingFrameHandler::HandleMsgOutputStateResponse(uint8_t SenderID, tMessageTypeOutputStateResponse* Message)
 {
 #if CONFIG_CENTRAL_NODE
-     ResponseHandler::OutputStateResponseHandler(SenderID,Message->OutputID,Message->PowerState,Message->TimerValue,Message->DefaultTimer);
+     Message::OutputStateResponseHandler(SenderID,Message->OutputID,Message->PowerState,Message->TimerValue,Message->DefaultTimer);
 #endif
 }
 

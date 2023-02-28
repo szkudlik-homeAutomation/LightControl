@@ -111,17 +111,19 @@ bool tForceButtonPressServlet::ProcessAndResponse()
    return false;
 }
 
+void tOutputStateServlet::onMessage(uint8_t type, void *data)
+{
+	if (type != Message::OutputStateResponseType)
+		return;
 
+	struct Message::tOutputStateResponse *OutputStateResponse = (struct Message::tOutputStateResponse *)data;
 
-
-void tOutputStateServlet::vOutputStateResponseHandler(uint8_t DevID, uint8_t OutputID, uint8_t PowerState, uint16_t  TimerValue, uint16_t DefaultTimer)
-  {
-    if (DevID != mExpectedDevID) return;
-    if (OutputID != mExpectedOutputID) return;
-    mPowerState = PowerState;
-    mTimerValue = TimerValue;
-    mDefaultTimer = DefaultTimer;
-  }
+    if (OutputStateResponse->SenderID != mExpectedDevID) return;
+    if (OutputStateResponse->OutputID != mExpectedOutputID) return;
+    mPowerState = OutputStateResponse->PowerState;
+    mTimerValue = OutputStateResponse->TimerValue;
+    mDefaultTimer = OutputStateResponse->DefaultTimer;
+}
 
 void tOutputStateServlet::SendOutputStateRequest(uint8_t DevID, uint8_t OutputID)
 {

@@ -52,22 +52,6 @@ void ResponseHandler::OverviewStateResponseHandler(uint8_t SenderID, uint8_t Pow
 	for (ResponseHandler * i = pFirst; i != NULL ; i = i->pNext)  i->vOverviewStateResponseHandler(SenderID,PowerState,TimerState);
 }
 
-void ResponseHandler::OutputStateResponseHandler(uint8_t SenderID, uint8_t OutputID, uint8_t PowerState, uint16_t  TimerValue, uint16_t DefaultTimer)
-{
-	LOG_PRINT("PowerState for device ");
-	LOG(print(SenderID,HEX));
-	LOG_PRINT(" output ID ");
-	LOG(print(OutputID,DEC));
-	LOG_PRINT("=");
-	LOG(print(PowerState,DEC));
-	LOG_PRINT(" with timers = ");
-	LOG(print(TimerValue,DEC));
-    LOG_PRINT(" default timer = ");
-    LOG(println(DefaultTimer,DEC));
-
-	for (ResponseHandler * i = pFirst; i != NULL ; i = i->pNext)  i->vOutputStateResponseHandler(SenderID,OutputID,PowerState,TimerValue,DefaultTimer);
-}
-
 void ResponseHandler::EepromCRCResponseHandler(uint8_t SenderID, uint8_t NumOfActions, uint16_t EepromCRC)
 {
 	LOG_PRINT("Eeprom CRC for device ");

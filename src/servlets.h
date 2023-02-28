@@ -6,7 +6,9 @@
 #include "Common_code/Network/httpServer.h"
 #include "http_binaries.h"
 #include "OutgoingMessage.h"
-#include "ResponseHandler.h"
+#include "Common_code/tMessageReciever.h"
+#include "Message.h"
+
 
 class tjavaScriptServlet :  public tHttpServlet
 {
@@ -54,13 +56,16 @@ public:
   virtual bool ProcessAndResponse();
 };
 
-class tOutputStateServlet : public tHttpServlet, public ResponseHandler
+class tOutputStateServlet : public tHttpServlet, public tMessageReciever
 {
   public:
-   tOutputStateServlet() :  tHttpServlet(),ResponseHandler(), mRequestSent(false) {};
-  virtual ~tOutputStateServlet() {}
+  tOutputStateServlet() :  tHttpServlet(), mRequestSent(false)
+  {
+  	 RegisterMessageType(Message::OutputStateResponseType);
+  }
 
-  virtual void vOutputStateResponseHandler(uint8_t DevID, uint8_t OutputID, uint8_t PowerState, uint16_t  TimerValue, uint16_t DefaultTimer);
+  virtual ~tOutputStateServlet() {}
+  virtual void onMessage(uint8_t type, void *data);
   virtual bool ProcessAndResponse();
 
 protected:
