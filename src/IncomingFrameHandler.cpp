@@ -162,7 +162,7 @@ void IncomingFrameHandler::HandleMsgSetOutput(uint8_t SenderID, tMessageTypeSetO
 void IncomingFrameHandler::HandleMsgButtonPress(uint8_t SenderID, tMessageTypeButtonPress *Message)
 {
 #if CONFIG_CENTRAL_NODE
-	DEBUG_PRINT_3("Dev ID:")
+	DEBUG_PRINT_3("Dev ID:");
 	DEBUG_3(print(SenderID,HEX));
 	DEBUG_PRINT_3(" ForcedSrc:");
 	DEBUG_3(print(Message->ForceSrcId,HEX));
