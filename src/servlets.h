@@ -61,11 +61,11 @@ class tOutputStateServlet : public tHttpServlet, public tMessageReciever
   public:
   tOutputStateServlet() :  tHttpServlet(), mRequestSent(false)
   {
-  	 RegisterMessageType(Message::OutputStateResponseType);
+	  RegisterMessageType(tMessageReciever::MessageType_frameRecieved);
   }
 
   virtual ~tOutputStateServlet() {}
-  virtual void onMessage(uint8_t type, void *data);
+  virtual void onMessage(uint8_t type, uint16_t data, void *pData);
   virtual bool ProcessAndResponse();
 
 protected:

@@ -31,12 +31,12 @@ bool NodeScanTask::Process(uint32_t * pPeriod)
    return true;
 }
 
-void NodeScanTask::onMessage(uint8_t type, void *data)
+void NodeScanTask::onMessage(uint8_t type, uint16_t data, void *pData)
 {
-	if (type != Message::VersionResponseType)
+	if (data != Message::frameRecieved_VersionResponse)
 		return;
 
-	struct Message::tVersionResponse *pVersionResponse = (struct Message::tVersionResponse *)data;
+	struct Message::tVersionResponse *pVersionResponse = (struct Message::tVersionResponse *)pData;
 	mActiveNodesMap |= 1 << (pVersionResponse->SenderID - 1);
 }
 

@@ -111,12 +111,12 @@ bool tForceButtonPressServlet::ProcessAndResponse()
    return false;
 }
 
-void tOutputStateServlet::onMessage(uint8_t type, void *data)
+void tOutputStateServlet::onMessage(uint8_t type, uint16_t data, void *pData)
 {
-	if (type != Message::OutputStateResponseType)
+	if (data != Message::OutputStateResponseType)
 		return;
 
-	struct Message::tOutputStateResponse *OutputStateResponse = (struct Message::tOutputStateResponse *)data;
+	struct Message::tOutputStateResponse *OutputStateResponse = (struct Message::tOutputStateResponse *)pData;
 
     if (OutputStateResponse->SenderID != mExpectedDevID) return;
     if (OutputStateResponse->OutputID != mExpectedOutputID) return;
