@@ -7,7 +7,7 @@
 #include "http_binaries.h"
 #include "OutgoingMessage.h"
 #include "Common_code/tMessageReciever.h"
-#include "Message.h"
+#include "LightControlMessages.h"
 
 
 class tjavaScriptServlet :  public tHttpServlet

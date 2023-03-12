@@ -113,10 +113,10 @@ bool tForceButtonPressServlet::ProcessAndResponse()
 
 void tOutputStateServlet::onMessage(uint8_t type, uint16_t data, void *pData)
 {
-	if (data != Message::OutputStateResponseType)
+	if (data != LightControlMessages::frameRecieved_OutputStateResponse)
 		return;
 
-	struct Message::tOutputStateResponse *OutputStateResponse = (struct Message::tOutputStateResponse *)pData;
+	struct LightControlMessages::tOutputStateResponse *OutputStateResponse = (struct LightControlMessages::tOutputStateResponse *)pData;
 
     if (OutputStateResponse->SenderID != mExpectedDevID) return;
     if (OutputStateResponse->OutputID != mExpectedOutputID) return;

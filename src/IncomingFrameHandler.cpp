@@ -15,7 +15,7 @@ using namespace ace_crc::crc16ccitt_nibble;
 
 #include "NodeScanTask.h"
 #include "OutgoingMessage.h"
-#include "Message.h"
+#include "LightControlMessages.h"
 #include "tOutputProcess_lightControl.h"
 
 
@@ -120,7 +120,7 @@ void IncomingFrameHandler::HandleMsgOverviewStateRequest(uint8_t SenderID)
 void IncomingFrameHandler::HandleMsgOverviewStateResponse(uint8_t SenderID, tMessageTypeOverviewStateResponse* Message)
 {
 #if CONFIG_CENTRAL_NODE
-	Message::OverviewStateResponseHandler(SenderID,Message->PowerState,Message->TimerState);
+	LightControlMessages::OverviewStateResponseHandler(SenderID,Message->PowerState,Message->TimerState);
 #endif
 }
 
@@ -138,7 +138,7 @@ void IncomingFrameHandler::HandleMsgOutputStateRequest(uint8_t SenderID, tMessag
 void IncomingFrameHandler::HandleMsgOutputStateResponse(uint8_t SenderID, tMessageTypeOutputStateResponse* Message)
 {
 #if CONFIG_CENTRAL_NODE
-     Message::OutputStateResponseHandler(SenderID,Message->OutputID,Message->PowerState,Message->TimerValue,Message->DefaultTimer);
+	LightControlMessages::OutputStateResponseHandler(SenderID,Message->OutputID,Message->PowerState,Message->TimerValue,Message->DefaultTimer);
 #endif
 }
 
@@ -271,7 +271,7 @@ void IncomingFrameHandler::HandleMsgEepromCrcRequest(uint8_t SenderID)
 void IncomingFrameHandler::HandleMsgEepromCrcResponse(uint8_t SenderID, tMessageTypeEepromCRCResponse* Message)
 {
 #if CONFIG_CENTRAL_NODE
-  Message::EepromCRCResponseHandler(SenderID,Message->NumOfActions,Message->EepromCRC);
+	LightControlMessages::EepromCRCResponseHandler(SenderID,Message->NumOfActions,Message->EepromCRC);
 #endif
 }
 
@@ -285,7 +285,7 @@ void IncomingFrameHandler::HandleMsgVersionRequest(uint8_t SenderID)
 void IncomingFrameHandler::HandleMsgVersionResponse(uint8_t SenderID, tMessageTypeFwVesionResponse *Message)
 {
 #if CONFIG_CENTRAL_NODE
-	Message::VersionResponseHandler(SenderID,Message->Major,Message->Minor,Message->Patch);
+	LightControlMessages::VersionResponseHandler(SenderID,Message->Major,Message->Minor,Message->Patch);
 #endif
 }
 
@@ -307,7 +307,7 @@ void IncomingFrameHandler::HandleMsgDefaultTimerRequest(uint8_t SenderID, tMessa
 void IncomingFrameHandler::HandleMsgDefaultTimerResponse(uint8_t SenderID, tMessageTypeDefaultTimerResponse *Message)
 {
 #if CONFIG_CENTRAL_NODE
-	Message::DefaultTimerResponseHandler(SenderID,Message->OutputID,Message->DefTimerValue);
+	LightControlMessages::DefaultTimerResponseHandler(SenderID,Message->OutputID,Message->DefTimerValue);
 #endif
 }
 

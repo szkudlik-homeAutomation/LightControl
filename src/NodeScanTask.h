@@ -7,7 +7,7 @@
 #include "lib/ArduinoQueue/ArduinoQueue.h"
 #include "Common_code/WorkerProcess.h"
 #include "Common_code/tMessageReciever.h"
-#include "Message.h"
+#include "Common_code/tMessages.h"
 
 class NodeScanTask : public WorkerTask, public tMessageReciever
 {

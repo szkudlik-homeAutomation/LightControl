@@ -12,27 +12,14 @@
  * uses tMessageReciever to dispatch messages
  */
 #include "../global.h"
+#include "Common_code/tMessages.h"
 
-class Message {
+class LightControlMessages : public tMessages {
 public:
-	  static const uint8_t frameRecieved_VersionResponse = 0;
-	  typedef struct tVersionResponse
-	  {
-		  uint8_t SenderID;
-		  uint8_t Major;
-		  uint8_t Minor;
-		  uint8_t Patch;
-	  };
-	  /*
-	   * log and dispatch MessageType_frameRecieved::frameRecieved_VersionResponse response through tMessageReciever
-	   */
-	  static void VersionResponseHandler(uint8_t SenderID, uint8_t Major, uint8_t Minor, uint8_t Patch);
-	  static void VersionResponseHandler(struct tVersionResponse *pVersionResponse);
-
 	  /*
 	   * log and dispatch MessageType_frameRecieved::frameRecieved_OutputStateResponseouput state response through tMessageReciever
 	   */
-	  static const uint8_t frameRecieved_OutputStateResponse = 1;
+	  static const uint8_t frameRecieved_OutputStateResponse = 128;
 	  typedef struct tOutputStateResponse
 	  {
 		  uint8_t SenderID;
@@ -44,7 +31,7 @@ public:
 	  static void OutputStateResponseHandler(uint8_t SenderID, uint8_t OutputID, uint8_t PowerState, uint16_t  TimerValue, uint16_t DefaultTimer);
 	  static void OutputStateResponseHandler(struct tOutputStateResponse* pOutputStateResponse);
 
-	  /* other responses - currently log response only */
+	  /* other incoming frames - currently log response only, no messages dispatch */
 	  static void OverviewStateResponseHandler(uint8_t SenderID, uint8_t PowerState, uint8_t  TimerState);
 	  static void EepromCRCResponseHandler(uint8_t SenderID, uint8_t NumOfActions, uint16_t EepromCRC);
 	  static void NodeScanResponse(uint32_t ActiveNodesMap);
