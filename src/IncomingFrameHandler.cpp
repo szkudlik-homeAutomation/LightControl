@@ -19,9 +19,12 @@ using namespace ace_crc::crc16ccitt_nibble;
 #include "tOutputProcess_lightControl.h"
 
 
-void IncomingFrameHandler::onFrame(void *pData, uint8_t MessageType, uint8_t SenderDevId)
+void tIncomingFrameHandler::onMessage(uint8_t type, uint16_t data, void *pData)
 {
-      switch (MessageType)
+	tCommunicationFrame *pFrame = (tCommunicationFrame *)pData;
+	uint8_t SenderDevId = pFrame->SenderDevId;
+
+	switch (data)	// messageType
       {
        case MESSAGE_TYPE_OVERVIEW_STATE_REQUEST:
            DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_OVERVIEW_STATE_REQUEST");
@@ -30,32 +33,32 @@ void IncomingFrameHandler::onFrame(void *pData, uint8_t MessageType, uint8_t Sen
 
        case MESSAGE_TYPE_OVERVIEW_STATE_RESPONSE:
            DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_OVERVIEW_STATE_RESPONSE");
-           HandleMsgOverviewStateResponse(SenderDevId,(tMessageTypeOverviewStateResponse*) (pData));
+           HandleMsgOverviewStateResponse(SenderDevId,(tMessageTypeOverviewStateResponse*) (pFrame->Data));
            break;
 
        case MESSAGE_TYPE_OUTPUT_STATE_REQUEST:
            DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_OUTPUT_STATE_REQUEST");
-           HandleMsgOutputStateRequest(SenderDevId,(tMessageTypeOutputStateRequest*)(pData));
+           HandleMsgOutputStateRequest(SenderDevId,(tMessageTypeOutputStateRequest*)(pFrame->Data));
            break;
 
        case MESSAGE_TYPE_OUTPUT_STATE_RESPONSE:
            DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_OUTPUT_STATE_RESPONSE");
-           HandleMsgOutputStateResponse(SenderDevId,(tMessageTypeOutputStateResponse*) (pData));
+           HandleMsgOutputStateResponse(SenderDevId,(tMessageTypeOutputStateResponse*) (pFrame->Data));
            break;
 
        case MESSAGE_TYPE_SET_OUTPUT:
            DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_SET_OUTPUT");
-           HandleMsgSetOutput(SenderDevId,(tMessageTypeSetOutput*)(pData));
+           HandleMsgSetOutput(SenderDevId,(tMessageTypeSetOutput*)(pFrame->Data));
            break;
 
        case MESSAGE_BUTTON_PRESS:
            DEBUG_PRINTLN_3("===================>MESSAGE_BUTTON_PRESS");
-           HandleMsgButtonPress(SenderDevId, (tMessageTypeButtonPress*)(pData));
+           HandleMsgButtonPress(SenderDevId, (tMessageTypeButtonPress*)(pFrame->Data));
            break;
 
        case MESSAGE_TYPE_SET_ACTION:
              DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_SET_ACTION");
-             HandleMsgSetAction(SenderDevId, (tMessageTypeSetAction*)(pData));
+             HandleMsgSetAction(SenderDevId, (tMessageTypeSetAction*)(pFrame->Data));
            break;
 
        case MESSAGE_TYPE_CLEAR_ACTIONS:
@@ -70,7 +73,7 @@ void IncomingFrameHandler::onFrame(void *pData, uint8_t MessageType, uint8_t Sen
 
        case MESSAGE_TYPE_FW_VERSION_RESPONSE:
              DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_FW_VERSION_RESPONSE");
-             HandleMsgVersionResponse(SenderDevId,(tMessageTypeFwVesionResponse*)(pData));
+             HandleMsgVersionResponse(SenderDevId,(tMessageTypeFwVesionResponse*)(pFrame->Data));
            break;
 
        case MESSAGE_TYPE_EEPROM_CRC_REQUEST:
@@ -80,7 +83,7 @@ void IncomingFrameHandler::onFrame(void *pData, uint8_t MessageType, uint8_t Sen
 
        case MESSAGE_TYPE_EEPROM_CRC_RESPONSE:
              DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_EEPROM_CRC_RESPONSE");
-             HandleMsgEepromCrcResponse(SenderDevId,(tMessageTypeEepromCRCResponse*)(pData));
+             HandleMsgEepromCrcResponse(SenderDevId,(tMessageTypeEepromCRCResponse*)(pFrame->Data));
            break;
 
        case MESSAGE_TYPE_FORCE_RESET:
@@ -91,19 +94,18 @@ void IncomingFrameHandler::onFrame(void *pData, uint8_t MessageType, uint8_t Sen
 
        case MESSAGE_TYPE_SET_DEFAULT_TIMER:
              DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_SET_DEFAULT_TIMER");
-             HandleMsgSetDefaultTimer(SenderDevId,(tMessageTypeSetDefaultTimer*)(pData));
+             HandleMsgSetDefaultTimer(SenderDevId,(tMessageTypeSetDefaultTimer*)(pFrame->Data));
            break;
 
        case MESSAGE_TYPE_DEFAULT_TIMER_REQUEST:
              DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_DEFAULT_TIMER_REQUEST");
-             HandleMsgDefaultTimerRequest(SenderDevId,(tMessageTypeDefaultTimerRequest*)(pData));
+             HandleMsgDefaultTimerRequest(SenderDevId,(tMessageTypeDefaultTimerRequest*)(pFrame->Data));
            break;
 
        case MESSAGE_TYPE_DEFAULT_TIMER_RESPONSE:
              DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_DEFAULT_TIMER_RESPONSE");
-             HandleMsgDefaultTimerResponse(SenderDevId,(tMessageTypeDefaultTimerResponse*)(pData));
+             HandleMsgDefaultTimerResponse(SenderDevId,(tMessageTypeDefaultTimerResponse*)(pFrame->Data));
            break;
-
 
      default:
          DEBUG_PRINTLN_3("MESSAGE  unknown type, drop");
@@ -111,20 +113,20 @@ void IncomingFrameHandler::onFrame(void *pData, uint8_t MessageType, uint8_t Sen
 }
 
 
-void IncomingFrameHandler::HandleMsgOverviewStateRequest(uint8_t SenderID)
+void tIncomingFrameHandler::HandleMsgOverviewStateRequest(uint8_t SenderID)
 {
    OutgoingMessage::SendMsgOverviewStateResponse(SenderID,OutputProcess.GetOutputStateMap(),OutputProcess.GetOutputTimersStateMap());
 }
 
 
-void IncomingFrameHandler::HandleMsgOverviewStateResponse(uint8_t SenderID, tMessageTypeOverviewStateResponse* Message)
+void tIncomingFrameHandler::HandleMsgOverviewStateResponse(uint8_t SenderID, tMessageTypeOverviewStateResponse* Message)
 {
 #if CONFIG_CENTRAL_NODE
 	LightControlMessages::OverviewStateResponseHandler(SenderID,Message->PowerState,Message->TimerState);
 #endif
 }
 
-void IncomingFrameHandler::HandleMsgOutputStateRequest(uint8_t SenderID, tMessageTypeOutputStateRequest* Message)
+void tIncomingFrameHandler::HandleMsgOutputStateRequest(uint8_t SenderID, tMessageTypeOutputStateRequest* Message)
 {
   if (Message->OutputID < NUM_OF_OUTPUTS)
   {
@@ -135,14 +137,14 @@ void IncomingFrameHandler::HandleMsgOutputStateRequest(uint8_t SenderID, tMessag
   }
 }
 
-void IncomingFrameHandler::HandleMsgOutputStateResponse(uint8_t SenderID, tMessageTypeOutputStateResponse* Message)
+void tIncomingFrameHandler::HandleMsgOutputStateResponse(uint8_t SenderID, tMessageTypeOutputStateResponse* Message)
 {
 #if CONFIG_CENTRAL_NODE
 	LightControlMessages::OutputStateResponseHandler(SenderID,Message->OutputID,Message->PowerState,Message->TimerValue,Message->DefaultTimer);
 #endif
 }
 
-void IncomingFrameHandler::HandleMsgSetOutput(uint8_t SenderID, tMessageTypeSetOutput* Message)
+void tIncomingFrameHandler::HandleMsgSetOutput(uint8_t SenderID, tMessageTypeSetOutput* Message)
 {
    if (Message->OutId >= NUM_OF_OUTPUTS)
    {
@@ -159,7 +161,7 @@ void IncomingFrameHandler::HandleMsgSetOutput(uint8_t SenderID, tMessageTypeSetO
 }
 
 
-void IncomingFrameHandler::HandleMsgButtonPress(uint8_t SenderID, tMessageTypeButtonPress *Message)
+void tIncomingFrameHandler::HandleMsgButtonPress(uint8_t SenderID, tMessageTypeButtonPress *Message)
 {
 #if CONFIG_CENTRAL_NODE
 	DEBUG_PRINT_3("Dev ID:");
@@ -233,13 +235,13 @@ void IncomingFrameHandler::HandleMsgButtonPress(uint8_t SenderID, tMessageTypeBu
 }
 
 
-void IncomingFrameHandler::HandleMsgClearAllActions(uint8_t SenderID)
+void tIncomingFrameHandler::HandleMsgClearAllActions(uint8_t SenderID)
 {
     EEPROM.write(EEPROM_ACTION_TABLE_USAGE_OFFSET,0);
 }
 
 
-void IncomingFrameHandler::HandleMsgSetAction(uint8_t SenderID, tMessageTypeSetAction* Message)
+void tIncomingFrameHandler::HandleMsgSetAction(uint8_t SenderID, tMessageTypeSetAction* Message)
 {
   uint8_t ActionTableUsage = EEPROM.read(EEPROM_ACTION_TABLE_USAGE_OFFSET);
   if (ActionTableUsage < ACTION_TABLE_SIZE)
@@ -251,7 +253,7 @@ void IncomingFrameHandler::HandleMsgSetAction(uint8_t SenderID, tMessageTypeSetA
 }
 
 
-void IncomingFrameHandler::HandleMsgEepromCrcRequest(uint8_t SenderID)
+void tIncomingFrameHandler::HandleMsgEepromCrcRequest(uint8_t SenderID)
 {
 
   int NumOfActions = EEPROM.read(EEPROM_ACTION_TABLE_USAGE_OFFSET);
@@ -268,7 +270,7 @@ void IncomingFrameHandler::HandleMsgEepromCrcRequest(uint8_t SenderID)
 }
 
 
-void IncomingFrameHandler::HandleMsgEepromCrcResponse(uint8_t SenderID, tMessageTypeEepromCRCResponse* Message)
+void tIncomingFrameHandler::HandleMsgEepromCrcResponse(uint8_t SenderID, tMessageTypeEepromCRCResponse* Message)
 {
 #if CONFIG_CENTRAL_NODE
 	LightControlMessages::EepromCRCResponseHandler(SenderID,Message->NumOfActions,Message->EepromCRC);
@@ -276,13 +278,13 @@ void IncomingFrameHandler::HandleMsgEepromCrcResponse(uint8_t SenderID, tMessage
 }
 
 
-void IncomingFrameHandler::HandleMsgVersionRequest(uint8_t SenderID)
+void tIncomingFrameHandler::HandleMsgVersionRequest(uint8_t SenderID)
 {
    OutgoingMessage::SendMsgVersionResponse(SenderID,FW_VERSION_MAJOR,FW_VERSION_MINOR,FW_VERSION_PATCH);
 }
 
 
-void IncomingFrameHandler::HandleMsgVersionResponse(uint8_t SenderID, tMessageTypeFwVesionResponse *Message)
+void tIncomingFrameHandler::HandleMsgVersionResponse(uint8_t SenderID, tMessageTypeFwVesionResponse *Message)
 {
 #if CONFIG_CENTRAL_NODE
 	LightControlMessages::VersionResponseHandler(SenderID,Message->Major,Message->Minor,Message->Patch);
@@ -290,13 +292,13 @@ void IncomingFrameHandler::HandleMsgVersionResponse(uint8_t SenderID, tMessageTy
 }
 
 
-void IncomingFrameHandler::HandleMsgSetDefaultTimer(uint8_t SenderID, tMessageTypeSetDefaultTimer *Message)
+void tIncomingFrameHandler::HandleMsgSetDefaultTimer(uint8_t SenderID, tMessageTypeSetDefaultTimer *Message)
 {
   if (Message->OutputID >= NUM_OF_OUTPUTS) return;
   EEPROM.put(EEPROM_DEFAULT_TIMER_VALUE_OFFSET+Message->OutputID*(sizeof(uint16_t)),Message->DefaultTimerValue);
 }
 
-void IncomingFrameHandler::HandleMsgDefaultTimerRequest(uint8_t SenderID, tMessageTypeDefaultTimerRequest *Message)
+void tIncomingFrameHandler::HandleMsgDefaultTimerRequest(uint8_t SenderID, tMessageTypeDefaultTimerRequest *Message)
 {
   if (Message->OutputID >= NUM_OF_OUTPUTS) return;
   uint16_t DefTimer;
@@ -304,7 +306,7 @@ void IncomingFrameHandler::HandleMsgDefaultTimerRequest(uint8_t SenderID, tMessa
   OutgoingMessage::SendMsgDefaultTimerResponse(SenderID,Message->OutputID,DefTimer);
 }
 
-void IncomingFrameHandler::HandleMsgDefaultTimerResponse(uint8_t SenderID, tMessageTypeDefaultTimerResponse *Message)
+void tIncomingFrameHandler::HandleMsgDefaultTimerResponse(uint8_t SenderID, tMessageTypeDefaultTimerResponse *Message)
 {
 #if CONFIG_CENTRAL_NODE
 	LightControlMessages::DefaultTimerResponseHandler(SenderID,Message->OutputID,Message->DefTimerValue);

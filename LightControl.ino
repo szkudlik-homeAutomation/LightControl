@@ -27,8 +27,8 @@
 #define TCP_WATCHDOG_TIMEOUT 600 
 
 Scheduler sched;
-IncomingFrameHandler IncomingFrameHandlerCallback;
-CommRecieverProcess CommReciever(sched,EEPROM.read(EEPROM_DEVICE_ID_OFFSET),&IncomingFrameHandlerCallback);
+tIncomingFrameHandler IncomingFrameHandler;
+CommRecieverProcess CommReciever(sched,EEPROM.read(EEPROM_DEVICE_ID_OFFSET));
 CommSenderProcess CommSender(sched,EEPROM.read(EEPROM_DEVICE_ID_OFFSET),EEPROM.read(EEPROM_DEVICE_ID_OFFSET));
 
 #if CONFIG_CENTRAL_NODE

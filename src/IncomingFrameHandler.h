@@ -9,12 +9,14 @@
 
 #include "../global.h"
 #include "Common_code/TLE8457_serial/TLE8457_serial_lib.h"
+#include "Common_code/tMessageReciever.h"
+#include "Common_code/tMessages.h"
 
-class IncomingFrameHandler: public CommRecieverProcessCallback {
+class tIncomingFrameHandler: public tMessageReciever {
 public:
-   IncomingFrameHandler() {};
+   tIncomingFrameHandler() { RegisterMessageType(tMessageReciever::MessageType_frameRecieved); }
 
-   virtual void onFrame(void *pData, uint8_t MessageType, uint8_t SenderDevId);
+   virtual void onMessage(uint8_t type, uint16_t data, void *pData);
 
 private:
    // handlers of all incoming frames
