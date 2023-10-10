@@ -8,7 +8,7 @@
 #include "src/Common_code/WatchdogProcess.h"
 #include "src/DigitalInputProcess.h"
 #include "src/tOutputProcess_lightControl.h"
-#include "src/IncomingFrameHandler.h"
+#include "src/tLightControlIncomingFrameHandler.h"
 
 #if CONFIG_CENTRAL_NODE
 #include "src/Common_code/WorkerProcess.h"
@@ -27,7 +27,7 @@
 #define TCP_WATCHDOG_TIMEOUT 600 
 
 Scheduler sched;
-tIncomingFrameHandler IncomingFrameHandler;
+tLightControlIncomingFrameHandler IncomingFrameHandler;
 CommRecieverProcess CommReciever(sched,EEPROM.read(EEPROM_DEVICE_ID_OFFSET));
 CommSenderProcess CommSender(sched,EEPROM.read(EEPROM_DEVICE_ID_OFFSET),EEPROM.read(EEPROM_DEVICE_ID_OFFSET));
 
