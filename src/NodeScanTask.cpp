@@ -1,6 +1,6 @@
 #include "../global.h"
 
-#include "OutgoingMessage.h"
+#include "tLightControlOutgoingMessages.h"
 #include "tOutputProcess_lightControl.h"
 #include "Common_code/TLE8457_serial/TLE8457_serial_lib.h"
 #include "NodeScanTask.h"
@@ -15,7 +15,7 @@ bool NodeScanTask::Process(uint32_t * pPeriod)
    {
        // send a frame
        mCurrentNodeID++;
-       OutgoingMessage::SendMsgVersionRequest(mCurrentNodeID);  // staring from 1
+       tLightControlOutgoingMessages::SendMsgVersionRequest(mCurrentNodeID);  // staring from 1
    }
    else if (mCurrentNodeID == MAX_NUM_OF_NODES)
    {

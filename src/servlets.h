@@ -5,7 +5,7 @@
 
 #include "Common_code/Network/httpServer.h"
 #include "http_binaries.h"
-#include "OutgoingMessage.h"
+#include "tLightControlOutgoingMessages.h"
 #include "Common_code/tMessageReciever.h"
 #include "LightControlMessages.h"
 

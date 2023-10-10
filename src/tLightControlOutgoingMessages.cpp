@@ -1,16 +1,17 @@
 /*
- * OutgoingMessage.cpp
+ * tLightControltLightControlOutgoingMessagess.cpp
  *
- *  Created on: Jan 17, 2023
+ *  Created on: Oct 10, 2023
  *      Author: mszkudli
  */
 
+#include "tLightControlOutgoingMessages.h"
 #include "../global.h"
-#include "OutgoingMessage.h"
+#include "tLightControlOutgoingMessages.h"
 #include "Common_code/TLE8457_serial/TLE8457_serial_lib.h"
 
 // OVERVIEW STATE HANDSHAKE
-bool OutgoingMessage::SendMsgOverviewStateRequest(uint8_t RecieverID)
+bool tLightControlOutgoingMessages::SendMsgOverviewStateRequest(uint8_t RecieverID)
 {
 #if CONFIG_CENTRAL_NODE
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_OVERVIEW_STATE_REQUEST");
@@ -19,7 +20,7 @@ bool OutgoingMessage::SendMsgOverviewStateRequest(uint8_t RecieverID)
   return true;
 }
 
-bool OutgoingMessage::SendMsgOverviewStateResponse(uint8_t RecieverID, uint8_t  PowerState, uint8_t  TimerState)
+bool tLightControlOutgoingMessages::SendMsgOverviewStateResponse(uint8_t RecieverID, uint8_t  PowerState, uint8_t  TimerState)
 {
   tMessageTypeOverviewStateResponse Msg;
   Msg.PowerState = PowerState;
@@ -30,7 +31,7 @@ bool OutgoingMessage::SendMsgOverviewStateResponse(uint8_t RecieverID, uint8_t  
 }
 
 // GET OUTPUT STATE HANDSHAKE
-bool OutgoingMessage::SendMsgOutputStateRequest(uint8_t RecieverID, uint8_t  OutputID)
+bool tLightControlOutgoingMessages::SendMsgOutputStateRequest(uint8_t RecieverID, uint8_t  OutputID)
 {
 #if CONFIG_CENTRAL_NODE
   tMessageTypeOutputStateRequest Msg;
@@ -41,7 +42,7 @@ bool OutgoingMessage::SendMsgOutputStateRequest(uint8_t RecieverID, uint8_t  Out
   return true;
 };
 
-bool OutgoingMessage::SendMsgOutputStateResponse(uint8_t RecieverID, uint8_t  OutputID, uint8_t  PowerState, uint16_t TimerValue, uint16_t DefaultTimer)
+bool tLightControlOutgoingMessages::SendMsgOutputStateResponse(uint8_t RecieverID, uint8_t  OutputID, uint8_t  PowerState, uint16_t TimerValue, uint16_t DefaultTimer)
 {
   tMessageTypeOutputStateResponse Msg;
   Msg.OutputID = OutputID;
@@ -55,7 +56,7 @@ bool OutgoingMessage::SendMsgOutputStateResponse(uint8_t RecieverID, uint8_t  Ou
 };
 
 // SET OUTPUT
-bool OutgoingMessage::SendMsgSetOutput(uint8_t RecieverID, uint8_t  OutId, uint8_t  State, uint16_t Timer)
+bool tLightControlOutgoingMessages::SendMsgSetOutput(uint8_t RecieverID, uint8_t  OutId, uint8_t  State, uint16_t Timer)
 {
 #if CONFIG_CENTRAL_NODE
   tMessageTypeSetOutput Message;
@@ -69,7 +70,7 @@ bool OutgoingMessage::SendMsgSetOutput(uint8_t RecieverID, uint8_t  OutId, uint8
 }
 
 // BUTTON  PRESS
-bool OutgoingMessage::SendMsgButtonPress(uint8_t RecieverID, uint8_t ForceSrcId, uint16_t ShortClick, uint16_t LongClick, uint16_t DoubleClick)
+bool tLightControlOutgoingMessages::SendMsgButtonPress(uint8_t RecieverID, uint8_t ForceSrcId, uint16_t ShortClick, uint16_t LongClick, uint16_t DoubleClick)
 {
   tMessageTypeButtonPress Msg;
   Msg.ShortClick = ShortClick;
@@ -82,7 +83,7 @@ bool OutgoingMessage::SendMsgButtonPress(uint8_t RecieverID, uint8_t ForceSrcId,
   return true;
 };
 
-bool OutgoingMessage::SendMsgClearAllActions(uint8_t RecieverID)
+bool tLightControlOutgoingMessages::SendMsgClearAllActions(uint8_t RecieverID)
 {
 #if CONFIG_CENTRAL_NODE
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_CLEAR_ACTIONS");
@@ -91,7 +92,7 @@ bool OutgoingMessage::SendMsgClearAllActions(uint8_t RecieverID)
   return true;
 };
 
-bool OutgoingMessage::SendMsgAddAction(uint8_t RecieverID, uint8_t OutId, uint8_t SenderDevID, uint8_t ButtonId, uint8_t TriggerType, uint8_t ActionType, uint16_t Timer, uint8_t  OutputsMask, uint8_t  OutputsStates)
+bool tLightControlOutgoingMessages::SendMsgAddAction(uint8_t RecieverID, uint8_t OutId, uint8_t SenderDevID, uint8_t ButtonId, uint8_t TriggerType, uint8_t ActionType, uint16_t Timer, uint8_t  OutputsMask, uint8_t  OutputsStates)
 {
 #if CONFIG_CENTRAL_NODE
   tMessageTypeSetAction Message;
@@ -111,7 +112,7 @@ bool OutgoingMessage::SendMsgAddAction(uint8_t RecieverID, uint8_t OutId, uint8_
 };
 
 // EEPROM CRC Handshake
-bool OutgoingMessage::SendMsgEepromCrcRequest(uint8_t RecieverID)
+bool tLightControlOutgoingMessages::SendMsgEepromCrcRequest(uint8_t RecieverID)
 {
 #if CONFIG_CENTRAL_NODE
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_EEPROM_CRC_REQUEST");
@@ -120,7 +121,7 @@ bool OutgoingMessage::SendMsgEepromCrcRequest(uint8_t RecieverID)
   return true;
 }
 
-bool OutgoingMessage::SendMsgEepromCrcResponse(uint8_t RecieverID,  uint8_t NumOfActions, uint16_t EepromCRC)
+bool tLightControlOutgoingMessages::SendMsgEepromCrcResponse(uint8_t RecieverID,  uint8_t NumOfActions, uint16_t EepromCRC)
 {
   tMessageTypeEepromCRCResponse Msg;
   Msg.NumOfActions = NumOfActions;
@@ -132,7 +133,7 @@ bool OutgoingMessage::SendMsgEepromCrcResponse(uint8_t RecieverID,  uint8_t NumO
 
 
 // VERSION HANDSHAKE
-bool OutgoingMessage::SendMsgVersionRequest(uint8_t RecieverID)
+bool tLightControlOutgoingMessages::SendMsgVersionRequest(uint8_t RecieverID)
 {
 #if CONFIG_CENTRAL_NODE
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_FW_VERSION_REQUEST");
@@ -141,7 +142,7 @@ bool OutgoingMessage::SendMsgVersionRequest(uint8_t RecieverID)
   return true;
 }
 
-bool OutgoingMessage::SendMsgVersionResponse(uint8_t RecieverID, uint8_t Major, uint8_t Minor, uint8_t Patch)
+bool tLightControlOutgoingMessages::SendMsgVersionResponse(uint8_t RecieverID, uint8_t Major, uint8_t Minor, uint8_t Patch)
 {
   tMessageTypeFwVesionResponse Msg;
   Msg.Major = Major;
@@ -151,14 +152,14 @@ bool OutgoingMessage::SendMsgVersionResponse(uint8_t RecieverID, uint8_t Major, 
   CommSender.Enqueue(RecieverID,MESSAGE_TYPE_FW_VERSION_RESPONSE,sizeof(Msg),&Msg);
 };
 
-bool OutgoingMessage::SendMsgReset(uint8_t RecieverID)
+bool tLightControlOutgoingMessages::SendMsgReset(uint8_t RecieverID)
 {
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_FORCE_RESET");
   CommSender.Enqueue(RecieverID,MESSAGE_TYPE_FORCE_RESET,0,NULL);
 }
 
 
-bool OutgoingMessage::SendMsgSetDefaultTimer(uint8_t RecieverID, uint8_t OutputID, uint16_t DefTimerValue)
+bool tLightControlOutgoingMessages::SendMsgSetDefaultTimer(uint8_t RecieverID, uint8_t OutputID, uint16_t DefTimerValue)
 {
   tMessageTypeSetDefaultTimer Msg;
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_SET_DEFAULT_TIMER");
@@ -167,7 +168,7 @@ bool OutgoingMessage::SendMsgSetDefaultTimer(uint8_t RecieverID, uint8_t OutputI
   CommSender.Enqueue(RecieverID,MESSAGE_TYPE_SET_DEFAULT_TIMER,sizeof(Msg),&Msg);
 }
 
-bool OutgoingMessage::SendMsgDefaultTimerRequest(uint8_t RecieverID, uint8_t OutputID)
+bool tLightControlOutgoingMessages::SendMsgDefaultTimerRequest(uint8_t RecieverID, uint8_t OutputID)
 {
   tMessageTypeDefaultTimerRequest Msg;
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_DEFAULT_TIMER_REQUEST");
@@ -175,7 +176,7 @@ bool OutgoingMessage::SendMsgDefaultTimerRequest(uint8_t RecieverID, uint8_t Out
   CommSender.Enqueue(RecieverID,MESSAGE_TYPE_DEFAULT_TIMER_REQUEST,sizeof(Msg),&Msg);
 }
 
-bool OutgoingMessage::SendMsgDefaultTimerResponse(uint8_t RecieverID, uint8_t OutputID, uint16_t DefTimerValue)
+bool tLightControlOutgoingMessages::SendMsgDefaultTimerResponse(uint8_t RecieverID, uint8_t OutputID, uint16_t DefTimerValue)
 {
   tMessageTypeDefaultTimerResponse Msg;
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_DEFAULT_TIMER_RESPONSE");
