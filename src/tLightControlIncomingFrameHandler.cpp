@@ -73,16 +73,6 @@ void tLightControlIncomingFrameHandler::onMessage(uint8_t type, uint16_t data, v
              HandleMsgClearAllActions(SenderDevId);
            break;
 
-       case MESSAGE_TYPE_FW_VERSION_REQUEST:
-             DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_FW_VERSION_REQUEST");
-             HandleMsgVersionRequest(SenderDevId);
-           break;
-
-       case MESSAGE_TYPE_FW_VERSION_RESPONSE:
-             DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_FW_VERSION_RESPONSE");
-             HandleMsgVersionResponse(SenderDevId,(tMessageTypeFwVesionResponse*)(pFrame->Data));
-           break;
-
        case MESSAGE_TYPE_EEPROM_CRC_REQUEST:
              DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_EEPROM_CRC_REQUEST");
              HandleMsgEepromCrcRequest(SenderDevId);
@@ -283,21 +273,6 @@ void tLightControlIncomingFrameHandler::HandleMsgEepromCrcResponse(uint8_t Sende
 	tLightControlMessages::EepromCRCResponseHandler(SenderID,Message->NumOfActions,Message->EepromCRC);
 #endif
 }
-
-
-void tLightControlIncomingFrameHandler::HandleMsgVersionRequest(uint8_t SenderID)
-{
-    tLightControlOutgoingFrames::SendMsgVersionResponse(SenderID,FW_VERSION_MAJOR,FW_VERSION_MINOR,FW_VERSION_PATCH);
-}
-
-
-void tLightControlIncomingFrameHandler::HandleMsgVersionResponse(uint8_t SenderID, tMessageTypeFwVesionResponse *Message)
-{
-#if CONFIG_CENTRAL_NODE
-	tLightControlMessages::VersionResponseHandler(SenderID,Message->Major,Message->Minor,Message->Patch);
-#endif
-}
-
 
 void tLightControlIncomingFrameHandler::HandleMsgSetDefaultTimer(uint8_t SenderID, tMessageTypeSetDefaultTimer *Message)
 {

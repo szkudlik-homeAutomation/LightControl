@@ -27,8 +27,6 @@ private:
    void HandleMsgButtonPress(uint8_t SenderID, tMessageTypeButtonPress *Message);
    void HandleMsgSetAction(uint8_t SenderID, tMessageTypeSetAction* Message);
    void HandleMsgClearAllActions(uint8_t SenderID);
-   void HandleMsgVersionRequest(uint8_t SenderID);
-   void HandleMsgVersionResponse(uint8_t SenderID, tMessageTypeFwVesionResponse *Message);
    void HandleMsgEepromCrcRequest(uint8_t SenderID);
    void HandleMsgEepromCrcResponse(uint8_t SenderID, tMessageTypeEepromCRCResponse* Message);
    void HandleMsgSetDefaultTimer(uint8_t SenderID, tMessageTypeSetDefaultTimer *Message);
