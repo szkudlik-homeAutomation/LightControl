@@ -1,5 +1,5 @@
 /*
- * tLightControlOutgoingMessages.h
+ * tLightControlOutgoingFrames.h
  *
  *  Created on: Oct 10, 2023
  *      Author: mszkudli
@@ -10,7 +10,7 @@
 #include "../global.h"
 #include "Common_code/TLE8457_serial/tOutgoingMessages.h"
 
-class tLightControlOutgoingMessages : public tOutgoingMessages {
+class tLightControlOutgoingFrames : public tOutgoingMessages {
 public:
       static bool SendMsgOverviewStateRequest(uint8_t RecieverID);
       static bool SendMsgOverviewStateResponse(uint8_t RecieverID, uint8_t  PowerState, uint8_t  TimerState);

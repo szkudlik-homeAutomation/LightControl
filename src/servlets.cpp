@@ -36,7 +36,7 @@ bool tOutputSetServlet::ProcessAndResponse()
 	DEBUG_3(print(State,DEC));
 	DEBUG_PRINT_3(" Timer=");
 	DEBUG_3(println(Timer,DEC));
-	tLightControlOutgoingMessages::SendMsgSetOutput(Device, Output, State, Timer);
+	tLightControlOutgoingFrames::SendMsgSetOutput(Device, Output, State, Timer);
 	SendResponse200();
 
 return false;
@@ -66,7 +66,7 @@ bool tSetTimerServlet::ProcessAndResponse()
 	DEBUG_3(print(Output,DEC));
 	DEBUG_PRINT_3(" Timer=");
 	DEBUG_3(println(Timer,DEC));
-	tLightControlOutgoingMessages::SendMsgSetDefaultTimer(Device, Output, Timer);
+	tLightControlOutgoingFrames::SendMsgSetDefaultTimer(Device, Output, Timer);
 	SendResponse200();
 
 	return false;
@@ -104,7 +104,7 @@ bool tForceButtonPressServlet::ProcessAndResponse()
    DEBUG_PRINT_3(" dbl:");
    DEBUG_3(println(DoubleClickBitmap,BIN));
 
-   tLightControlOutgoingMessages::SendMsgButtonPress(DEVICE_ID_BROADCAST, Device, ShortClickBitmap, LongClickBitmap, DoubleClickBitmap);
+   tLightControlOutgoingFrames::SendMsgButtonPress(DEVICE_ID_BROADCAST, Device, ShortClickBitmap, LongClickBitmap, DoubleClickBitmap);
 
    SendResponse200();
 
@@ -132,7 +132,7 @@ void tOutputStateServlet::SendOutputStateRequest(uint8_t DevID, uint8_t OutputID
   mExpectedDevID = DevID;
   mExpectedOutputID = OutputID;
 
-  tLightControlOutgoingMessages::SendMsgOutputStateRequest(DevID,OutputID);
+  tLightControlOutgoingFrames::SendMsgOutputStateRequest(DevID,OutputID);
 }
 
 

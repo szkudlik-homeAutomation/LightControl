@@ -1,6 +1,6 @@
 #include "../global.h"
 
-#include "tLightControlOutgoingMessages.h"
+#include "tLightControlOutgoingFrames.h"
 #include "Common_code/Network/telnetServer.h"
 #include "lib/Commander/src/Commander.h"
 #include "NodeScanTask.h"
@@ -46,7 +46,7 @@ bool send_ClearActions(Commander &Cmdr)
   int Dst;
   if(Cmdr.getInt(Dst))
   {
-    tLightControlOutgoingMessages::SendMsgClearAllActions(Dst);
+    tLightControlOutgoingFrames::SendMsgClearAllActions(Dst);
   }
   else
   {
@@ -63,7 +63,7 @@ bool send_stateOverviewHandler(Commander &Cmdr)
   int Dst;
   if(Cmdr.getInt(Dst))
   {
-    tLightControlOutgoingMessages::SendMsgOverviewStateRequest(Dst);
+    tLightControlOutgoingFrames::SendMsgOverviewStateRequest(Dst);
   }
   else
   {
@@ -88,7 +88,7 @@ bool send_OutputStateHandler(Commander &Cmdr)
     goto error;
   }
 
-   tLightControlOutgoingMessages::SendMsgOutputStateRequest(Dst,OutId);
+   tLightControlOutgoingFrames::SendMsgOutputStateRequest(Dst,OutId);
 
   return true;
 error:
@@ -120,7 +120,7 @@ bool send_SetOutputHandler(Commander &Cmdr)
     //goto finish;
   }
 
-  tLightControlOutgoingMessages::SendMsgSetOutput(Dst, OutId, State, Timer);
+  tLightControlOutgoingFrames::SendMsgSetOutput(Dst, OutId, State, Timer);
   return true;
 error:
   Cmdr.println(F("Usage: SetOutput dst_dev_id output_id state[0/1] [timer[sec]]"));
@@ -177,7 +177,7 @@ bool send_addAction(Commander &Cmdr)
   }
 
 final:
-  tLightControlOutgoingMessages::SendMsgAddAction(RecieverID, OutId, SenderDevID, ButtonId, TriggerType, ActionType, Timer, OutputsMask, OutputsStates);
+  tLightControlOutgoingFrames::SendMsgAddAction(RecieverID, OutId, SenderDevID, ButtonId, TriggerType, ActionType, Timer, OutputsMask, OutputsStates);
   return true;
 
 error:
@@ -193,7 +193,7 @@ bool send_GetEepromCrc(Commander &Cmdr)
   int Dst;
   if(Cmdr.getInt(Dst))
   {
-    tLightControlOutgoingMessages::SendMsgEepromCrcRequest(Dst);
+    tLightControlOutgoingFrames::SendMsgEepromCrcRequest(Dst);
   }
   else
   {
@@ -209,7 +209,7 @@ bool send_GetVersion(Commander &Cmdr)
   int Dst;
   if(Cmdr.getInt(Dst))
   {
-    tLightControlOutgoingMessages::SendMsgVersionRequest(Dst);
+    tLightControlOutgoingFrames::SendMsgVersionRequest(Dst);
   }
   else
   {
@@ -225,7 +225,7 @@ bool send_Reset(Commander &Cmdr)
   int Dst;
   if(Cmdr.getInt(Dst))
   {
-    tLightControlOutgoingMessages::SendMsgReset(Dst);
+    tLightControlOutgoingFrames::SendMsgReset(Dst);
   }
   else
   {
@@ -261,7 +261,7 @@ bool send_SetDefaultTimer(Commander &Cmdr)
     goto error;
   }
 
-   tLightControlOutgoingMessages::SendMsgSetDefaultTimer(Dst,OutId,DefTimerValue);
+   tLightControlOutgoingFrames::SendMsgSetDefaultTimer(Dst,OutId,DefTimerValue);
 
   return true;
 error:
@@ -283,7 +283,7 @@ bool send_GetDefaultTimer(Commander &Cmdr)
     goto error;
   }
 
-   tLightControlOutgoingMessages::SendMsgDefaultTimerRequest(Dst,OutId);
+   tLightControlOutgoingFrames::SendMsgDefaultTimerRequest(Dst,OutId);
 
   return true;
 error:
@@ -317,7 +317,7 @@ bool send_ButtonPress(Commander &Cmdr)
   }
 
 final:
-  tLightControlOutgoingMessages::SendMsgButtonPress(DEVICE_ID_BROADCAST,ForcedSenderId, ShortClick, LongClick, DoubleClick);
+  tLightControlOutgoingFrames::SendMsgButtonPress(DEVICE_ID_BROADCAST,ForcedSenderId, ShortClick, LongClick, DoubleClick);
   return true;
 
 error:

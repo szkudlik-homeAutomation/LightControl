@@ -14,7 +14,7 @@ using namespace ace_crc::crc16ccitt_nibble;
 #include "tLightControlIncomingFrameHandler.h"
 
 #include "NodeScanTask.h"
-#include "tLightControlOutgoingMessages.h"
+#include "tLightControlOutgoingFrames.h"
 #include "tLightControlMessages.h"
 #include "tOutputProcess_lightControl.h"
 
@@ -122,7 +122,7 @@ void tLightControlIncomingFrameHandler::onMessage(uint8_t type, uint16_t data, v
 
 void tLightControlIncomingFrameHandler::HandleMsgOverviewStateRequest(uint8_t SenderID)
 {
-   tLightControlOutgoingMessages::SendMsgOverviewStateResponse(SenderID,OutputProcess.GetOutputStateMap(),OutputProcess.GetOutputTimersStateMap());
+   tLightControlOutgoingFrames::SendMsgOverviewStateResponse(SenderID,OutputProcess.GetOutputStateMap(),OutputProcess.GetOutputTimersStateMap());
 }
 
 
@@ -140,7 +140,7 @@ void tLightControlIncomingFrameHandler::HandleMsgOutputStateRequest(uint8_t Send
       uint16_t DefTimer;
       EEPROM.get(EEPROM_DEFAULT_TIMER_VALUE_OFFSET+Message->OutputID*(sizeof(uint16_t)),DefTimer);
 
-      tLightControlOutgoingMessages::SendMsgOutputStateResponse(SenderID,Message->OutputID, OutputProcess.GetOutputState(Message->OutputID), OutputProcess.GetOutputTimer(Message->OutputID),DefTimer);
+      tLightControlOutgoingFrames::SendMsgOutputStateResponse(SenderID,Message->OutputID, OutputProcess.GetOutputState(Message->OutputID), OutputProcess.GetOutputTimer(Message->OutputID),DefTimer);
   }
 }
 
@@ -273,7 +273,7 @@ void tLightControlIncomingFrameHandler::HandleMsgEepromCrcRequest(uint8_t Sender
     crc = crc_update(crc, &Action, sizeof(Action));
   }
   crc = crc_finalize(crc);
-  tLightControlOutgoingMessages::SendMsgEepromCrcResponse(SenderID,NumOfActions,crc);
+  tLightControlOutgoingFrames::SendMsgEepromCrcResponse(SenderID,NumOfActions,crc);
 }
 
 
@@ -287,7 +287,7 @@ void tLightControlIncomingFrameHandler::HandleMsgEepromCrcResponse(uint8_t Sende
 
 void tLightControlIncomingFrameHandler::HandleMsgVersionRequest(uint8_t SenderID)
 {
-    tLightControlOutgoingMessages::SendMsgVersionResponse(SenderID,FW_VERSION_MAJOR,FW_VERSION_MINOR,FW_VERSION_PATCH);
+    tLightControlOutgoingFrames::SendMsgVersionResponse(SenderID,FW_VERSION_MAJOR,FW_VERSION_MINOR,FW_VERSION_PATCH);
 }
 
 
@@ -310,7 +310,7 @@ void tLightControlIncomingFrameHandler::HandleMsgDefaultTimerRequest(uint8_t Sen
   if (Message->OutputID >= NUM_OF_OUTPUTS) return;
   uint16_t DefTimer;
   EEPROM.get(EEPROM_DEFAULT_TIMER_VALUE_OFFSET+Message->OutputID*(sizeof(uint16_t)),DefTimer);
-  tLightControlOutgoingMessages::SendMsgDefaultTimerResponse(SenderID,Message->OutputID,DefTimer);
+  tLightControlOutgoingFrames::SendMsgDefaultTimerResponse(SenderID,Message->OutputID,DefTimer);
 }
 
 void tLightControlIncomingFrameHandler::HandleMsgDefaultTimerResponse(uint8_t SenderID, tMessageTypeDefaultTimerResponse *Message)
