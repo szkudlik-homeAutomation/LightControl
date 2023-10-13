@@ -14,7 +14,7 @@
 #include "../global.h"
 #include "Common_code/tMessages.h"
 
-class LightControlMessages : public tMessages {
+class tLightControlMessages : public tMessages {
 public:
 	  /*
 	   * log and dispatch MessageType_frameRecieved::frameRecieved_OutputStateResponseouput state response through tMessageReciever

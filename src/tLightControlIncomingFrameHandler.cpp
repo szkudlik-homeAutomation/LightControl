@@ -15,7 +15,7 @@ using namespace ace_crc::crc16ccitt_nibble;
 
 #include "NodeScanTask.h"
 #include "tLightControlOutgoingMessages.h"
-#include "LightControlMessages.h"
+#include "tLightControlMessages.h"
 #include "tOutputProcess_lightControl.h"
 
 
@@ -129,7 +129,7 @@ void tLightControlIncomingFrameHandler::HandleMsgOverviewStateRequest(uint8_t Se
 void tLightControlIncomingFrameHandler::HandleMsgOverviewStateResponse(uint8_t SenderID, tMessageTypeOverviewStateResponse* Message)
 {
 #if CONFIG_CENTRAL_NODE
-	LightControlMessages::OverviewStateResponseHandler(SenderID,Message->PowerState,Message->TimerState);
+	tLightControlMessages::OverviewStateResponseHandler(SenderID,Message->PowerState,Message->TimerState);
 #endif
 }
 
@@ -147,7 +147,7 @@ void tLightControlIncomingFrameHandler::HandleMsgOutputStateRequest(uint8_t Send
 void tLightControlIncomingFrameHandler::HandleMsgOutputStateResponse(uint8_t SenderID, tMessageTypeOutputStateResponse* Message)
 {
 #if CONFIG_CENTRAL_NODE
-	LightControlMessages::OutputStateResponseHandler(SenderID,Message->OutputID,Message->PowerState,Message->TimerValue,Message->DefaultTimer);
+	tLightControlMessages::OutputStateResponseHandler(SenderID,Message->OutputID,Message->PowerState,Message->TimerValue,Message->DefaultTimer);
 #endif
 }
 
@@ -280,7 +280,7 @@ void tLightControlIncomingFrameHandler::HandleMsgEepromCrcRequest(uint8_t Sender
 void tLightControlIncomingFrameHandler::HandleMsgEepromCrcResponse(uint8_t SenderID, tMessageTypeEepromCRCResponse* Message)
 {
 #if CONFIG_CENTRAL_NODE
-	LightControlMessages::EepromCRCResponseHandler(SenderID,Message->NumOfActions,Message->EepromCRC);
+	tLightControlMessages::EepromCRCResponseHandler(SenderID,Message->NumOfActions,Message->EepromCRC);
 #endif
 }
 
@@ -294,7 +294,7 @@ void tLightControlIncomingFrameHandler::HandleMsgVersionRequest(uint8_t SenderID
 void tLightControlIncomingFrameHandler::HandleMsgVersionResponse(uint8_t SenderID, tMessageTypeFwVesionResponse *Message)
 {
 #if CONFIG_CENTRAL_NODE
-	LightControlMessages::VersionResponseHandler(SenderID,Message->Major,Message->Minor,Message->Patch);
+	tLightControlMessages::VersionResponseHandler(SenderID,Message->Major,Message->Minor,Message->Patch);
 #endif
 }
 
@@ -316,7 +316,7 @@ void tLightControlIncomingFrameHandler::HandleMsgDefaultTimerRequest(uint8_t Sen
 void tLightControlIncomingFrameHandler::HandleMsgDefaultTimerResponse(uint8_t SenderID, tMessageTypeDefaultTimerResponse *Message)
 {
 #if CONFIG_CENTRAL_NODE
-	LightControlMessages::DefaultTimerResponseHandler(SenderID,Message->OutputID,Message->DefTimerValue);
+	tLightControlMessages::DefaultTimerResponseHandler(SenderID,Message->OutputID,Message->DefTimerValue);
 #endif
 }
 

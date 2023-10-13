@@ -6,9 +6,9 @@
  */
 #include "../global.h"
 #include "Common_code/tMessageReciever.h"
-#include "LightControlMessages.h"
+#include "tLightControlMessages.h"
 
-static void LightControlMessages::OutputStateResponseHandler(uint8_t SenderID, uint8_t OutputID, uint8_t PowerState, uint16_t  TimerValue, uint16_t DefaultTimer)
+static void tLightControlMessages::OutputStateResponseHandler(uint8_t SenderID, uint8_t OutputID, uint8_t PowerState, uint16_t  TimerValue, uint16_t DefaultTimer)
 {
 	tOutputStateResponse OutputStateResponse;
 	OutputStateResponse.SenderID = SenderID;
@@ -19,7 +19,7 @@ static void LightControlMessages::OutputStateResponseHandler(uint8_t SenderID, u
 	OutputStateResponseHandler(&OutputStateResponse);
 }
 
-static void LightControlMessages::OutputStateResponseHandler(struct tOutputStateResponse* pOutputStateResponse)
+static void tLightControlMessages::OutputStateResponseHandler(struct tOutputStateResponse* pOutputStateResponse)
 {
 	LOG_PRINT("PowerState for device ");
 	LOG(print(pOutputStateResponse->SenderID,HEX));
@@ -36,7 +36,7 @@ static void LightControlMessages::OutputStateResponseHandler(struct tOutputState
 }
 
 
-void LightControlMessages::OverviewStateResponseHandler(uint8_t SenderID, uint8_t PowerState, uint8_t  TimerState)
+void tLightControlMessages::OverviewStateResponseHandler(uint8_t SenderID, uint8_t PowerState, uint8_t  TimerState)
 {
 	LOG_PRINT("PowerStateBitmap for device ");
 	LOG(print(SenderID,HEX));
@@ -46,7 +46,7 @@ void LightControlMessages::OverviewStateResponseHandler(uint8_t SenderID, uint8_
 	LOG(println(TimerState,BIN));
 }
 
-void LightControlMessages::EepromCRCResponseHandler(uint8_t SenderID, uint8_t NumOfActions, uint16_t EepromCRC)
+void tLightControlMessages::EepromCRCResponseHandler(uint8_t SenderID, uint8_t NumOfActions, uint16_t EepromCRC)
 {
 	LOG_PRINT("Eeprom CRC for device ");
 	LOG(print(SenderID,HEX));
@@ -56,13 +56,13 @@ void LightControlMessages::EepromCRCResponseHandler(uint8_t SenderID, uint8_t Nu
 	LOG(println(EepromCRC,DEC));
 }
 
-void LightControlMessages::NodeScanResponse(uint32_t ActiveNodesMap)
+void tLightControlMessages::NodeScanResponse(uint32_t ActiveNodesMap)
 {
 	LOG_PRINT("Active node map: ");
 	LOG(println(ActiveNodesMap,BIN));
 }
 
-void LightControlMessages::DefaultTimerResponseHandler(uint8_t SenderID,uint8_t OutputID,uint16_t DefTimerValue)
+void tLightControlMessages::DefaultTimerResponseHandler(uint8_t SenderID,uint8_t OutputID,uint16_t DefTimerValue)
 {
 	LOG_PRINT("Default timer for device ");
 	LOG(print(SenderID,HEX));

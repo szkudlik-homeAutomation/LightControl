@@ -4,7 +4,7 @@
 #include "tOutputProcess_lightControl.h"
 #include "Common_code/TLE8457_serial/TLE8457_serial_lib.h"
 #include "NodeScanTask.h"
-#include "LightControlMessages.h"
+#include "tLightControlMessages.h"
 
 #if CONFIG_CENTRAL_NODE
 bool NodeScanTask::Process(uint32_t * pPeriod)
@@ -25,7 +25,7 @@ bool NodeScanTask::Process(uint32_t * pPeriod)
    else
    {
        // send result
-       LightControlMessages::NodeScanResponse(mActiveNodesMap);
+       tLightControlMessages::NodeScanResponse(mActiveNodesMap);
        return false;
    }
 
@@ -34,10 +34,10 @@ bool NodeScanTask::Process(uint32_t * pPeriod)
 
 void NodeScanTask::onMessage(uint8_t type, uint16_t data, void *pData)
 {
-	if (data != LightControlMessages::frameRecieved_VersionResponse)
+	if (data != tLightControlMessages::frameRecieved_VersionResponse)
 		return;
 
-	struct LightControlMessages::tVersionResponse *pVersionResponse = (struct LightControlMessages::tVersionResponse *)pData;
+	struct tLightControlMessages::tVersionResponse *pVersionResponse = (struct tLightControlMessages::tVersionResponse *)pData;
 	mActiveNodesMap |= 1 << (pVersionResponse->SenderID - 1);
 }
 
