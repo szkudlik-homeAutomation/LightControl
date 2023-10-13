@@ -8,9 +8,9 @@
 #pragma once
 
 #include "../global.h"
-#include "Common_code/TLE8457_serial/tOutgoingMessages.h"
+#include "Common_code/TLE8457_serial/tOutgoingFrames.h"
 
-class tLightControlOutgoingFrames : public tOutgoingMessages {
+class tLightControlOutgoingFrames : public tOutgoingFrames {
 public:
       static bool SendMsgOverviewStateRequest(uint8_t RecieverID);
       static bool SendMsgOverviewStateResponse(uint8_t RecieverID, uint8_t  PowerState, uint8_t  TimerState);
