@@ -83,12 +83,6 @@ void tLightControlIncomingFrameHandler::onMessage(uint8_t type, uint16_t data, v
              HandleMsgEepromCrcResponse(SenderDevId,(tMessageTypeEepromCRCResponse*)(pFrame->Data));
            break;
 
-       case MESSAGE_TYPE_FORCE_RESET:
-             DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_FORCE_RESET");
-             cli();
-             while(1); // let watchdog reboot the device
-           break;
-
        case MESSAGE_TYPE_SET_DEFAULT_TIMER:
              DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_SET_DEFAULT_TIMER");
              HandleMsgSetDefaultTimer(SenderDevId,(tMessageTypeSetDefaultTimer*)(pFrame->Data));

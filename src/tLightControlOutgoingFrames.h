@@ -22,7 +22,6 @@ public:
       static bool SendMsgClearAllActions(uint8_t RecieverID);
       static bool SendMsgEepromCrcRequest(uint8_t RecieverID);
       static bool SendMsgEepromCrcResponse(uint8_t RecieverID,  uint8_t NumOfActions, uint16_t EepromCRC);
-      static bool SendMsgReset(uint8_t RecieverID);
       static bool SendMsgSetDefaultTimer(uint8_t RecieverID, uint8_t OutputID, uint16_t DefTimerValue);
       static bool SendMsgDefaultTimerRequest(uint8_t RecieverID,uint8_t OutputID);
       static bool SendMsgDefaultTimerResponse(uint8_t RecieverID, uint8_t OutputID, uint16_t DefTimerValue);

@@ -131,12 +131,6 @@ bool tLightControlOutgoingFrames::SendMsgEepromCrcResponse(uint8_t RecieverID,  
   return true;
 };
 
-bool tLightControlOutgoingFrames::SendMsgReset(uint8_t RecieverID)
-{
-  DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_FORCE_RESET");
-  CommSender.Enqueue(RecieverID,MESSAGE_TYPE_FORCE_RESET,0,NULL);
-}
-
 
 bool tLightControlOutgoingFrames::SendMsgSetDefaultTimer(uint8_t RecieverID, uint8_t OutputID, uint16_t DefTimerValue)
 {
