@@ -106,7 +106,7 @@ void tLightControlIncomingFrameHandler::onMessage(uint8_t type, uint16_t data, v
 
 void tLightControlIncomingFrameHandler::HandleMsgOverviewStateRequest(uint8_t SenderID)
 {
-   tLightControlOutgoingFrames::SendMsgOverviewStateResponse(SenderID,OutputProcess.GetOutputStateMap(),OutputProcess.GetOutputTimersStateMap());
+   tLightControlOutgoingFrames::SendMsgOverviewStateResponse(SenderID,tOutputProcess::get()->GetOutputStateMap(),tOutputProcess::get()->GetOutputTimersStateMap());
 }
 
 
@@ -124,7 +124,7 @@ void tLightControlIncomingFrameHandler::HandleMsgOutputStateRequest(uint8_t Send
       uint16_t DefTimer;
       EEPROM.get(EEPROM_DEFAULT_TIMER_VALUE_OFFSET+Message->OutputID*(sizeof(uint16_t)),DefTimer);
 
-      tLightControlOutgoingFrames::SendMsgOutputStateResponse(SenderID,Message->OutputID, OutputProcess.GetOutputState(Message->OutputID), OutputProcess.GetOutputTimer(Message->OutputID),DefTimer);
+      tLightControlOutgoingFrames::SendMsgOutputStateResponse(SenderID,Message->OutputID, tOutputProcess::get()->GetOutputState(Message->OutputID), tOutputProcess::get()->GetOutputTimer(Message->OutputID),DefTimer);
   }
 }
 
@@ -148,7 +148,7 @@ void tLightControlIncomingFrameHandler::HandleMsgSetOutput(uint8_t SenderID, tMe
      EEPROM.get(EEPROM_DEFAULT_TIMER_VALUE_OFFSET+Message->OutId*(sizeof(uint16_t)),Timer);
    }
 
-  OutputProcess.SetOutput(Message->OutId,Message->State,Timer,tOutputProcess::ForceTimer);
+  tOutputProcess::get()->SetOutput(Message->OutId,Message->State,Timer,tOutputProcess::ForceTimer);
 }
 
 
@@ -174,7 +174,7 @@ void tLightControlIncomingFrameHandler::HandleMsgButtonPress(uint8_t SenderID, t
   tMessageTypeSetAction Action;
   uint8_t i = EEPROM.read(EEPROM_ACTION_TABLE_USAGE_OFFSET);
   // remeber output state BEFORE performing action set
-  uint8_t OutputState = OutputProcess.GetOutputStateMap();
+  uint8_t OutputState = tOutputProcess::get()->GetOutputStateMap();
   while (i--)
   {
     EEPROM.get(EEPROM_ACTION_TABLE_OFFSET+(EEPROM_ACTION_TABLE_SIZE*i),Action);
@@ -211,15 +211,15 @@ void tLightControlIncomingFrameHandler::HandleMsgButtonPress(uint8_t SenderID, t
     {
       case BUTTON_ACTION_TYPE_ON:
          // when "turn on" action is triggered bu a button, don't set a timer if it is shorter than current timer
-        OutputProcess.SetOutput(Action.OutId,1,Timer,tOutputProcess::TimerLongerOnly);
+        tOutputProcess::get()->SetOutput(Action.OutId,1,Timer,tOutputProcess::TimerLongerOnly);
         break;
 
       case BUTTON_ACTION_TYPE_OFF:
-        OutputProcess.SetOutput(Action.OutId,0,0,tOutputProcess::ForceTimer);
+        tOutputProcess::get()->SetOutput(Action.OutId,0,0,tOutputProcess::ForceTimer);
         break;
 
       case BUTTON_ACTION_TYPE_TOGGLE:
-        OutputProcess.ToggleOutput(Action.OutId,Timer);
+        tOutputProcess::get()->ToggleOutput(Action.OutId,Timer);
         break;
     }
   }
