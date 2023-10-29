@@ -19,11 +19,6 @@ public:
 private:
    // handlers of all incoming frames
 
-   void HandleMsgOverviewStateRequest(uint8_t SenderID);
-   void HandleMsgOverviewStateResponse(uint8_t SenderID, tMessageTypeOverviewStateResponse* Message);
-   void HandleMsgOutputStateRequest(uint8_t SenderID, tMessageTypeOutputStateRequest* Message);
-   void HandleMsgOutputStateResponse(uint8_t SenderID, tMessageTypeOutputStateResponse* Message);
-   void HandleMsgSetOutput(uint8_t SenderID, tMessageTypeSetOutput* Message);
    void HandleMsgButtonPress(uint8_t SenderID, tMessageTypeButtonPress *Message);
    void HandleMsgSetAction(uint8_t SenderID, tMessageTypeSetAction* Message);
    void HandleMsgClearAllActions(uint8_t SenderID);

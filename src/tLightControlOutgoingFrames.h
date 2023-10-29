@@ -12,11 +12,6 @@
 
 class tLightControlOutgoingFrames : public tOutgoingFrames {
 public:
-      static bool SendMsgOverviewStateRequest(uint8_t RecieverID);
-      static bool SendMsgOverviewStateResponse(uint8_t RecieverID, uint8_t  PowerState, uint8_t  TimerState);
-      static bool SendMsgOutputStateRequest(uint8_t RecieverID, uint8_t  OutputID);
-      static bool SendMsgOutputStateResponse(uint8_t RecieverID, uint8_t  OutputID, uint8_t  PowerState, uint16_t TimerValue, uint16_t DefaultTimer);
-      static bool SendMsgSetOutput(uint8_t RecieverID, uint8_t  OutId, uint8_t  State, uint16_t Timer);
       static bool SendMsgButtonPress(uint8_t RecieverID, uint8_t ForceSrcId, uint16_t ShortClick, uint16_t LongClick, uint16_t DoubleClick);
       static bool SendMsgAddAction(uint8_t RecieverID, uint8_t OutId, uint8_t SenderDevID, uint8_t ButtonId, uint8_t TriggerType, uint8_t ActionType, uint16_t Timer, uint8_t  OutputsMask, uint8_t  OutputsStates);
       static bool SendMsgClearAllActions(uint8_t RecieverID);

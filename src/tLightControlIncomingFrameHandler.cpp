@@ -33,31 +33,6 @@ void tLightControlIncomingFrameHandler::onMessage(uint8_t type, uint16_t data, v
 
     switch (data)	// messageType
       {
-       case MESSAGE_TYPE_OVERVIEW_STATE_REQUEST:
-           DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_OVERVIEW_STATE_REQUEST");
-           HandleMsgOverviewStateRequest(SenderDevId);
-           break;
-
-       case MESSAGE_TYPE_OVERVIEW_STATE_RESPONSE:
-           DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_OVERVIEW_STATE_RESPONSE");
-           HandleMsgOverviewStateResponse(SenderDevId,(tMessageTypeOverviewStateResponse*) (pFrame->Data));
-           break;
-
-       case MESSAGE_TYPE_OUTPUT_STATE_REQUEST:
-           DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_OUTPUT_STATE_REQUEST");
-           HandleMsgOutputStateRequest(SenderDevId,(tMessageTypeOutputStateRequest*)(pFrame->Data));
-           break;
-
-       case MESSAGE_TYPE_OUTPUT_STATE_RESPONSE:
-           DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_OUTPUT_STATE_RESPONSE");
-           HandleMsgOutputStateResponse(SenderDevId,(tMessageTypeOutputStateResponse*) (pFrame->Data));
-           break;
-
-       case MESSAGE_TYPE_SET_OUTPUT:
-           DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_SET_OUTPUT");
-           HandleMsgSetOutput(SenderDevId,(tMessageTypeSetOutput*)(pFrame->Data));
-           break;
-
        case MESSAGE_BUTTON_PRESS:
            DEBUG_PRINTLN_3("===================>MESSAGE_BUTTON_PRESS");
            HandleMsgButtonPress(SenderDevId, (tMessageTypeButtonPress*)(pFrame->Data));
@@ -102,55 +77,6 @@ void tLightControlIncomingFrameHandler::onMessage(uint8_t type, uint16_t data, v
          DEBUG_PRINTLN_3("MESSAGE  unknown type, drop");
       }
 }
-
-
-void tLightControlIncomingFrameHandler::HandleMsgOverviewStateRequest(uint8_t SenderID)
-{
-   tLightControlOutgoingFrames::SendMsgOverviewStateResponse(SenderID,tOutputProcess::get()->GetOutputStateMap(),tOutputProcess::get()->GetOutputTimersStateMap());
-}
-
-
-void tLightControlIncomingFrameHandler::HandleMsgOverviewStateResponse(uint8_t SenderID, tMessageTypeOverviewStateResponse* Message)
-{
-#if CONFIG_CENTRAL_NODE
-	tLightControlMessages::OverviewStateResponseHandler(SenderID,Message->PowerState,Message->TimerState);
-#endif
-}
-
-void tLightControlIncomingFrameHandler::HandleMsgOutputStateRequest(uint8_t SenderID, tMessageTypeOutputStateRequest* Message)
-{
-  if (Message->OutputID < NUM_OF_OUTPUTS)
-  {
-      uint16_t DefTimer;
-      EEPROM.get(EEPROM_DEFAULT_TIMER_VALUE_OFFSET+Message->OutputID*(sizeof(uint16_t)),DefTimer);
-
-      tLightControlOutgoingFrames::SendMsgOutputStateResponse(SenderID,Message->OutputID, tOutputProcess::get()->GetOutputState(Message->OutputID), tOutputProcess::get()->GetOutputTimer(Message->OutputID),DefTimer);
-  }
-}
-
-void tLightControlIncomingFrameHandler::HandleMsgOutputStateResponse(uint8_t SenderID, tMessageTypeOutputStateResponse* Message)
-{
-#if CONFIG_CENTRAL_NODE
-	tLightControlMessages::OutputStateResponseHandler(SenderID,Message->OutputID,Message->PowerState,Message->TimerValue,Message->DefaultTimer);
-#endif
-}
-
-void tLightControlIncomingFrameHandler::HandleMsgSetOutput(uint8_t SenderID, tMessageTypeSetOutput* Message)
-{
-   if (Message->OutId >= NUM_OF_OUTPUTS)
-   {
-     // drop it
-     return;
-   }
-   uint16_t Timer = Message->Timer;
-   if (DEFAULT_TIMER == Timer)
-   {
-     EEPROM.get(EEPROM_DEFAULT_TIMER_VALUE_OFFSET+Message->OutId*(sizeof(uint16_t)),Timer);
-   }
-
-  tOutputProcess::get()->SetOutput(Message->OutId,Message->State,Timer,tOutputProcess::ForceTimer);
-}
-
 
 void tLightControlIncomingFrameHandler::HandleMsgButtonPress(uint8_t SenderID, tMessageTypeButtonPress *Message)
 {
