@@ -37,6 +37,8 @@
 #define DEVICE_ID_BROADCAST 0xFF
 
 #define CONFIG_TLE8457_COMM_LIB 1
+#define CONFIG_OUTPUT_PROCESS 1
+#define CONFIG_OUTPUT_USE_EEPROM_DEF_TIMER 1
 
 #include "GlobalDefs/CommDefs.h"
 

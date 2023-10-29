@@ -4,7 +4,7 @@
 
 #include "Common_code/Network/httpServer.h"
 #include "http_binaries.h"
-#include "OutgoingMessage.h"
+#include "tLightControlOutgoingFrames.h"
 
 class tLightWebControl : public tHttpServlet
 {
