@@ -39,14 +39,12 @@
  */
 #define NUM_OF_RETRANSMISSIONS 1
 
-
 /**
  * COMMUNICATION_PAYLOAD_DATA_SIZE
  *
  * number of avaliable payload data in a communication frame
  */
 #define COMMUNICATION_PAYLOAD_DATA_SIZE 8
-
 
 /**
  * FRAME_TRANSMISSION_TIME
