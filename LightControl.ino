@@ -71,18 +71,19 @@ void COMM_SERIAL_EVENT() {
 #define SENSOR_ID_SYSTEM_STATUS 1
 
 void setup() {
-  if (EEPROM.read(EEPROM_CANNARY_OFFSET) != EEPROM_CANNARY)
-    SetDefaultEEPromValues();
-
-  COMM_SERIAL.begin(9600);
-  while (!COMM_SERIAL);
 #ifdef DEBUG_SERIAL
   DEBUG_SERIAL.begin(115200);
   while (!DEBUG_SERIAL);
   DEBUG_SERIAL.print("START, v");
   DEBUG_SERIAL.println(FW_VERSION);
-
 #endif
+
+  if (EEPROM.read(EEPROM_CANNARY_OFFSET) != EEPROM_CANNARY)
+    SetDefaultEEPromValues();
+
+  COMM_SERIAL.begin(9600);
+  while (!COMM_SERIAL);
+
   CommSender.add();
   CommReciever.add();
   WatchdogProcess.add(true);
@@ -96,9 +97,11 @@ void setup() {
   Worker.add();
   
   SensorProcess.add(true);
-  tSensor *pSensor;
-  pSensor = new tSystemStatusSensor;
-  pSensor->Register(SENSOR_ID_SYSTEM_STATUS,"SystemStatus",NULL,10); //1 sec
+  tSystemStatusSensor *pSystemStatusSensor = new tSystemStatusSensor;
+
+  pSystemStatusSensor->setConfig(10); // 1 sec
+  pSystemStatusSensor->Register(SENSOR_ID_SYSTEM_STATUS,"SystemStatus");
+  pSystemStatusSensor->Start();
   
 #ifdef DEBUG_SERIAL
   DEBUG_SERIAL.println("START Tcp ");

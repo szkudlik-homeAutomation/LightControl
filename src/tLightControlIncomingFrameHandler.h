@@ -12,7 +12,7 @@
 
 class tLightControlIncomingFrameHandler: public tIncomingFrameHanlder {
 public:
-   tLightControlIncomingFrameHandler() { RegisterMessageType(tMessageReciever::MessageType_frameRecieved); }
+   tLightControlIncomingFrameHandler() : tIncomingFrameHanlder() { }
 
    virtual void onMessage(uint8_t type, uint16_t data, void *pData);
 
