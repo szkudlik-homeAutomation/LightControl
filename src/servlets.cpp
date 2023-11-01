@@ -1,4 +1,5 @@
 #include "../global.h"
+#include "Common_code/OutputProcess.h"
 
 #include "servlets.h"
 #if CONFIG_CENTRAL_NODE

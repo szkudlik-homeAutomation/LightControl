@@ -10,8 +10,6 @@
 
 #define NUM_OF_OUTPUTS 8
 
-#define DEFAULT_TIMER 0xFFFF
-
 /**
  * Sent by the central node - arbitrary set state of a single output
  * this is a broadcast frame

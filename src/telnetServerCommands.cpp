@@ -9,14 +9,9 @@
 
 
 bool helloHandler(Commander &Cmdr);
-bool send_stateOverviewHandler(Commander &Cmdr);
-bool send_OutputStateHandler(Commander &Cmdr);
-bool send_SetOutputHandler(Commander &Cmdr);
 bool send_ClearActions(Commander &Cmdr);
 bool send_addAction(Commander &Cmdr);
 bool send_GetEepromCrc(Commander &Cmdr);
-bool send_GetVersion(Commander &Cmdr);
-bool send_Reset(Commander &Cmdr);
 bool trigger_ScanNodes(Commander &Cmdr);
 bool send_SetDefaultTimer(Commander &Cmdr);
 bool send_GetDefaultTimer(Commander &Cmdr);
@@ -55,76 +50,6 @@ bool send_ClearActions(Commander &Cmdr)
   }
 
   return true;
-}
-
-bool send_stateOverviewHandler(Commander &Cmdr)
-{
-
-  int Dst;
-  if(Cmdr.getInt(Dst))
-  {
-    tLightControlOutgoingFrames::SendMsgOverviewStateRequest(Dst);
-  }
-  else
-  {
-    Cmdr.println(F("Usage: StateOverview dst_dev_id"));
-    return false;
-  }
-
-  return true;
-}
-
-bool send_OutputStateHandler(Commander &Cmdr)
-{
-
-  int Dst;
-  int OutId;
-  if(!Cmdr.getInt(Dst))
-  {
-    goto error;
-  }
-  if (! Cmdr.getInt(OutId))
-  {
-    goto error;
-  }
-
-   tLightControlOutgoingFrames::SendMsgOutputStateRequest(Dst,OutId);
-
-  return true;
-error:
-  Cmdr.println(F("Usage: OutputState dst_dev_id output_id"));
-  return false;
-}
-
-bool send_SetOutputHandler(Commander &Cmdr)
-{
-  int Dst;
-  int OutId;
-  int State;
-  int Timer = DEFAULT_TIMER;
-
-  if(!Cmdr.getInt(Dst))
-  {
-    goto error;
-  }
-  if (! Cmdr.getInt(OutId))
-  {
-    goto error;
-  }
-  if (! Cmdr.getInt(State))
-  {
-    goto error;
-  }
-  if (! Cmdr.getInt(Timer))
-  {
-    //goto finish;
-  }
-
-  tLightControlOutgoingFrames::SendMsgSetOutput(Dst, OutId, State, Timer);
-  return true;
-error:
-  Cmdr.println(F("Usage: SetOutput dst_dev_id output_id state[0/1] [timer[sec]]"));
-  return false;
 }
 
 bool send_addAction(Commander &Cmdr)
@@ -198,38 +123,6 @@ bool send_GetEepromCrc(Commander &Cmdr)
   else
   {
     Cmdr.println(F("Usage: StateOverview dst_dev_id"));
-    return false;
-  }
-
-  return true;
-}
-
-bool send_GetVersion(Commander &Cmdr)
-{
-  int Dst;
-  if(Cmdr.getInt(Dst))
-  {
-    tLightControlOutgoingFrames::SendMsgVersionRequest(Dst);
-  }
-  else
-  {
-    Cmdr.println(F("Usage: GetVersion dst_dev_id"));
-    return false;
-  }
-
-  return true;
-}
-
-bool send_Reset(Commander &Cmdr)
-{
-  int Dst;
-  if(Cmdr.getInt(Dst))
-  {
-    tLightControlOutgoingFrames::SendMsgReset(Dst);
-  }
-  else
-  {
-    Cmdr.println(F("Usage: SendReset dst_dev_id"));
     return false;
   }
 
