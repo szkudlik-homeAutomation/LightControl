@@ -7,7 +7,7 @@
 #include "src/Common_code/TLE8457_serial/TLE8457_serial_lib.h"
 #include "src/Common_code/WatchdogProcess.h"
 #include "src/DigitalInputProcess.h"
-#include "src/tOutputProcess_lightControl.h"
+#include "src/tLightControlOutputProcess.h"
 #include "src/tLightControlIncomingFrameHandler.h"
 
 #if CONFIG_CENTRAL_NODE
@@ -63,7 +63,7 @@ tHttpServlet * ServletFactory(String *pRequestBuffer)
 DigitalInputProcess DigitalInput(sched);
 #endif
 
-tOutputProcess_lightControl OutputProcess(sched);
+tLightControlOutputProcess OutputProcess(sched);
 tWatchdogProcess  WatchdogProcess(sched);
 
 void COMM_SERIAL_EVENT() {

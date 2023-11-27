@@ -15,7 +15,7 @@ using namespace ace_crc::crc16ccitt_nibble;
 
 #include "tLightControlOutgoingFrames.h"
 #include "tLightControlMessages.h"
-#include "tOutputProcess_lightControl.h"
+#include "tLightControlOutputProcess.h"
 
 
 void tLightControlIncomingFrameHandler::onMessage(uint8_t type, uint16_t data, void *pData)

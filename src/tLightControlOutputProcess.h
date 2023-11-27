@@ -1,9 +1,9 @@
 #include "../global.h"
 #include "Common_code/tOutputProcess.h"
 
-class tOutputProcess_lightControl : public tOutputProcess {
+class tLightControlOutputProcess : public tOutputProcess {
 public:
-	tOutputProcess_lightControl(Scheduler &manager) : tOutputProcess(manager) {}
+	tLightControlOutputProcess(Scheduler &manager) : tOutputProcess(manager) {}
 
    virtual void setup()
    {
@@ -28,6 +28,7 @@ public:
        Output[5].SetPin(A0,((OutputPolarity &  (1 << 5)) == 0) ? 0 : 1);
      #endif
    }
-};
+protected:
+    virtual void onMessage(uint8_t type, uint16_t data, void *pData);
 
-extern tOutputProcess_lightControl OutputProcess;
+};
