@@ -1,5 +1,5 @@
 #include "../global.h"
-#include "Common_code/OutputProcess.h"
+#include "Common_code/tOutputProcess.h"
 
 class tOutputProcess_lightControl : public tOutputProcess {
 public:

@@ -1,8 +1,10 @@
 #include "../global.h"
-#include "Common_code/OutputProcess.h"
+#include "Common_code/tOutputProcess.h"
 
 #include "servlets.h"
 #if CONFIG_CENTRAL_NODE
+
+#include "Common_code/TLE8457_serial/TLE8457_serial_lib.h"
 
 bool tjavaScriptServlet::ProcessAndResponse()
 {
@@ -114,12 +116,13 @@ bool tForceButtonPressServlet::ProcessAndResponse()
 
 void tOutputStateServlet::onMessage(uint8_t type, uint16_t data, void *pData)
 {
-	if (data != tLightControlMessages::frameRecieved_OutputStateResponse)
+	if (type != tMessages::MessageType_SerialFrameRecieved || data != MESSAGE_TYPE_OUTPUT_STATE_RESPONSE)
 		return;
 
-	struct tLightControlMessages::tOutputStateResponse *OutputStateResponse = (struct tLightControlMessages::tOutputStateResponse *)pData;
+	tCommunicationFrame *pFrame = (tCommunicationFrame *)pData;
+    tMessageTypeOutputStateResponse *OutputStateResponse = (tMessageTypeOutputStateResponse *)pFrame->Data;
 
-    if (OutputStateResponse->SenderID != mExpectedDevID) return;
+    if (pFrame->SenderDevId != mExpectedDevID) return;
     if (OutputStateResponse->OutputID != mExpectedOutputID) return;
     mPowerState = OutputStateResponse->PowerState;
     mTimerValue = OutputStateResponse->TimerValue;

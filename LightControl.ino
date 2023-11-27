@@ -36,8 +36,12 @@ WorkerProcess Worker(sched);
 tNetwork Network;
 tTcpServerProcess TcpServerProcess(sched,TCP_WATCHDOG_TIMEOUT);
 tHttpServer HttpServer;
+#if CONFIG_SENSOR_HUB
 tSensorHub SensorHub;
-tSensorProcess SensorProcess(sched); 
+#endif
+#if CONFIG_SENSORS
+tSensorProcess SensorProcess(sched);
+#endif
 
 tHttpServlet * ServletFactory(String *pRequestBuffer)
 {
@@ -45,12 +49,13 @@ tHttpServlet * ServletFactory(String *pRequestBuffer)
    if (pRequestBuffer->startsWith("/outputSet")) return new tOutputSetServlet();
    if (pRequestBuffer->startsWith("/timerset")) return new tSetTimerServlet();
    if (pRequestBuffer->startsWith("/button")) return new tForceButtonPressServlet();
+#if CONFIG_SENSOR_STATE_SERVLET
    if (pRequestBuffer->startsWith("/sensorState")) return new tSensorStateServlet();
+#endif
 
    if (pRequestBuffer->startsWith("/1.js")) return new tjavaScriptServlet();
    if (pRequestBuffer->startsWith("/garden")) return new tGardenLightsServlet();
    if (pRequestBuffer->startsWith("/indoorLights")) return new tIndoorLightsServlet();
-
    return new tDefaultPageServlet();
 }
 
@@ -96,12 +101,14 @@ void setup() {
   TcpServerProcess.add(true);
   Worker.add();
   
+#if CONFIG_SENSORS
   SensorProcess.add(true);
   tSystemStatusSensor *pSystemStatusSensor = new tSystemStatusSensor;
 
   pSystemStatusSensor->setConfig(10); // 1 sec
   pSystemStatusSensor->Register(SENSOR_ID_SYSTEM_STATUS,"SystemStatus");
   pSystemStatusSensor->Start();
+#endif CONFIG_SENSORS
   
 #ifdef DEBUG_SERIAL
   DEBUG_SERIAL.println("START Tcp ");

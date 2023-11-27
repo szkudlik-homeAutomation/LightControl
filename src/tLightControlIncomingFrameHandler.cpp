@@ -13,7 +13,6 @@ using namespace ace_crc::crc16ccitt_nibble;
 
 #include "tLightControlIncomingFrameHandler.h"
 
-#include "NodeScanTask.h"
 #include "tLightControlOutgoingFrames.h"
 #include "tLightControlMessages.h"
 #include "tOutputProcess_lightControl.h"
@@ -22,11 +21,6 @@ using namespace ace_crc::crc16ccitt_nibble;
 void tLightControlIncomingFrameHandler::onMessage(uint8_t type, uint16_t data, void *pData)
 {
     uint8_t ret;
-
-    ret = handleCommonMessages(type, data, pData);
-    if (STATUS_SUCCESS == ret)
-        // handled
-        return;
 
     tCommunicationFrame *pFrame = (tCommunicationFrame *)pData;
     uint8_t SenderDevId = pFrame->SenderDevId;
@@ -74,7 +68,7 @@ void tLightControlIncomingFrameHandler::onMessage(uint8_t type, uint16_t data, v
            break;
 
      default:
-         DEBUG_PRINTLN_3("MESSAGE  unknown type, drop");
+    	 tIncomingFrameHanlder::onMessage(type, data, pData);
       }
 }
 

@@ -3,16 +3,13 @@
 #include "tLightControlOutgoingFrames.h"
 #include "Common_code/Network/telnetServer.h"
 #include "lib/Commander/src/Commander.h"
-#include "NodeScanTask.h"
 
 #if CONFIG_CENTRAL_NODE
 
 
-bool helloHandler(Commander &Cmdr);
 bool send_ClearActions(Commander &Cmdr);
 bool send_addAction(Commander &Cmdr);
 bool send_GetEepromCrc(Commander &Cmdr);
-bool trigger_ScanNodes(Commander &Cmdr);
 bool send_SetDefaultTimer(Commander &Cmdr);
 bool send_GetDefaultTimer(Commander &Cmdr);
 bool send_ButtonPress(Commander &Cmdr);
@@ -127,11 +124,6 @@ bool send_GetEepromCrc(Commander &Cmdr)
   }
 
   return true;
-}
-
-bool trigger_ScanNodes(Commander &Cmdr)
-{
-	NodeScanTask::trigger();
 }
 
 bool send_SetDefaultTimer(Commander &Cmdr)
