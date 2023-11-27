@@ -14,7 +14,6 @@ using namespace ace_crc::crc16ccitt_nibble;
 #include "tLightControlIncomingFrameHandler.h"
 
 #include "tLightControlOutgoingFrames.h"
-#include "tLightControlMessages.h"
 #include "tLightControlOutputProcess.h"
 
 
@@ -184,7 +183,12 @@ void tLightControlIncomingFrameHandler::HandleMsgEepromCrcRequest(uint8_t Sender
 void tLightControlIncomingFrameHandler::HandleMsgEepromCrcResponse(uint8_t SenderID, tMessageTypeEepromCRCResponse* Message)
 {
 #if CONFIG_CENTRAL_NODE
-	tLightControlMessages::EepromCRCResponseHandler(SenderID,Message->NumOfActions,Message->EepromCRC);
+	LOG_PRINT("Eeprom CRC for device ");
+	LOG(print(SenderID,HEX));
+	LOG_PRINT(" num of actions=");
+	LOG(print(Message->NumOfActions,DEC));
+	LOG_PRINT(" CRC=");
+	LOG(println(Message->EepromCRC,DEC));
 #endif
 }
 
@@ -205,7 +209,11 @@ void tLightControlIncomingFrameHandler::HandleMsgDefaultTimerRequest(uint8_t Sen
 void tLightControlIncomingFrameHandler::HandleMsgDefaultTimerResponse(uint8_t SenderID, tMessageTypeDefaultTimerResponse *Message)
 {
 #if CONFIG_CENTRAL_NODE
-	tLightControlMessages::DefaultTimerResponseHandler(SenderID,Message->OutputID,Message->DefTimerValue);
+	LOG_PRINT("Default timer for device ");
+	LOG(print(SenderID,HEX));
+	LOG_PRINT(" outId ");
+	LOG(print(Message->OutputID,DEC));
+	LOG_PRINT("=");
+	LOG(println(Message->DefTimerValue,DEC));
 #endif
 }
-
