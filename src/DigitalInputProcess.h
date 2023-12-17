@@ -50,8 +50,9 @@ private:
 class DigitalInputProcess : public Process
 {
   public:
-  DigitalInputProcess(Scheduler &manager) : 
-    Process(manager,LOW_PRIORITY,DIGITAL_INPUT_PROCESS_SERVICE_TIME) {}
+	static DigitalInputProcess *Instance;
+    DigitalInputProcess(Scheduler &manager) :
+    Process(manager,LOW_PRIORITY,DIGITAL_INPUT_PROCESS_SERVICE_TIME) { Instance = this; }
   
   virtual void setup();
   virtual void service();
@@ -61,5 +62,3 @@ private:
   
   Button mButton[mNumOfActiveButtons];  
 };
-
-extern DigitalInputProcess DigitalInput;

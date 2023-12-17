@@ -3,6 +3,9 @@
 #include "tLightControlOutgoingFrames.h"
 #include "Common_code/TLE8457_serial/TLE8457_serial_lib.h"
 
+
+DigitalInputProcess *DigitalInputProcess::Instance = NULL;
+
 void DigitalInputProcess::setup()
 {
     uint16_t InputPolarity;

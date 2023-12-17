@@ -20,7 +20,7 @@ bool tLightControlOutgoingFrames::SendMsgButtonPress(uint8_t RecieverID, uint8_t
   Msg.ForceSrcId = ForceSrcId;
 
   DEBUG_PRINTLN_3("===================>sending MESSAGE_BUTTON_PRESS");
-  CommSender.Enqueue(RecieverID,MESSAGE_BUTTON_PRESS,sizeof(Msg),&Msg);
+  CommSenderProcess::Instance->Enqueue(RecieverID,MESSAGE_BUTTON_PRESS,sizeof(Msg),&Msg);
   return true;
 };
 
@@ -28,7 +28,7 @@ bool tLightControlOutgoingFrames::SendMsgClearAllActions(uint8_t RecieverID)
 {
 #if CONFIG_CENTRAL_NODE
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_CLEAR_ACTIONS");
-  CommSender.Enqueue(RecieverID,MESSAGE_TYPE_CLEAR_ACTIONS,0,NULL);
+  CommSenderProcess::Instance->Enqueue(RecieverID,MESSAGE_TYPE_CLEAR_ACTIONS,0,NULL);
 #endif
   return true;
 };
@@ -47,7 +47,7 @@ bool tLightControlOutgoingFrames::SendMsgAddAction(uint8_t RecieverID, uint8_t O
   Message.OutputsStates = OutputsStates;
 
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_SET_ACTION");
-  CommSender.Enqueue(RecieverID,MESSAGE_TYPE_SET_ACTION,sizeof(Message),&Message);
+  CommSenderProcess::Instance->Enqueue(RecieverID,MESSAGE_TYPE_SET_ACTION,sizeof(Message),&Message);
 #endif
   return true;
 };
@@ -57,7 +57,7 @@ bool tLightControlOutgoingFrames::SendMsgEepromCrcRequest(uint8_t RecieverID)
 {
 #if CONFIG_CENTRAL_NODE
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_EEPROM_CRC_REQUEST");
-  CommSender.Enqueue(RecieverID,MESSAGE_TYPE_EEPROM_CRC_REQUEST,0,NULL);
+  CommSenderProcess::Instance->Enqueue(RecieverID,MESSAGE_TYPE_EEPROM_CRC_REQUEST,0,NULL);
 #endif
   return true;
 }
@@ -68,7 +68,7 @@ bool tLightControlOutgoingFrames::SendMsgEepromCrcResponse(uint8_t RecieverID,  
   Msg.NumOfActions = NumOfActions;
   Msg.EepromCRC = EepromCRC;
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_EEPROM_CRC_RESPONSE");
-  CommSender.Enqueue(RecieverID,MESSAGE_TYPE_EEPROM_CRC_RESPONSE,sizeof(Msg),&Msg);
+  CommSenderProcess::Instance->Enqueue(RecieverID,MESSAGE_TYPE_EEPROM_CRC_RESPONSE,sizeof(Msg),&Msg);
   return true;
 };
 
@@ -79,7 +79,7 @@ bool tLightControlOutgoingFrames::SendMsgSetDefaultTimer(uint8_t RecieverID, uin
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_SET_DEFAULT_TIMER");
   Msg.OutputID = OutputID;
   Msg.DefaultTimerValue = DefTimerValue;
-  CommSender.Enqueue(RecieverID,MESSAGE_TYPE_SET_DEFAULT_TIMER,sizeof(Msg),&Msg);
+  CommSenderProcess::Instance->Enqueue(RecieverID,MESSAGE_TYPE_SET_DEFAULT_TIMER,sizeof(Msg),&Msg);
 }
 
 bool tLightControlOutgoingFrames::SendMsgDefaultTimerRequest(uint8_t RecieverID, uint8_t OutputID)
@@ -87,7 +87,7 @@ bool tLightControlOutgoingFrames::SendMsgDefaultTimerRequest(uint8_t RecieverID,
   tMessageTypeDefaultTimerRequest Msg;
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_DEFAULT_TIMER_REQUEST");
   Msg.OutputID = OutputID;
-  CommSender.Enqueue(RecieverID,MESSAGE_TYPE_DEFAULT_TIMER_REQUEST,sizeof(Msg),&Msg);
+  CommSenderProcess::Instance->Enqueue(RecieverID,MESSAGE_TYPE_DEFAULT_TIMER_REQUEST,sizeof(Msg),&Msg);
 }
 
 bool tLightControlOutgoingFrames::SendMsgDefaultTimerResponse(uint8_t RecieverID, uint8_t OutputID, uint16_t DefTimerValue)
@@ -96,6 +96,6 @@ bool tLightControlOutgoingFrames::SendMsgDefaultTimerResponse(uint8_t RecieverID
   DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_DEFAULT_TIMER_RESPONSE");
   Msg.OutputID = OutputID;
   Msg.DefTimerValue = DefTimerValue;
-  CommSender.Enqueue(RecieverID,MESSAGE_TYPE_DEFAULT_TIMER_RESPONSE,sizeof(Msg),&Msg);
+  CommSenderProcess::Instance->Enqueue(RecieverID,MESSAGE_TYPE_DEFAULT_TIMER_RESPONSE,sizeof(Msg),&Msg);
 }
 
