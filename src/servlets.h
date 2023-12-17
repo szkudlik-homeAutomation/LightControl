@@ -60,7 +60,7 @@ class tOutputStateServlet : public tHttpServlet, public tMessageReciever
   public:
   tOutputStateServlet() :  tHttpServlet(), mRequestSent(false)
   {
-	  RegisterMessageType(tMessages::MessageType_SerialFrameRecieved);
+	  RegisterMessageType(MessageType_SerialFrameRecieved);
   }
 
   virtual ~tOutputStateServlet() {}

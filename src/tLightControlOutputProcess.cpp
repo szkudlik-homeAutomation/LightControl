@@ -12,7 +12,7 @@
 
 void tLightControlOutputProcess::onMessage(uint8_t type, uint16_t data, void *pData)
 {
-    if (type != tMessages::MessageType_SerialFrameRecieved)
+    if (type != MessageType_SerialFrameRecieved)
     {
     	tOutputProcess::onMessage(type, data, pData);
         return;

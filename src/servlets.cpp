@@ -116,7 +116,7 @@ bool tForceButtonPressServlet::ProcessAndResponse()
 
 void tOutputStateServlet::onMessage(uint8_t type, uint16_t data, void *pData)
 {
-	if (type != tMessages::MessageType_SerialFrameRecieved || data != MESSAGE_TYPE_OUTPUT_STATE_RESPONSE)
+	if (type != MessageType_SerialFrameRecieved || data != MESSAGE_TYPE_OUTPUT_STATE_RESPONSE)
 		return;
 
 	tCommunicationFrame *pFrame = (tCommunicationFrame *)pData;
