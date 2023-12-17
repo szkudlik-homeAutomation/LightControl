@@ -8,11 +8,12 @@
 #pragma once
 
 #include "../global.h"
-#include "Common_code/TLE8457_serial/tIncomingFrameHanlder.h"
+#include "Common_code/tMessageReciever.h"
+#include "Common_code/tMessages.h"
 
-class tLightControlIncomingFrameHandler: public tIncomingFrameHanlder {
+class tLightControlIncomingFrameHandler : public tMessageReciever {
 public:
-   tLightControlIncomingFrameHandler() : tIncomingFrameHanlder() { }
+   tLightControlIncomingFrameHandler() : tMessageReciever() { RegisterMessageType(tMessages::MessageType_SerialFrameRecieved); }
 
    virtual void onMessage(uint8_t type, uint16_t data, void *pData);
 

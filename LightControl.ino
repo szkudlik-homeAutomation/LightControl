@@ -5,6 +5,7 @@
 #include "src/lib/ArduinoProcessScheduler/src/ProcessScheduler.h"
 
 #include "src/Common_code/TLE8457_serial/TLE8457_serial_lib.h"
+#include "src/Common_code/TLE8457_serial/tIncomingFrameHanlder.h"
 #include "src/Common_code/WatchdogProcess.h"
 #include "src/DigitalInputProcess.h"
 #include "src/tLightControlOutputProcess.h"
@@ -27,7 +28,8 @@
 #define TCP_WATCHDOG_TIMEOUT 600 
 
 Scheduler sched;
-tLightControlIncomingFrameHandler IncomingFrameHandler;
+tIncomingFrameHanlder CommonIncomingFrameHandler;
+tLightControlIncomingFrameHandler LightControlIncomingFrameHandler;
 CommRecieverProcess CommReciever(sched,EEPROM.read(EEPROM_DEVICE_ID_OFFSET));
 CommSenderProcess CommSender(sched,EEPROM.read(EEPROM_DEVICE_ID_OFFSET),EEPROM.read(EEPROM_DEVICE_ID_OFFSET));
 

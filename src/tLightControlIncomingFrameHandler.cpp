@@ -15,6 +15,7 @@ using namespace ace_crc::crc16ccitt_nibble;
 
 #include "tLightControlOutgoingFrames.h"
 #include "tLightControlOutputProcess.h"
+#include "Common_code/TLE8457_serial/TLE8457_serial_lib.h"
 
 
 void tLightControlIncomingFrameHandler::onMessage(uint8_t type, uint16_t data, void *pData)
@@ -65,9 +66,6 @@ void tLightControlIncomingFrameHandler::onMessage(uint8_t type, uint16_t data, v
              DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_DEFAULT_TIMER_RESPONSE");
              HandleMsgDefaultTimerResponse(SenderDevId,(tMessageTypeDefaultTimerResponse*)(pFrame->Data));
            break;
-
-     default:
-    	 tIncomingFrameHanlder::onMessage(type, data, pData);
       }
 }
 
