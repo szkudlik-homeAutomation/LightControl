@@ -9,7 +9,7 @@
 #include "src/Common_code/WatchdogProcess.h"
 #include "src/DigitalInputProcess.h"
 #include "src/tLightControlOutputProcess.h"
-#include "src/tLightControlIncomingFrameHandler.h"
+#include "src/tLightControl.h"
 
 #if CONFIG_CENTRAL_NODE
 #include "src/Common_code/WorkerProcess.h"
@@ -29,7 +29,7 @@
 
 Scheduler sched;
 tIncomingFrameHanlder CommonIncomingFrameHandler;
-tLightControlIncomingFrameHandler LightControlIncomingFrameHandler;
+tLightControl LightControlIncomingFrameHandler;
 CommRecieverProcess CommReciever(sched,EEPROM.read(EEPROM_DEVICE_ID_OFFSET));
 CommSenderProcess CommSender(sched,EEPROM.read(EEPROM_DEVICE_ID_OFFSET),EEPROM.read(EEPROM_DEVICE_ID_OFFSET));
 

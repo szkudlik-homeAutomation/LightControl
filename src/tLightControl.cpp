@@ -11,14 +11,14 @@
 using namespace ace_crc::crc16ccitt_nibble;
 
 
-#include "tLightControlIncomingFrameHandler.h"
+#include "tLightControl.h"
 
 #include "tLightControlOutgoingFrames.h"
 #include "tLightControlOutputProcess.h"
 #include "Common_code/TLE8457_serial/TLE8457_serial_lib.h"
 
 
-void tLightControlIncomingFrameHandler::onMessage(uint8_t type, uint16_t data, void *pData)
+void tLightControl::onMessage(uint8_t type, uint16_t data, void *pData)
 {
     uint8_t ret;
 
@@ -69,7 +69,7 @@ void tLightControlIncomingFrameHandler::onMessage(uint8_t type, uint16_t data, v
       }
 }
 
-void tLightControlIncomingFrameHandler::HandleMsgButtonPress(uint8_t SenderID, tMessageTypeButtonPress *Message)
+void tLightControl::HandleMsgButtonPress(uint8_t SenderID, tMessageTypeButtonPress *Message)
 {
 #if CONFIG_CENTRAL_NODE
 	DEBUG_PRINT_3("Dev ID:");
@@ -143,13 +143,13 @@ void tLightControlIncomingFrameHandler::HandleMsgButtonPress(uint8_t SenderID, t
 }
 
 
-void tLightControlIncomingFrameHandler::HandleMsgClearAllActions(uint8_t SenderID)
+void tLightControl::HandleMsgClearAllActions(uint8_t SenderID)
 {
     EEPROM.write(EEPROM_ACTION_TABLE_USAGE_OFFSET,0);
 }
 
 
-void tLightControlIncomingFrameHandler::HandleMsgSetAction(uint8_t SenderID, tMessageTypeSetAction* Message)
+void tLightControl::HandleMsgSetAction(uint8_t SenderID, tMessageTypeSetAction* Message)
 {
   uint8_t ActionTableUsage = EEPROM.read(EEPROM_ACTION_TABLE_USAGE_OFFSET);
   if (ActionTableUsage < ACTION_TABLE_SIZE)
@@ -161,7 +161,7 @@ void tLightControlIncomingFrameHandler::HandleMsgSetAction(uint8_t SenderID, tMe
 }
 
 
-void tLightControlIncomingFrameHandler::HandleMsgEepromCrcRequest(uint8_t SenderID)
+void tLightControl::HandleMsgEepromCrcRequest(uint8_t SenderID)
 {
 
   int NumOfActions = EEPROM.read(EEPROM_ACTION_TABLE_USAGE_OFFSET);
@@ -178,7 +178,7 @@ void tLightControlIncomingFrameHandler::HandleMsgEepromCrcRequest(uint8_t Sender
 }
 
 
-void tLightControlIncomingFrameHandler::HandleMsgEepromCrcResponse(uint8_t SenderID, tMessageTypeEepromCRCResponse* Message)
+void tLightControl::HandleMsgEepromCrcResponse(uint8_t SenderID, tMessageTypeEepromCRCResponse* Message)
 {
 #if CONFIG_CENTRAL_NODE
 	LOG_PRINT("Eeprom CRC for device ");
@@ -190,13 +190,13 @@ void tLightControlIncomingFrameHandler::HandleMsgEepromCrcResponse(uint8_t Sende
 #endif
 }
 
-void tLightControlIncomingFrameHandler::HandleMsgSetDefaultTimer(uint8_t SenderID, tMessageTypeSetDefaultTimer *Message)
+void tLightControl::HandleMsgSetDefaultTimer(uint8_t SenderID, tMessageTypeSetDefaultTimer *Message)
 {
   if (Message->OutputID >= NUM_OF_OUTPUTS) return;
   EEPROM.put(EEPROM_DEFAULT_TIMER_VALUE_OFFSET+Message->OutputID*(sizeof(uint16_t)),Message->DefaultTimerValue);
 }
 
-void tLightControlIncomingFrameHandler::HandleMsgDefaultTimerRequest(uint8_t SenderID, tMessageTypeDefaultTimerRequest *Message)
+void tLightControl::HandleMsgDefaultTimerRequest(uint8_t SenderID, tMessageTypeDefaultTimerRequest *Message)
 {
   if (Message->OutputID >= NUM_OF_OUTPUTS) return;
   uint16_t DefTimer;
@@ -204,7 +204,7 @@ void tLightControlIncomingFrameHandler::HandleMsgDefaultTimerRequest(uint8_t Sen
   tLightControlOutgoingFrames::SendMsgDefaultTimerResponse(SenderID,Message->OutputID,DefTimer);
 }
 
-void tLightControlIncomingFrameHandler::HandleMsgDefaultTimerResponse(uint8_t SenderID, tMessageTypeDefaultTimerResponse *Message)
+void tLightControl::HandleMsgDefaultTimerResponse(uint8_t SenderID, tMessageTypeDefaultTimerResponse *Message)
 {
 #if CONFIG_CENTRAL_NODE
 	LOG_PRINT("Default timer for device ");

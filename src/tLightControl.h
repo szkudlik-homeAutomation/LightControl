@@ -10,9 +10,9 @@
 #include "../global.h"
 #include "Common_code/tMessageReciever.h"
 
-class tLightControlIncomingFrameHandler : public tMessageReciever {
+class tLightControl : public tMessageReciever {
 public:
-   tLightControlIncomingFrameHandler() : tMessageReciever() { RegisterMessageType(MessageType_SerialFrameRecieved); }
+   tLightControl() : tMessageReciever() { RegisterMessageType(MessageType_SerialFrameRecieved); }
 
    virtual void onMessage(uint8_t type, uint16_t data, void *pData);
 
