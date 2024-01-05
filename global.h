@@ -20,8 +20,6 @@
 
 #include <Arduino.h>
 
-#define CONFIG_CENTRAL_NODE 1
-
 #if CONFIG_CENTRAL_NODE
 
 //#define DEBUG_1_ENABLE
@@ -31,7 +29,7 @@
 #define DEBUG_SERIAL Serial
 #define DEBUG_SERIAL_EVENT serialEvent
 
-#endif CONFIG_CENTRAL_NODE
+#endif //CONFIG_CENTRAL_NODE
 
 //todo: move
 #define CENTRAL_NODE_DEVICE_ID 1
