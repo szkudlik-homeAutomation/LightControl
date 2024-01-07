@@ -1,6 +1,8 @@
 #pragma once
 
 #include "../global.h"
+#include "../src/Common_code/helpers.h"
+#include "TLE8457_serial_lib_defs.h"
 
 // a double click - two short clicks occur before max time
 #define DOUBLE_CLICK_TICKS_MAX   8   // 400ms 
@@ -22,6 +24,7 @@ typedef struct
   uint16_t DoubleClick;  // bitmap of new double clicks
   uint8_t  ForceSrcId;   // if != 0, the reciever will take this as a sender ID. If == 0, the real sender will be taken (for compatibility)
 } tMessageTypeButtonPress;
+C_ASSERT(sizeof(tMessageTypeButtonPress) <= COMMUNICATION_PAYLOAD_DATA_SIZE);
 
 /**
  * Set a reaction for a button pressed 
@@ -49,6 +52,7 @@ typedef struct
   uint8_t  OutputsMask;   // bitmap of other outputs to be checked before action
   uint8_t  OutputsStates; // required states of outputs. All masked bits MUST be zero
 } tMessageTypeSetAction;
+C_ASSERT(sizeof(tMessageTypeSetAction) <= COMMUNICATION_PAYLOAD_DATA_SIZE);
 
 
 /**
@@ -67,6 +71,7 @@ typedef struct
   uint8_t  NumOfActions;
   uint16_t EepromCRC;
 } tMessageTypeEepromCRCResponse;
+C_ASSERT(sizeof(tMessageTypeEepromCRCResponse) <= COMMUNICATION_PAYLOAD_DATA_SIZE);
 
 #define MESSAGE_TYPE_SET_DEFAULT_TIMER 0x0F
 typedef struct 
@@ -74,12 +79,14 @@ typedef struct
   uint8_t  OutputID;              // output ID 
   uint16_t DefaultTimerValue;     // timer value
 } tMessageTypeSetDefaultTimer;
+C_ASSERT(sizeof(tMessageTypeSetDefaultTimer) <= COMMUNICATION_PAYLOAD_DATA_SIZE);
 
 #define MESSAGE_TYPE_DEFAULT_TIMER_REQUEST 0x10
 typedef struct 
 {
   uint8_t  OutputID;      // id of an output 
 } tMessageTypeDefaultTimerRequest;
+C_ASSERT(sizeof(tMessageTypeDefaultTimerRequest) <= COMMUNICATION_PAYLOAD_DATA_SIZE);
 
 
 #define MESSAGE_TYPE_DEFAULT_TIMER_RESPONSE 0x11
@@ -88,4 +95,49 @@ typedef struct
   uint8_t  OutputID;      // id of an output
   uint16_t DefTimerValue; // default timer. 0 means there's no timer (set forever)
 } tMessageTypeDefaultTimerResponse;
+C_ASSERT(sizeof(tMessageTypeDefaultTimerResponse) <= COMMUNICATION_PAYLOAD_DATA_SIZE);
 
+/**
+ * Erase all codes - clear Eeprom codes  map, all codes need to be re-programmed
+ * for keyCode
+ */
+#define MESSAGE_TYPE_CLEAR_CODES 0x80
+
+/**
+ * add a code to eeprom
+ */
+typedef struct
+{
+	uint8_t size;		// code size, 0 - a dongle, otherwise - number of digits
+	uint32_t code;		// a code in binary format
+
+	uint8_t ValidStart;	    // valid only between start-end. If 0 - valid always.
+	uint8_t ValidEnd;		// start-end is a time code from the central node. Only older byte from 16-bit timestamp
+    uint8_t ButtonBitmap;   // bitmap of buttons shortClick in MESSAGE_BUTTON_PRESS triggered by this key
+    						// incorrect code triggers all buttons long pressed
+                            // NOTE - for backward compatibility with LightControl, where messages are 8 bytes long, bitmap must be shortened to 8 bits
+} tMessageTypeAddCode;
+C_ASSERT(sizeof(tMessageTypeAddCode) <= COMMUNICATION_PAYLOAD_DATA_SIZE);
+#define MESSAGE_TYPE_ADD_CODE 0x81
+
+/**
+ * trigger a code - for debug, inject code as if entered on keypad
+ */
+typedef struct
+{
+	uint8_t size;		// code size, 0 - a dongle, otherwise - number of digits
+	uint32_t code;		// a code in binary format
+} tMessageTypeTriggerCode;
+C_ASSERT(sizeof(tMessageTypeTriggerCode) <= COMMUNICATION_PAYLOAD_DATA_SIZE);
+#define MESSAGE_TYPE_TRIGGER_CODE 0x82
+
+/**
+ * code recieved - an event, to retrieve all codes. Sent as a broadcast
+ */
+typedef struct
+{
+	uint8_t size;		// code size, 0 - a dongle, otherwise - number of digits
+	uint32_t code;		// a code in binary format
+} tMessageTypeCodeRecieved;
+C_ASSERT(sizeof(tMessageTypeCodeRecieved) <= COMMUNICATION_PAYLOAD_DATA_SIZE);
+#define MESSAGE_TYPE_CODE_RECIEVED 0x83

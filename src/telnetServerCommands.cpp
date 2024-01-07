@@ -13,6 +13,9 @@ bool send_GetEepromCrc(Commander &Cmdr);
 bool send_SetDefaultTimer(Commander &Cmdr);
 bool send_GetDefaultTimer(Commander &Cmdr);
 bool send_ButtonPress(Commander &Cmdr);
+bool send_ClearCodes(Commander &Cmdr);
+bool send_addCode(Commander &Cmdr);
+bool send_triggerCode(Commander &Cmdr);
 
 const commandList_t TelnetCommands[] = {
   {"enableLogs",      TelnetEnableLogs,             "enable logs on telnet console"},
@@ -29,7 +32,9 @@ const commandList_t TelnetCommands[] = {
   {"Reset",           send_Reset,                   "MESSAGE_TYPE_FORCE_RESET dev_id (may be 255 - broadcast)"},
   {"ScanActiveNodes", trigger_ScanNodes,            "Scan the bus for nodes from 1 to 32"},
   {"addAction",       send_addAction,               "MESSAGE_TYPE_SET_ACTION dev_id OutId SenderID ButtonId [ Timer TriggerType ActionType OutputsMask OutputsStates ]"},
-};
+  {"ClearCodes",      send_ClearCodes,              "KEY CODE: ClearCodes dev_id"},
+  {"AddCode",       send_addCode, "KEY CODE: AddCode dev_id type code ButtonBitmap"},
+  {"TriggerCode",   send_triggerCode, "KEY CODE: TriggerCode dev_id type code"},};
 
 tTelnetServer TelnetServer(TelnetCommands,sizeof(TelnetCommands));
 

@@ -1,6 +1,5 @@
 #include "global.h"
 
-
 #include <Arduino.h>
 #include "src/lib/ArduinoProcessScheduler/src/ProcessScheduler.h"
 
@@ -12,8 +11,9 @@
 #include "src/tLightControl.h"
 
 #if CONFIG_CENTRAL_NODE
-#include "src/Common_code/WorkerProcess.h"
 #include "src/servlets.h"
+#include "src/tKeyRecieverMessageLog.h"
+#include "src/Common_code/WorkerProcess.h"
 #include "src/Common_code/sensors/tSensor.h"
 #include "src/Common_code/sensors/tSensorHub.h"
 #include "src/Common_code/sensors/tSystemStatusSensor.h"
@@ -34,6 +34,7 @@ CommRecieverProcess CommReciever(sched,EEPROM.read(EEPROM_DEVICE_ID_OFFSET));
 CommSenderProcess CommSender(sched,EEPROM.read(EEPROM_DEVICE_ID_OFFSET),EEPROM.read(EEPROM_DEVICE_ID_OFFSET));
 
 #if CONFIG_CENTRAL_NODE
+tKeyRecieverMessageLog KeyRecieverMessageLog;
 WorkerProcess Worker(sched);
 tNetwork Network;
 tTcpServerProcess TcpServerProcess(sched,TCP_WATCHDOG_TIMEOUT);
