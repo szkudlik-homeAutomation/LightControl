@@ -27,8 +27,8 @@ void tKeyRecieverMessageLog::onMessage(uint8_t type, uint16_t data, void *pData)
 
 void tKeyRecieverMessageLog::HandleMsgCodeRecieved(tMessageTypeCodeRecieved *Msg)
 {
-    LOG_PRINT(" Code recieved, type: ");
-    LOG(print(Msg->type, DEC));
+    LOG_PRINT(" Code received, size: ");
+    LOG(print(Msg->size, DEC));
     LOG_PRINT(" value: ");
     LOG(print(Msg->code, DEC));
     LOG_PRINT(" 0x");
