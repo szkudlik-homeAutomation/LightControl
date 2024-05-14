@@ -59,6 +59,16 @@
 #define CONFIG_WATCHDOG 1
 
 
+#if APP_Central
+#include "appDefs\central.h"
+#elif APP_generalTest
+#include "appDefs\generalTest.h"
+#elif APP_node
+#include "appDefs\node.h"
+#else
+#error no app defined
+#endif
+
 #include "GlobalDefs/TLE8457_serial_lib_defs.h"
 #include "GlobalDefs/version.h"
 #include "GlobalDefs/Eeprom.h"
