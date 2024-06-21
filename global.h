@@ -20,17 +20,6 @@
 
 #include <Arduino.h>
 
-#if CONFIG_CENTRAL_NODE
-
-//#define DEBUG_1_ENABLE
-//#define DEBUG_2_ENABLE
-#define DEBUG_3_ENABLE
-
-#define DEBUG_SERIAL Serial
-#define DEBUG_SERIAL_EVENT serialEvent
-
-#endif //CONFIG_CENTRAL_NODE
-
 //todo: move
 #define CENTRAL_NODE_DEVICE_ID 1
 #define DEVICE_ID_BROADCAST 0xFF
@@ -39,22 +28,6 @@
 #define CONFIG_OUTPUT_PROCESS 1
 
 #include "GlobalDefs/CommDefs.h"
-
-#if CONFIG_CENTRAL_NODE
-#define CONFIG_NETWORK 1
-#define CONFIG_HTTP_SERVER 1
-#define CONFIG_LOGGER 1
-#define CONFIG_TELNET_SERVER 1
-#define CONFIG_WORKER_PROCESS 1
-#define CONFIG_NODE_SCAN_TASK 1
-
-#define CONFIG_SENSORS 0
-#define CONFIG_SENSOR_HUB 0
-#define CONFIG_SENSORS_JSON_OUTPUT 0
-#define CONFIG_SYSTEM_STATUS_SENSOR 0
-#define CONFIG_SENSOR_STATE_SERVLET 0
-
-#endif
 
 #define CONFIG_WATCHDOG 1
 
