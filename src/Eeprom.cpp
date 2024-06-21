@@ -15,10 +15,11 @@ void SetDefaultEEPromValues()
     EEPROM.write(EEPROM_DEFAULT_TIMER_VALUE_OFFSET+i*(sizeof(uint16_t))+1,0); //16bit
   }
 
-#if CONFIG_CENTRAL_NODE
-
-  EEPROM.write(EEPROM_DEVICE_ID_OFFSET,CENTRAL_NODE_DEVICE_ID);
+#if FORCE_DEVICE_ID
+  EEPROM.write(EEPROM_DEVICE_ID_OFFSET,FORCE_DEVICE_ID);
+#endif // FORCE_DEVICE_ID
   
+#if CONFIG_NETWORK
   EEPROM.write(EEPROM_IP+0,192);
   EEPROM.write(EEPROM_IP+1,168);
   EEPROM.write(EEPROM_IP+2,101);
@@ -41,6 +42,5 @@ void SetDefaultEEPromValues()
   EEPROM.write(EEPROM_MAC+3,0x2A);
   EEPROM.write(EEPROM_MAC+4,0x16);
   EEPROM.write(EEPROM_MAC+5,0x78);
-
-#endif
+#endif // CONFIG_NETWORK
 }

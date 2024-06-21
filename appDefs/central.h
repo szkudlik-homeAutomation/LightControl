@@ -1,6 +1,8 @@
 #pragma once
 
+#define CONFIG_CENTRAL_NODE 1
 
+#define FORCE_DEVICE_ID CENTRAL_NODE_DEVICE_ID
 
 //#define DEBUG_1_ENABLE
 //#define DEBUG_2_ENABLE

@@ -8,19 +8,8 @@
  */
 #pragma once
 
-
-// #define CONFIG_TLE8457_serial_lib
-
-#ifdef __AVR_ATmega2560__
-#define CONFIG_CENTRAL_NODE 1
-#elif __AVR_ATmega328P__
-#else
-#error unknown board
-#endif
-
 #include <Arduino.h>
 
-//todo: move
 #define CENTRAL_NODE_DEVICE_ID 1
 #define DEVICE_ID_BROADCAST 0xFF
 
