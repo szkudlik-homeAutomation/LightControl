@@ -2,15 +2,45 @@
 
 #include "../global.h"
 #include "../src/Common_code/helpers.h"
-#include "TLE8457_serial_lib_defs.h"
 
 // a double click - two short clicks occur before max time
 #define DOUBLE_CLICK_TICKS_MAX   8   // 400ms 
 
-// maximum number of nodes, should not be mode than 32 because of bitmaps
-#define MAX_NUM_OF_NODES 32
+// TLE8457_serial_lib required macros
 
-#define NUM_OF_OUTPUTS 8
+/**
+ * MAX_TRANSMIT_DELAY
+ *
+ * Maximum allowed delay between retransmissions
+ */
+#define MAX_TRANSMIT_DELAY 100
+
+/**
+ * Number of retransmissions in case of collision
+ */
+#define MAX_NUM_OF_RETRANSMISSIONS 5
+
+/**
+ * Number of retransmissions of every transmission
+ */
+#define NUM_OF_RETRANSMISSIONS 1
+
+/**
+ * COMMUNICATION_PAYLOAD_DATA_SIZE
+ *
+ * number of avaliable payload data in a communication frame
+ */
+#define COMMUNICATION_PAYLOAD_DATA_SIZE 8
+
+/**
+ * FRAME_TRANSMISSION_TIME
+ *
+ * estimated frame transmission time
+ * calculate it based on baud rate and frame size
+ */
+#define FRAME_TRANSMISSION_TIME 20
+
+#define TRANSMISSION_SPEED 9600
 
 /**
  * Sent by the central node - arbitrary set state of a single output

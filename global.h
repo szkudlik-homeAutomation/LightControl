@@ -27,9 +27,12 @@
 #define CONFIG_TLE8457_COMM_LIB 1
 #define CONFIG_OUTPUT_PROCESS 1
 
-#include "GlobalDefs/CommDefs.h"
-
 #define CONFIG_WATCHDOG 1
+
+// maximum number of nodes, should not be mode than 32 because of bitmaps
+#define MAX_NUM_OF_NODES 32
+
+#define NUM_OF_OUTPUTS 8
 
 
 #if APP_Central
@@ -42,7 +45,7 @@
 #error no app defined
 #endif
 
-#include "GlobalDefs/TLE8457_serial_lib_defs.h"
+#include "GlobalDefs/CommDefs.h"
 #include "GlobalDefs/version.h"
 #include "GlobalDefs/Eeprom.h"
 //#include "GlobalDefs/outputPins.h"
