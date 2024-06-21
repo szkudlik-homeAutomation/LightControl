@@ -4,8 +4,7 @@
 #include "Common_code/Network/telnetServer.h"
 #include "lib/Commander/src/Commander.h"
 
-#if CONFIG_CENTRAL_NODE
-
+#if CONFIG_TELNET_SERVER
 
 bool send_ClearActions(Commander &Cmdr);
 bool send_addAction(Commander &Cmdr);
@@ -214,4 +213,4 @@ error:
   Cmdr.println(F("Usage: ButtonPress forcedSrcID ShortClick [LongClick DoubleClick] (bitmaps)"));
   return false;
 }
-#endif //CENTRAL_NODE
+#endif // CONFIG_TELNET_SERVER

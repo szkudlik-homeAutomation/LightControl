@@ -1,7 +1,13 @@
 #include "../global.h"
+
+#if CONFIG_DIGITAL_INPUT_PROCESS
+
+// TODO: move to common code
+
 #include "DigitalInputProcess.h"
 #include "tLightControlOutgoingFrames.h"
 #include "Common_code/TLE8457_serial/TLE8457_serial_lib.h"
+
 
 
 DigitalInputProcess *DigitalInputProcess::Instance = NULL;
@@ -94,3 +100,5 @@ uint8_t Button::Process()
 
   return State;
 }
+
+#endif // CONFIG_DIGITAL_INPUT_PROCESS
