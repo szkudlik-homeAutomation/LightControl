@@ -6,6 +6,9 @@
 #elif APP_node
 #include "generated/node.config.h"
 #include "appDefs/node.config.h"
+#elif APP_keyCode
+#include "generated/keyCode.config.h"
+#include "appDefs/keyCode.config.h"
 #else
 #error "Unknown app."
 #endif
