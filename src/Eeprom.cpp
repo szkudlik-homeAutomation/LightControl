@@ -3,8 +3,10 @@
 void SetDefaultEEPromValues(bool force)
 {
 
-  if ((EEPROM.read(EEPROM_CANNARY_OFFSET) == EEPROM_CANNARY) && !force)
+  if (EEPROM.read(EEPROM_CANNARY_OFFSET) == EEPROM_CANNARY) {
+	  DEBUG_PRINTLN_3("Cannary is OK - EEPROM is already initialized");
 	  return;
+  }
 
   DEBUG_PRINTLN_3("!!!!!!!!!!!!!!!!!!!!!!!!! CLEAN EEPROM MEMORY - SETTING DEFAULTS !!!!!!!!!!!!!!!!!");
   EEPROM.write(EEPROM_CANNARY_OFFSET,EEPROM_CANNARY);
