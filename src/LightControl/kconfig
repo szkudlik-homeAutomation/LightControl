@@ -1,0 +1,29 @@
+
+config LIGHT_CONTROL_APP
+    bool "compile light control application"
+    default n
+    select OUTPUT_PROCESS
+        
+config LIGHT_CONTROL_EEPROM_OUTPUTS_POLARITY
+    bool "get outputs polarity from eeprom"
+    default n
+    depends on LIGHT_CONTROL_APP
+
+config LIGHT_CONTROL_LOG_INCOMING_EVENTS
+    bool "log incoming light control events"
+    default n
+    depends on LIGHT_CONTROL_APP
+
+config ACTION_TABLE_SIZE
+    int "number of actions in EEPROM table"
+    default 10
+    depends on LIGHT_CONTROL_APP
+
+config LIGHT_CONTROL_CENTRAL_NODE
+    bool "light control central node"
+    default n
+    depends on LIGHT_CONTROL_APP
+    help
+      this option is enabled, the node will act as a central node 
+      It will be able to send detatiled commands to other nodes 
+      
