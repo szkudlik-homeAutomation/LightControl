@@ -31,6 +31,10 @@ typedef struct __tEeprom
   uint8_t ActionTableUsage;
   tMessageTypeSetAction ActionTableEntry[CONFIG_ACTION_TABLE_SIZE];
 #endif // CONFIG_LIGHT_CONTROL_APP
+#if CONFIG_KEY_CODE_APP
+	uint8_t KeyCodeTableUsage;
+	tMessageTypeAddCode KeyCodeTableEntry[CONFIG_KEY_CODE_TABLE_SIZE];
+#endif // CONFIG_KEY_CODE_APP
 };
 
 #define EEPROM_CANNARY_OFFSET offsetof(__tEeprom,CANNARY)
@@ -48,5 +52,9 @@ typedef struct __tEeprom
 #define EEPROM_ACTION_TABLE_USAGE_OFFSET offsetof(__tEeprom,ActionTableUsage)
 #define EEPROM_ACTION_TABLE_OFFSET offsetof(__tEeprom,ActionTableEntry[0])
 #define EEPROM_CONFIG_ACTION_TABLE_SIZE sizeof(tMessageTypeSetAction)
+
+#define KEY_CODE_TABLE_USAGE_OFFSET offsetof(__tEeprom,KeyCodeTableUsage)
+#define KEY_CODE_TABLE_OFFSET offsetof(__tEeprom,KeyCodeTableEntry[0])
+#define KEY_CODE_TABLE_SIZE sizeof(tMessageTypeAddCode)
 
 void SetDefaultEEPromValues(bool force = false);
