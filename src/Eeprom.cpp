@@ -13,6 +13,16 @@ void SetDefaultEEPromValues(bool force)
 
   // device ID is supposed to be pre-set for a node
 
+#if CONFIG_LIGHT_CONTROL_APP
+  EEPROM.write(EEPROM_ACTION_TABLE_USAGE_OFFSET,0);
+
+  for (uint8_t i=0; i<CONFIG_OUTPUT_PROCESS_NUM_OF_PINS; i++)
+  {
+    EEPROM.write(EEPROM_DEFAULT_TIMER_VALUE_OFFSET+i*(sizeof(uint16_t)),0);
+    EEPROM.write(EEPROM_DEFAULT_TIMER_VALUE_OFFSET+i*(sizeof(uint16_t))+1,0); //16bit
+  }
+#endif //CONFIG_LIGHT_CONTROL_APP
+
 #if CONFIG_NETWORK
   EEPROM.write(EEPROM_IP+0,192);
   EEPROM.write(EEPROM_IP+1,168);

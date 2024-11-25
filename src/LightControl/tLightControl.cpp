@@ -4,6 +4,8 @@
  *  Created on: 10 sie 2022
  *      Author: szkud
  */
+//#define LOCAL_LOGLEVEL_1 1
+//#define LOCAL_LOGLEVEL_2 1
 
 #include "../../global.h"
 
@@ -18,8 +20,8 @@
 #include "../Common_code/TLE8457_serial/TLE8457_serial_lib.h"
 using namespace ace_crc::crc16ccitt_nibble;
 
-
-
+// instance of the class
+tLightControl LightControl;
 
 
 void tLightControl::onMessage(uint8_t type, uint16_t data, void *pData)
@@ -88,11 +90,36 @@ void tLightControl::HandleMsgButtonPress(uint8_t SenderID, tMessageTypeButtonPre
   // iterate through the action table
   tMessageTypeSetAction Action;
   uint8_t i = EEPROM.read(EEPROM_ACTION_TABLE_USAGE_OFFSET);
+  DEBUG_PRINT_1("num of EEPROM entries:");
+  DEBUG_1(println(i,DEC));
+
+
   // remeber output state BEFORE performing action set
   uint8_t OutputState = tOutputProcess::Instance->GetOutputStateMap();
   while (i--)
   {
     EEPROM.get(EEPROM_ACTION_TABLE_OFFSET+(EEPROM_CONFIG_ACTION_TABLE_SIZE*i),Action);
+
+    DEBUG_PRINT_1("Eeprom entry #");
+	DEBUG_1(print(i,DEC));
+
+    DEBUG_PRINT_1(" OutId:");
+	DEBUG_1(print(Action.OutId,DEC));
+	DEBUG_PRINT_1(" SenderDevID:");
+	DEBUG_1(print(Action.SenderDevID,HEX));
+    DEBUG_PRINT_1(" ButtonId:");
+	DEBUG_1(print(Action.SenderDevID,HEX));
+    DEBUG_PRINT_1(" TriggerType:");
+    DEBUG_1(print(Action.TriggerType,DEC));
+    DEBUG_PRINT_1(" ActionType:");
+    DEBUG_1(print(Action.ActionType,DEC));
+    DEBUG_PRINT_1(" Timer:");
+    DEBUG_1(print(Action.Timer,DEC));
+    DEBUG_PRINT_1(" OutputsMask:");
+    DEBUG_1(print(Action.OutputsMask,BIN));
+    DEBUG_PRINT_1(" OutputsStates:");
+    DEBUG_1(println(Action.OutputsStates,BIN));
+
     // does the sender ID match?
     if (Action.SenderDevID != SenderID) continue;
 
@@ -122,10 +149,13 @@ void tLightControl::HandleMsgButtonPress(uint8_t SenderID, tMessageTypeButtonPre
       EEPROM.get(EEPROM_DEFAULT_TIMER_VALUE_OFFSET+Action.OutId*(sizeof(uint16_t)),Timer);
     }
 
+    DEBUG_PRINTLN_2("Action HIT!!!");
+
     switch (Action.ActionType)
     {
       case BUTTON_ACTION_TYPE_ON:
          // when "turn on" action is triggered bu a button, don't set a timer if it is shorter than current timer
+    	DEBUG_PRINTLN_2("Setting output ");
         tOutputProcess::Instance->SetOutput(Action.OutId,1,Timer,tOutputProcess::TimerLongerOnly);
         break;
 
@@ -139,7 +169,6 @@ void tLightControl::HandleMsgButtonPress(uint8_t SenderID, tMessageTypeButtonPre
     }
   }
 }
-
 
 void tLightControl::HandleMsgClearAllActions(uint8_t SenderID)
 {
