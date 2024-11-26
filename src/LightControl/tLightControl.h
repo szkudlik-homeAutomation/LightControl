@@ -14,7 +14,10 @@
 
 class tLightControl : public tMessageReciever {
 public:
-   tLightControl() : tMessageReciever() { RegisterMessageType(MessageType_SerialFrameRecieved); }
+   tLightControl() : tMessageReciever() {
+	   RegisterMessageType(MessageType_SerialFrameRecieved);
+	   RegisterMessageType(MessageType_DigialInputEvent);
+   }
 
    virtual void onMessage(uint8_t type, uint16_t data, void *pData);
 

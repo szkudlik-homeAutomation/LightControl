@@ -28,43 +28,55 @@ void tLightControl::onMessage(uint8_t type, uint16_t data, void *pData)
 {
     uint8_t ret;
 
-    tCommunicationFrame *pFrame = (tCommunicationFrame *)pData;
-    uint8_t SenderDevId = pFrame->SenderDevId;
+    if (type == MessageType_SerialFrameRecieved)
+    {
+        tCommunicationFrame *pFrame = (tCommunicationFrame *)pData;
+        uint8_t SenderDevId = pFrame->SenderDevId;
 
-    switch (data)	// messageType
-      {
-       case MESSAGE_BUTTON_PRESS:
-           HandleMsgButtonPress(SenderDevId, (tMessageTypeButtonPress*)(pFrame->Data));
-           break;
+        switch (data)	// messageType
+          {
+           case MESSAGE_BUTTON_PRESS:
+               HandleMsgButtonPress(SenderDevId, (tMessageTypeButtonPress*)(pFrame->Data));
+               break;
 
-       case MESSAGE_TYPE_SET_ACTION:
-             HandleMsgSetAction(SenderDevId, (tMessageTypeSetAction*)(pFrame->Data));
-           break;
+           case MESSAGE_TYPE_SET_ACTION:
+                 HandleMsgSetAction(SenderDevId, (tMessageTypeSetAction*)(pFrame->Data));
+               break;
 
-       case MESSAGE_TYPE_CLEAR_ACTIONS:
-             HandleMsgClearAllActions(SenderDevId);
-           break;
+           case MESSAGE_TYPE_CLEAR_ACTIONS:
+                 HandleMsgClearAllActions(SenderDevId);
+               break;
 
-       case MESSAGE_TYPE_EEPROM_CRC_REQUEST:
-             HandleMsgEepromCrcRequest(SenderDevId);
-           break;
+           case MESSAGE_TYPE_EEPROM_CRC_REQUEST:
+                 HandleMsgEepromCrcRequest(SenderDevId);
+               break;
 
-       case MESSAGE_TYPE_EEPROM_CRC_RESPONSE:
-             HandleMsgEepromCrcResponse(SenderDevId,(tMessageTypeEepromCRCResponse*)(pFrame->Data));
-           break;
+           case MESSAGE_TYPE_EEPROM_CRC_RESPONSE:
+                 HandleMsgEepromCrcResponse(SenderDevId,(tMessageTypeEepromCRCResponse*)(pFrame->Data));
+               break;
 
-       case MESSAGE_TYPE_SET_DEFAULT_TIMER:
-             HandleMsgSetDefaultTimer(SenderDevId,(tMessageTypeSetDefaultTimer*)(pFrame->Data));
-           break;
+           case MESSAGE_TYPE_SET_DEFAULT_TIMER:
+                 HandleMsgSetDefaultTimer(SenderDevId,(tMessageTypeSetDefaultTimer*)(pFrame->Data));
+               break;
 
-       case MESSAGE_TYPE_DEFAULT_TIMER_REQUEST:
-             HandleMsgDefaultTimerRequest(SenderDevId,(tMessageTypeDefaultTimerRequest*)(pFrame->Data));
-           break;
+           case MESSAGE_TYPE_DEFAULT_TIMER_REQUEST:
+                 HandleMsgDefaultTimerRequest(SenderDevId,(tMessageTypeDefaultTimerRequest*)(pFrame->Data));
+               break;
 
-       case MESSAGE_TYPE_DEFAULT_TIMER_RESPONSE:
-             HandleMsgDefaultTimerResponse(SenderDevId,(tMessageTypeDefaultTimerResponse*)(pFrame->Data));
-           break;
-      }
+           case MESSAGE_TYPE_DEFAULT_TIMER_RESPONSE:
+                 HandleMsgDefaultTimerResponse(SenderDevId,(tMessageTypeDefaultTimerResponse*)(pFrame->Data));
+               break;
+          }
+    }
+
+    if (type == MessageType_DigialInputEvent)
+    {
+    	tDigialInputEvent *event = (tDigialInputEvent *)pData;
+
+    	// send message to all devices
+    	tLightControlOutgoingFrames::SendMsgButtonPress(DEVICE_ID_BROADCAST,0,
+    			event->ShortClick, event->LongClick, event->DoubleClick);
+    }
 }
 
 void tLightControl::HandleMsgButtonPress(uint8_t SenderID, tMessageTypeButtonPress *Message)
