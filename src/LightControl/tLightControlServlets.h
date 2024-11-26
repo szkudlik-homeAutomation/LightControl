@@ -18,6 +18,18 @@ public:
   virtual bool ProcessAndResponse();
 };
 
+/**
+ * force button servlet - send a button press
+ */
+class tLightControl_ForceButtonPressServlet :  public tHttpServlet
+{
+public:
+  tLightControl_ForceButtonPressServlet() : tHttpServlet() {}
+  virtual ~tLightControl_ForceButtonPressServlet() {}
+
+  virtual bool ProcessAndResponse();
+};
+
 
 #endif // CONFIG_LIGHT_CONTROL_APP
 

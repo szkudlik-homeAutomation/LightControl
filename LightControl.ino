@@ -24,6 +24,7 @@ public:
 	{
 #if CONFIG_LIGHT_CONTROL_APP
 		if (pRequestBuffer->startsWith("/timerset")) return new tLightControl_SetTimerServlet();
+		if (pRequestBuffer->startsWith("/button")) return new tLightControl_ForceButtonPressServlet();
 #endif CONFIG_LIGHT_CONTROL_APP
 		return NULL;
 	}
