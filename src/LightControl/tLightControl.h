@@ -7,12 +7,17 @@
 
 #pragma once
 
-#include "../global.h"
-#include "Common_code/tMessageReciever.h"
+#include "../../global.h"
+
+#if CONFIG_LIGHT_CONTROL_APP
+#include "../Common_code/tMessageReciever.h"
 
 class tLightControl : public tMessageReciever {
 public:
-   tLightControl() : tMessageReciever() { RegisterMessageType(MessageType_SerialFrameRecieved); }
+   tLightControl() : tMessageReciever() {
+	   RegisterMessageType(MessageType_SerialFrameRecieved);
+	   RegisterMessageType(MessageType_DigialInputEvent);
+   }
 
    virtual void onMessage(uint8_t type, uint16_t data, void *pData);
 
@@ -29,3 +34,5 @@ private:
    void HandleMsgDefaultTimerResponse(uint8_t SenderID, tMessageTypeDefaultTimerResponse *Message);
 
 };
+
+#endif CONFIG_LIGHT_CONTROL_APP

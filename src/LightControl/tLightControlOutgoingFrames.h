@@ -7,8 +7,10 @@
 
 #pragma once
 
-#include "../global.h"
-#include "Common_code/TLE8457_serial/tOutgoingFrames.h"
+#include "../../global.h"
+#if CONFIG_LIGHT_CONTROL_APP
+
+#include "../Common_code/TLE8457_serial/tOutgoingFrames.h"
 
 class tLightControlOutgoingFrames : public tOutgoingFrames {
 public:
@@ -21,3 +23,5 @@ public:
       static bool SendMsgDefaultTimerRequest(uint8_t RecieverID,uint8_t OutputID);
       static bool SendMsgDefaultTimerResponse(uint8_t RecieverID, uint8_t OutputID, uint16_t DefTimerValue);
 };
+#endif // CONFIG_LIGHT_CONTROL_APP
+
