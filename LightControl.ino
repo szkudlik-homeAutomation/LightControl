@@ -25,10 +25,12 @@ public:
 #if CONFIG_LIGHT_CONTROL_APP
 		if (pRequestBuffer->startsWith("/timerset")) return new tLightControl_SetTimerServlet();
 		if (pRequestBuffer->startsWith("/button")) return new tLightControl_ForceButtonPressServlet();
+		if (pRequestBuffer->startsWith("/1.js")) return new tLightControl_javaScriptServlet();
+		if (pRequestBuffer->startsWith("/garden")) return new tLightControl_GardenLightsServlet();
+		if (pRequestBuffer->startsWith("/indoorLights")) return new tLightControl_IndoorLightsServlet();
 #endif CONFIG_LIGHT_CONTROL_APP
 		return NULL;
 	}
-
 };
 
 // instantiate the process

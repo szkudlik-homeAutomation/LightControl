@@ -5,9 +5,25 @@
 
 #include "tLightControlServlets.h"
 #include "tLightControlOutgoingFrames.h"
+#include "lightControl_http_binaries.h"
 #include "../Common_code/TLE8457_serial/TLE8457_serial_lib.h"
 
-bool tLightControl_SetTimerServlet::ProcessAndResponse()
+void tLightControl_servlets::SendSetupFooter()
+{
+	uint16_t SetupParam=0;
+	GetParameter("setup",&SetupParam);
+	if (! SetupParam)
+	{
+		pOwner->SendFlashString(PSTR("<br><small><a href=\"?setup=1\"><i>setup</i></a></small><br>"));
+	}
+	else
+	{
+		pOwner->SendFlashString(PSTR("<small><br><a href=\"?setup=0\"><i>hide setup</i></a><br>"));
+	}
+		pOwner->SendFlashString(PSTR("<br><a href=\"index\">strona główna</a><br>"));
+}
+
+	bool tLightControl_SetTimerServlet::ProcessAndResponse()
 {
 	uint16_t Device;  // device iD
 	uint16_t Output;  // output iD
@@ -77,6 +93,29 @@ bool tLightControl_ForceButtonPressServlet::ProcessAndResponse()
 
    return false;
 }
+
+bool tLightControl_javaScriptServlet::ProcessAndResponse()
+{
+	pOwner->SendFlashString(OutputControl_js_raw,OutputControl_js_raw_len);
+	return false;
+}
+
+bool tLightControl_GardenLightsServlet::ProcessAndResponse()
+{
+	pOwner->SendFlashString(gardenLightsPageHeader_http_raw,gardenLightsPageHeader_http_raw_len);
+	SendSetupFooter();
+	SendVersionAndPageClose();
+	return false;
+}
+
+bool tLightControl_IndoorLightsServlet::ProcessAndResponse()
+{
+	pOwner->SendFlashString(indoorLightsPageHeader_http_raw,indoorLightsPageHeader_http_raw_len);
+	SendSetupFooter();
+	SendVersionAndPageClose();
+	return false;
+}
+
 
 #endif // CONFIG_LIGHT_CONTROL_APP
 
