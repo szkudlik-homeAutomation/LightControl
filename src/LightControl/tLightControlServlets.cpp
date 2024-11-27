@@ -116,6 +116,13 @@ bool tLightControl_IndoorLightsServlet::ProcessAndResponse()
 	return false;
 }
 
+bool tLightControl_DefaultPageServlet::ProcessAndResponse()
+{
+	pOwner->SendFlashString(defaultPage_http_raw,defaultPage_http_raw_len);
+	SendVersionAndPageClose();
+	return false;
+}
+
 
 #endif // CONFIG_LIGHT_CONTROL_APP_HTTP_SERVLETS
 

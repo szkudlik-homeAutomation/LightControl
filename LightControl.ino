@@ -31,6 +31,11 @@ public:
 #endif CONFIG_LIGHT_CONTROL_APP_TELNET_COMMANDS
 		return NULL;
 	}
+
+	 virtual tHttpServlet *getDefaultServlet(String *pRequestBuffer)
+	 {
+		 return new tLightControl_DefaultPageServlet();
+	 }
 };
 
 // instantiate the process

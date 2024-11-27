@@ -70,6 +70,14 @@ public:
   virtual bool ProcessAndResponse();
 };
 
+class tLightControl_DefaultPageServlet :  public tLightControl_servlets
+{
+public:
+  tLightControl_DefaultPageServlet() : tLightControl_servlets() {}
+  virtual ~tLightControl_DefaultPageServlet() {}
+
+  virtual bool ProcessAndResponse();
+};
 
 
 
