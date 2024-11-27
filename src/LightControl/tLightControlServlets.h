@@ -2,7 +2,7 @@
 
 #include "../../global.h"
 
-#if CONFIG_LIGHT_CONTROL_APP
+#if CONFIG_LIGHT_CONTROL_APP_HTTP_SERVLETS
 
 #include "../Common_code/Network/httpServer.h"
 
@@ -73,5 +73,5 @@ public:
 
 
 
-#endif // CONFIG_LIGHT_CONTROL_APP
+#endif // CONFIG_LIGHT_CONTROL_APP_HTTP_SERVLETS
 

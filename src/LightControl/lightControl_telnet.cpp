@@ -10,8 +10,7 @@
 
 #include "../../global.h"
 
-#if CONFIG_TELNET_SERVER
-#if CONFIG_LIGHT_CONTROL_APP
+#if CONFIG_LIGHT_CONTROL_APP_TELNET_COMMANDS
 
 #include "../lib/Commander/src/Commander.h"
 #include "tLightControlOutgoingFrames.h"
@@ -193,6 +192,5 @@ bool send_addAction(Commander &Cmdr)
 	  return false;
 }
 
-#endif	// CONFIG_LIGHT_CONTROL_APP
-#endif // CONFIG_TELNET_SERVER
+#endif	// CONFIG_LIGHT_CONTROL_APP_TELNET_COMMANDS
 

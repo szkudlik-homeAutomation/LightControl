@@ -29,7 +29,7 @@ typedef struct __tEeprom
 #if CONFIG_LIGHT_CONTROL_APP
   uint16_t DefaultTimerValue[CONFIG_OUTPUT_PROCESS_NUM_OF_PINS];
   uint8_t ActionTableUsage;
-  tMessageTypeSetAction ActionTableEntry[CONFIG_ACTION_TABLE_SIZE];
+  tMessageTypeSetAction ActionTableEntry[CONFIG_LIGHT_CONTROL_ACTION_TABLE_SIZE];
 #endif // CONFIG_LIGHT_CONTROL_APP
 };
 

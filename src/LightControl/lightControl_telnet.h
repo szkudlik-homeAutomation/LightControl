@@ -2,9 +2,7 @@
 
 #include "../../global.h"
 
-#if CONFIG_TELNET_SERVER
-
-#if CONFIG_LIGHT_CONTROL_APP
+#if CONFIG_LIGHT_CONTROL_APP_TELNET_COMMANDS
 
 bool send_ButtonPress(Commander &Cmdr);
 bool send_ClearActions(Commander &Cmdr);
@@ -22,11 +20,9 @@ bool send_addAction(Commander &Cmdr);
   {"addAction",       send_addAction,               "MESSAGE_TYPE_SET_ACTION dev_id OutId SenderID ButtonId [ Timer TriggerType ActionType OutputsMask OutputsStates ]"}
 
 
-#else	// CONFIG_LIGHT_CONTROL_APP
+#else	// CONFIG_LIGHT_CONTROL_APP_TELNET_COMMANDS
 
 #define LIGHT_CONTROL_SERVER_COMMANDS
 
-#endif	// CONFIG_LIGHT_CONTROL_APP
+#endif	// CONFIG_LIGHT_CONTROL_APP_TELNET_COMMANDS
 
-
-#endif // CONFIG_TELNET_SERVER

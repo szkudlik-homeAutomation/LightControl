@@ -1,7 +1,7 @@
 #include "../../global.h"
 
 
-#if CONFIG_LIGHT_CONTROL_APP
+#if CONFIG_LIGHT_CONTROL_APP_HTTP_SERVLETS
 
 #include "tLightControlServlets.h"
 #include "tLightControlOutgoingFrames.h"
@@ -117,5 +117,5 @@ bool tLightControl_IndoorLightsServlet::ProcessAndResponse()
 }
 
 
-#endif // CONFIG_LIGHT_CONTROL_APP
+#endif // CONFIG_LIGHT_CONTROL_APP_HTTP_SERVLETS
 

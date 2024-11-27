@@ -199,7 +199,7 @@ void tLightControl::HandleMsgSetAction(uint8_t SenderID, tMessageTypeSetAction* 
 #endif CONFIG_LIGHT_CONTROL_LOG_INCOMING_EVENTS
 
   uint8_t ActionTableUsage = EEPROM.read(EEPROM_ACTION_TABLE_USAGE_OFFSET);
-  if (ActionTableUsage < CONFIG_ACTION_TABLE_SIZE)
+  if (ActionTableUsage < CONFIG_LIGHT_CONTROL_ACTION_TABLE_SIZE)
   {
     EEPROM.put(EEPROM_ACTION_TABLE_OFFSET+(EEPROM_CONFIG_ACTION_TABLE_SIZE*ActionTableUsage),*Message);
     ActionTableUsage++;
