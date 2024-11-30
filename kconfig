@@ -2,6 +2,8 @@ menu "Home Automation General empty application"
 
 rsource "src/LightControl/kconfig"
 
+rsource "src/KeyCodeApp/kconfig"
+
 rsource "src/Common_code/kconfig"
 
 endmenu
