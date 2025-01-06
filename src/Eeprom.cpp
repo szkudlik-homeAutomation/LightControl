@@ -45,6 +45,6 @@ void SetDefaultEEPromValues(bool force)
   EEPROM.write(EEPROM_MAC+2,0x4D);
   EEPROM.write(EEPROM_MAC+3,0x5A);
   EEPROM.write(EEPROM_MAC+4,0x5B);
-  EEPROM.write(EEPROM_MAC+5,0x15);
+  EEPROM.write(EEPROM_MAC+5,0x24);
 #endif //CONFIG_NETWORK
 }
