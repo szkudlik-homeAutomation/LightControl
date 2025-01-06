@@ -12,7 +12,7 @@
 #if CONFIG_LIGHT_CONTROL_APP
 
 #include "tLightControl.h"
-#include "tLightControlFrames.h"
+#include "../tSerialFrames.h"
 #include "tLightControlOutputProcess.h"
 #include "tLightControlOutgoingFrames.h"
 

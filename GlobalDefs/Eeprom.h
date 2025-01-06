@@ -5,7 +5,7 @@
 
 #define EEPROM_CANNARY 0x90     // change if update changes EEPROM structure
 
-#include "../src/LightControl/tLightControlFrames.h"
+#include "../src/tSerialFrames.h"
 
 typedef struct __tEeprom
 {
