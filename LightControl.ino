@@ -8,7 +8,7 @@
 #if CONFIG_LIGHT_CONTROL_APP
 #include "src/LightControl/tLightControlServlets.h"
 #include "src/LightControl/nodesEepromScanServlet.h"
-
+#include "src/LightControl/tLightControlgetActionsJSONservlet.h"
 
 tLightControlOutputProcess LightControlOutputProcess;
 #endif CONFIG_LIGHT_CONTROL_APP
@@ -27,7 +27,7 @@ public:
 		if (pRequestBuffer->startsWith("/timerset")) return new tLightControl_SetTimerServlet();
 		if (pRequestBuffer->startsWith("/button")) return new tLightControl_ForceButtonPressServlet();
 		if (pRequestBuffer->startsWith("/1.js")) return new tLightControl_javaScriptServlet();
-		if (pRequestBuffer->startsWith("/getactions")) return new tLightControl_getActions_XML();
+		if (pRequestBuffer->startsWith("/getactions")) return new tLightControl_getActionsJSON_servlet();
 #if CONFIG_NODE_SCAN_EEPROM_STATUS_TASK
 		if (pRequestBuffer->startsWith("/nodeseepromscan")) return new tLightControl_nodesEepromScanServlet();
 #endif CONFIG_NODE_SCAN_EEPROM_STATUS_TASK

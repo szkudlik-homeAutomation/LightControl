@@ -7,18 +7,6 @@
 #include "../Common_code/Network/httpServer.h"
 #include "../tSerialFrames.h"
 
-class tLightControl_getActions_XML : public tHttpServlet
-{
-public:
-	tLightControl_getActions_XML() : tHttpServlet() {}
-	virtual ~tLightControl_getActions_XML() {}
-
-	virtual bool ProcessAndResponse();
-
-private:
-	void tMessageTypeSetActionToXML(tMessageTypeSetAction *pAction);
-};
-
 class tLightControl_servlets : public tHttpServlet
 {
 public:
