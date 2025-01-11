@@ -11,9 +11,11 @@
 #include "lib/Commander/src/Commander.h"
 bool send_ScanEeprom(Commander &Cmdr)
 {
-	NodeScanWithEEpromStatusTask::trigger();
+	NodeScanWithEEpromStatusTask::trigger(0);
 }
 #endif // CONFIG_TELNET_SERVER
+
+NodeScanWithEEpromStatusTask *NodeScanWithEEpromStatusTask::mRunning;
 
 bool NodeScanWithEEpromStatusTask::Process(uint32_t *pNextServiceDelay)
 {
@@ -44,7 +46,6 @@ bool NodeScanWithEEpromStatusTask::Process(uint32_t *pNextServiceDelay)
 			LOG(print(mNumberOfActions[i]));
 			LOG_PRINTLN(" actions");
 	   }
-	   onFinished();
        return false;
    }
 

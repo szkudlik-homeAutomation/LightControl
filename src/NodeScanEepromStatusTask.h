@@ -12,24 +12,33 @@ class NodeScanWithEEpromStatusTask : public WorkerTask, public tMessageReciever
 {
 public:
 	NodeScanWithEEpromStatusTask() : mCurrentNodeID(0)
-   {
+    {
 	   RegisterMessageType(MessageType_SerialFrameRecieved);
-   }
-   virtual ~NodeScanWithEEpromStatusTask() {}
+	   mRunning = this;
+    }
+   virtual ~NodeScanWithEEpromStatusTask() {mRunning = NULL;}
 
    virtual bool Process(uint32_t * pNextServiceDelay);
-   static void trigger() { tWorkerProcess::Instance->Enqueue(new NodeScanWithEEpromStatusTask()); }
-
+   static bool trigger(uint16_t cookie) {
+	   if (mRunning == NULL)
+	   {
+		   tWorkerProcess::Instance->Enqueue(new NodeScanWithEEpromStatusTask(), cookie);
+	   } else {
+		   return false;
+	   }
+	   return true;
+   }
+   uint8_t mNumberOfActions[CONFIG_TLE8457_MAX_NUM_OF_NODES];
 protected:
    virtual void onMessage(uint8_t type, uint16_t data, void *pData);
-   virtual void onFinished() {}
+   static NodeScanWithEEpromStatusTask *mRunning;
+
 
 private:
-   static const uint16_t REQUEST_SENDING_PERIOD = 600;  // 600ms
-   static const uint16_t RESPONSE_WAIT_PERIOD   = 2000;  // 2s
+   static const uint16_t REQUEST_SENDING_PERIOD = 200;  // 600ms
+   static const uint16_t RESPONSE_WAIT_PERIOD   = 500;  // 2s
 
    uint8_t mCurrentNodeID;  // if == CONFIG_TLE8457_MAX_NUM_OF_NODES - waiting for responses
-   uint8_t mNumberOfActions[CONFIG_TLE8457_MAX_NUM_OF_NODES];
 };
 
 #endif // CONFIG_NODE_SCAN_EEPROM_STATUS_TASK
