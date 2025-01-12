@@ -16,7 +16,7 @@ bool tLightControl_nodesEepromScanServlet::ProcessAndResponse()
 		result = NodeScanWithEEpromStatusTask::trigger((uint32_t)this);
 		if (result)
 			{
-			SendResponse200();
+			pOwner->SendFlashString(PSTR("HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{\"Devices\": {"));
 			return true;
 			}
 		else
@@ -45,14 +45,21 @@ void tLightControl_nodesEepromScanServlet::onMessage(uint8_t type, uint16_t data
 
 	for (int i = 0; i < CONFIG_TLE8457_MAX_NUM_OF_NODES; i++) {
 		if (pTask->mNumberOfActions[i] == 255)
+			// node is not available
 			continue;
-	    pOwner->SendFlashString(PSTR("Node:"));
-	    pOwner->mEthernetClient.print(i + 1,HEX);
+		if (i > 0)
+			pOwner->mEthernetClient.print(",");
+		pOwner->mEthernetClient.print("\"");
+		pOwner->mEthernetClient.print(i+1, HEX);
+		pOwner->mEthernetClient.print("\":{");
 
-	    pOwner->SendFlashString(PSTR(" has "));
+	    pOwner->SendFlashString(PSTR("\"Node\":"));
+	    pOwner->mEthernetClient.print(i + 1,DEC);
+	    pOwner->SendFlashString(PSTR(", \"Actions\": "));
 	    pOwner->mEthernetClient.print(pTask->mNumberOfActions[i]);
-	    pOwner->SendFlashString(PSTR(" actions"));
+	    pOwner->SendFlashString(PSTR("}"));
    }
+	pOwner->SendFlashString(PSTR("}}"));
 	mState = STATE_FINISHED;
 }
 
