@@ -87,6 +87,15 @@ typedef struct
 } tMessageTypeDefaultTimerResponse;
 C_ASSERT(sizeof(tMessageTypeDefaultTimerResponse) <= CONFIG_COMMUNICATION_PAYLOAD_DATA_SIZE);
 
+/*
+ * Get all actions
+ * the reciever must send all actions in a series of MESSAGE_TYPE_GET_ACTIONS_RESPONSE
+ *
+ * end of transmission is marked by a frame with OutId == 255
+ */
+#define MESSAGE_TYPE_GET_ACTIONS_REQUEST 0xA0
+#define MESSAGE_TYPE_GET_ACTIONS_RESPONSE 0xA1
+typedef tMessageTypeSetAction tMessageTypeGetActionsResponse;
 
 /************************************************************************
  * KeyCodeApp specific messages

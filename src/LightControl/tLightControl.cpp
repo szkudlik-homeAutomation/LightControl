@@ -66,6 +66,13 @@ void tLightControl::onMessage(uint8_t type, uint16_t data, void *pData)
            case MESSAGE_TYPE_DEFAULT_TIMER_RESPONSE:
                  HandleMsgDefaultTimerResponse(SenderDevId,(tMessageTypeDefaultTimerResponse*)(pFrame->Data));
                break;
+           case MESSAGE_TYPE_GET_ACTIONS_REQUEST:
+                 HandleMsgGetActionsRequest(SenderDevId);
+        	   break;
+
+           case MESSAGE_TYPE_GET_ACTIONS_RESPONSE:
+			LogMsgGetActionsResponse(SenderDevId, (tMessageTypeGetActionsResponse*) (pFrame->Data));
+			break;
           }
     }
 
@@ -207,7 +214,6 @@ void tLightControl::HandleMsgSetAction(uint8_t SenderID, tMessageTypeSetAction* 
   }
 }
 
-
 void tLightControl::HandleMsgEepromCrcRequest(uint8_t SenderID)
 {
 #if CONFIG_LIGHT_CONTROL_LOG_INCOMING_EVENTS
@@ -278,5 +284,61 @@ void tLightControl::HandleMsgDefaultTimerResponse(uint8_t SenderID, tMessageType
 #endif CONFIG_LIGHT_CONTROL_LOG_INCOMING_EVENTS
 }
 
-#endif CONFIG_LIGHT_CONTROL_APP
+void tLightControl::HandleMsgGetActionsRequest(uint8_t SenderID)
+{
+#if CONFIG_LIGHT_CONTROL_LOG_INCOMING_EVENTS
+    DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_GET_ACTIONS_REQUEST");
+#endif
 
+	tMessageTypeSetAction Action;
+	uint8_t i = EEPROM.read(EEPROM_ACTION_TABLE_USAGE_OFFSET);
+	while (i--) {
+		EEPROM.get(
+				EEPROM_ACTION_TABLE_OFFSET
+						+ (EEPROM_CONFIG_ACTION_TABLE_SIZE * i), Action);
+		tLightControlOutgoingFrames::SendMsgGetActionsResponse(SenderID, Action);
+	}
+
+	// send end marker
+	Action.OutId = 255;
+	tLightControlOutgoingFrames::SendMsgGetActionsResponse(SenderID, Action);
+}
+
+void tLightControl::LogMsgGetActionsResponse(uint8_t SenderID, tMessageTypeGetActionsResponse *Message)
+{
+#if CONFIG_LIGHT_CONTROL_LOG_INCOMING_EVENTS
+	DEBUG_PRINTLN_3("===================>MESSAGE_TYPE_GET_ACTIONS_RESPONSE");
+	LOG_PRINT("Action from device: ")
+    LOG(println(SenderID,HEX));
+    if (Message->OutId == 255)
+    {
+    	LOG_PRINT(" End of transmission");
+    }
+    else
+    {
+        LOG_PRINT(" OutId = ");
+        LOG(print(Message->OutId,DEC));
+
+        LOG_PRINT(" SenderDevID = ");
+        LOG(print(Message->SenderDevID, DEC));
+
+        LOG_PRINT(" ButtonId = ");
+        LOG(print(Message->ButtonId, DEC));
+
+        LOG_PRINT(" TriggerType = ");
+        LOG(print(Message->TriggerType, DEC));
+
+        LOG_PRINT(" ActionType = ");
+        LOG(print(Message->ActionType, DEC));
+
+        LOG_PRINT(" Timer = ");
+        LOG(print(Message->Timer, DEC));
+
+        LOG_PRINT(" OutputsMask = ");
+        LOG(print(Message->OutputsMask, DEC));
+    }
+    LOG_PRINTLN("");
+#endif
+}
+
+#endif CONFIG_LIGHT_CONTROL_APP

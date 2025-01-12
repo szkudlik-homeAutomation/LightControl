@@ -32,7 +32,8 @@ private:
    void HandleMsgSetDefaultTimer(uint8_t SenderID, tMessageTypeSetDefaultTimer *Message);
    void HandleMsgDefaultTimerRequest(uint8_t SenderID, tMessageTypeDefaultTimerRequest *Message);
    void HandleMsgDefaultTimerResponse(uint8_t SenderID, tMessageTypeDefaultTimerResponse *Message);
-
+   void HandleMsgGetActionsRequest(uint8_t SenderID);
+   void LogMsgGetActionsResponse(uint8_t SenderID, tMessageTypeGetActionsResponse *Message);
 };
 
 #endif CONFIG_LIGHT_CONTROL_APP

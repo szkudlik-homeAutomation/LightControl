@@ -13,6 +13,5 @@ bool send_triggerCode(Commander &Cmdr);
   {"AddCode",       send_addCode,		   "KEY CODE: AddCode dev_id type code ButtonBitmap"},	\
   {"TriggerCode",   send_triggerCode,	   "KEY CODE: TriggerCode dev_id type code"},
 
-
 #endif	// CONFIG_KEY_CODE_APP_TELNET_COMMANDS
 
