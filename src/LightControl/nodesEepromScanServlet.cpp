@@ -16,7 +16,10 @@ bool tLightControl_nodesEepromScanServlet::ProcessAndResponse()
 		result = NodeScanWithEEpromStatusTask::trigger((uint32_t)this);
 		if (result)
 			{
-			pOwner->SendFlashString(PSTR("HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{\"Devices\": {"));
+			pOwner->SendFlashString(PSTR("HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS\r\nAccess-Control-Allow-Headers: Content-Type, Authorization\r\n\r\n{\"Devices\": {"));
+
+
+
 			return true;
 			}
 		else
