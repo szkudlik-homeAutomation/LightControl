@@ -10,31 +10,93 @@
 #if CONFIG_LIGHT_CONTROL_APP_HTTP_SERVLETS
 
 #include "tLightControlgetActionsJSONservlet.h"
+#include "../Common_code/TLE8457_serial/TLE8457_serial_lib.h"
+#include "tLightControlOutgoingFrames.h"
+
+bool tLightControl_getActionsJSON_servlet::isRunning = false;
+
+void tLightControl_getActionsJSON_servlet::onMessage(uint8_t type, uint16_t data, void *pData)
+{
+	if (type != MessageType_SerialFrameRecieved || data != MESSAGE_TYPE_GET_ACTIONS_RESPONSE)
+		return;
+
+	tCommunicationFrame *pFrame = (tCommunicationFrame *)pData;
+	tMessageTypeGetActionsResponse *pAction = (tMessageTypeGetActionsResponse *)pFrame->Data;
+
+	if (mState == STATE_NO_DATA_RECIEVED)
+	{
+		pOwner->SendFlashString(PSTR("HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS\r\nAccess-Control-Allow-Headers: Content-Type, Authorization\r\n\r\n{\"DevID\": "));
+		pOwner->mEthernetClient.print(mDeviceId, DEC);
+		pOwner->SendFlashString(PSTR(", \"Actions\":{"));
+		mState = STATE_RUNNING;
+	}
+
+	if (pAction->OutId == 255)
+	{
+		mState = STATE_FINISHED;
+		return;
+	}
+
+	pOwner->SendFlashString(PSTR("\""));
+	pOwner->mEthernetClient.print(mNumOfActons, DEC);
+	pOwner->SendFlashString(PSTR("\":"));
+	tMessageTypeSetActionToJSON(pAction);
+	pOwner->SendFlashString(PSTR(","));
+	mNumOfActons++;
+}
+
 
 bool tLightControl_getActionsJSON_servlet::ProcessAndResponse()
  {
-	tMessageTypeSetAction action1 = {1,2,3,4,5,6,7,8};
-	tMessageTypeSetAction action2 = {10,20,30,40,50,60,70,80};
-	uint8_t num_of_actions = 2;
-	uint8_t j = 1;
+	bool result;
 
-	pOwner->SendFlashString(PSTR("HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n"));
 
-	pOwner->SendFlashString(PSTR("{\"DevID\":"));
-	pOwner->mEthernetClient.print(j, DEC);
-	pOwner->SendFlashString(PSTR(", \"Actions\":{"));
-	for (uint8_t i = 0; i < num_of_actions; i++) {
-		if (i > 0)
+	switch (mState)
+	{
+	case STATE_INIT:
+		mState = STATE_NO_DATA_RECIEVED;
+		if (!isRunning)
+			{
+			bool ParametersOK = true;
+			uint16_t Device;  // device iD
+
+			ParametersOK &= GetParameter("Dev",&Device);
+			if (! ParametersOK)
+			{
+			  SendResponse400();
+			  return false;
+			}
+			mDeviceId = Device;
+
+			isRunning = true;
+			mStartTimestamp = millis();
+			tLightControlOutgoingFrames::SendMsgGetActionsRequest(mDeviceId);
+			return true;
+			}
+		else
 		{
-			pOwner->SendFlashString(PSTR(","));
+			SendResponse503();
+			return false;
 		}
-		pOwner->SendFlashString(PSTR("\""));
-		pOwner->mEthernetClient.print(i, DEC);
-		pOwner->SendFlashString(PSTR("\":"));
-		if (i == 0) tMessageTypeSetActionToJSON(&action1);
-		if (i > 0) tMessageTypeSetActionToJSON(&action2);
+	case STATE_NO_DATA_RECIEVED:
+		if ((millis() - mStartTimestamp) > SERVLET_TIMEOUT) {
+			SendResponse424();
+    		return false;
+		}
+		return true;
+
+	case STATE_RUNNING:
+		if ((millis() - mStartTimestamp) > SERVLET_TIMEOUT) {
+			mState = STATE_FINISHED;
+		}
+		return true;
+
+	case STATE_FINISHED:
+	    pOwner->SendFlashString(PSTR("\"NumOfActions\": "));
+	    pOwner->mEthernetClient.print(mNumOfActons, DEC);
+	    pOwner->SendFlashString(PSTR("}}"));
+		return false;
 	}
-	pOwner->SendFlashString(PSTR("}}"));
 
 	return false;
 }
