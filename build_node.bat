@@ -1,1 +1,1 @@
-build.bat node
+build-uno.bat node

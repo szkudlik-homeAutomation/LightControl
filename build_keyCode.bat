@@ -1,1 +1,1 @@
-build.bat keyCode
+build-uno.bat keyCode

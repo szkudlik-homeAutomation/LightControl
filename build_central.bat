@@ -1,1 +1,1 @@
-build.bat central
+build-mega.bat central
