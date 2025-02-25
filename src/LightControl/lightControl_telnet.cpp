@@ -192,5 +192,21 @@ bool send_addAction(Commander &Cmdr)
 	  return false;
 }
 
+bool send_getActions(Commander &Cmdr)
+{
+	  int Dst;
+	  if(Cmdr.getInt(Dst))
+	  {
+	    tLightControlOutgoingFrames::SendMsgGetActionsRequest(Dst);
+	  }
+	  else
+	  {
+	    Cmdr.println(F("Usage: getActions dst_dev_id"));
+	    return false;
+	  }
+
+	  return true;
+}
+
 #endif	// CONFIG_LIGHT_CONTROL_APP_TELNET_COMMANDS
 

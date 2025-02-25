@@ -22,6 +22,9 @@ public:
       static bool SendMsgSetDefaultTimer(uint8_t RecieverID, uint8_t OutputID, uint16_t DefTimerValue);
       static bool SendMsgDefaultTimerRequest(uint8_t RecieverID,uint8_t OutputID);
       static bool SendMsgDefaultTimerResponse(uint8_t RecieverID, uint8_t OutputID, uint16_t DefTimerValue);
+      static bool SendMsgGetActionsRequest(uint8_t RecieverID);
+      static bool SendMsgGetActionsResponse(uint8_t RecieverID, tMessageTypeGetActionsResponse Msg);
+
 };
 #endif // CONFIG_LIGHT_CONTROL_APP
 

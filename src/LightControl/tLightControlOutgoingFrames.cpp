@@ -114,4 +114,19 @@ bool tLightControlOutgoingFrames::SendMsgDefaultTimerResponse(uint8_t RecieverID
   CommSenderProcess::Instance->Enqueue(RecieverID,MESSAGE_TYPE_DEFAULT_TIMER_RESPONSE,sizeof(Msg),&Msg);
 }
 
+bool tLightControlOutgoingFrames::SendMsgGetActionsRequest(uint8_t RecieverID) {
+#if CONFIG_LIGHT_CONTROL_LOG_INCOMING_EVENTS
+	DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_GET_ACTIONS_REQUEST");
+#endif CONFIG_LIGHT_CONTROL_LOG_INCOMING_EVENTS`
+	  CommSenderProcess::Instance->Enqueue(RecieverID,MESSAGE_TYPE_GET_ACTIONS_REQUEST,0,NULL);
+}
+
+bool tLightControlOutgoingFrames::SendMsgGetActionsResponse(uint8_t RecieverID, tMessageTypeGetActionsResponse Msg)
+{
+#if CONFIG_LIGHT_CONTROL_LOG_INCOMING_EVENTS
+	DEBUG_PRINTLN_3("===================>sending MESSAGE_TYPE_GET_ACTIONS_RESPONSE");
+#endif CONFIG_LIGHT_CONTROL_LOG_INCOMING_EVENTS`
+	  CommSenderProcess::Instance->Enqueue(RecieverID,MESSAGE_TYPE_GET_ACTIONS_RESPONSE,sizeof(Msg),&Msg);
+}
+
 #endif // CONFIG_LIGHT_CONTROL_APP
