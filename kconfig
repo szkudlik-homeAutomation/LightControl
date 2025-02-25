@@ -6,4 +6,10 @@ rsource "src/KeyCodeApp/kconfig"
 
 rsource "src/Common_code/kconfig"
 
+config NODE_SCAN_EEPROM_STATUS_TASK
+    bool "Enable Node Scan Task with Eeprom statuses"
+	default n
+    select WORKER_PROCESS
+    select TLE8457_COMM_LIB
+
 endmenu
