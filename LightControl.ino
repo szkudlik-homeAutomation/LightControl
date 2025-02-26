@@ -10,7 +10,10 @@
 #include "src/LightControl/nodesEepromScanServlet.h"
 #include "src/LightControl/tLightControlgetActionsJSONservlet.h"
 
+#if CONFIG_OUTPUT_PROCESS
 tLightControlOutputProcess LightControlOutputProcess;
+#endif CONFIG_OUTPUT_PROCESS
+
 #endif CONFIG_LIGHT_CONTROL_APP
 
 #if CONFIG_HTTP_SERVER

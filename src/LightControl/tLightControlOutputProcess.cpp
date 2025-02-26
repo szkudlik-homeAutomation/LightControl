@@ -8,6 +8,7 @@
 #include "../../global.h"
 
 #if CONFIG_LIGHT_CONTROL_APP
+#if CONFIG_OUTPUT_PROCESS
 
 #include "tLightControlOutputProcess.h"
 #include "../Common_code/TLE8457_serial/tOutgoingFrames.h"
@@ -60,4 +61,5 @@ void tLightControlOutputProcess::onMessage(uint8_t type, uint16_t data, void *pD
     }
 }
 
+#endif CONFIG_OUTPUT_PROCESS
 #endif CONFIG_LIGHT_CONTROL_APP

@@ -20,6 +20,12 @@ config LIGHT_CONTROL_EEPROM_OUTPUTS_POLARITY
     bool "get outputs polarity from eeprom"
     default n
     depends on LIGHT_CONTROL_APP
+    help
+    	if this option is enabled, the outputs polarity will be read from eeprom
+        otherwise the outputs polarity will be set to "active low"
+        eeprom byte should be set during flash programming
+        bit set to 0 means active low, 1 active high
+
 
 config LIGHT_CONTROL_LOG_INCOMING_EVENTS
     bool "log incoming light control events"
