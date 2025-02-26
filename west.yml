@@ -12,7 +12,7 @@ manifest:
       repo-path: Common_code.git
       import: 
         path-prefix: LightControl
-      revision: a28e1c998a8afab8f6919b7d94416854765c5182
+      revision: 780a7263283099e4a43beae1bd1d993a48f087bf
 
   self:
       path: LightControl
