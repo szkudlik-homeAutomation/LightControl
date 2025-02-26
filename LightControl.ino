@@ -3,6 +3,7 @@
 #include "global.h"
 #include "src/Common_code/tApplication.h"
 #include "src/LightControl/tLightControlOutputProcess.h"
+#include "src/LightControl/tLightControlInputProcess.h"
 #include "src/Common_code/Network/httpServer.h"
 
 #if CONFIG_LIGHT_CONTROL_APP
@@ -10,7 +11,14 @@
 #include "src/LightControl/nodesEepromScanServlet.h"
 #include "src/LightControl/tLightControlgetActionsJSONservlet.h"
 
+#if CONFIG_INPUT_PROCESS
+tLightControlInputProcess LightControlInputProcess;
+#endif CONFIG_INPUT_PROCESS
+
+#if CONFIG_OUTPUT_PROCESS
 tLightControlOutputProcess LightControlOutputProcess;
+#endif CONFIG_OUTPUT_PROCESS
+
 #endif CONFIG_LIGHT_CONTROL_APP
 
 #if CONFIG_HTTP_SERVER
