@@ -5,6 +5,8 @@
 #include "src/LightControl/tLightControlOutputProcess.h"
 #include "src/LightControl/tLightControlInputProcess.h"
 #include "src/Common_code/Network/httpServer.h"
+#include "src/Common_code/sensors/tSensorFactory.h"
+#include "src/Common_code/sensors/tSensor.h"
 
 #if CONFIG_LIGHT_CONTROL_APP
 #include "src/LightControl/tLightControlServlets.h"
@@ -56,7 +58,7 @@ tAppHttpServer AppHttpServer;
 
 #endif CONFIG_HTTP_SERVER
 
-
+char sensorName[] = "System Status";
 class tHomeAutomation: public tApplication {
 public:
 	tHomeAutomation() : tApplication() {}
@@ -67,6 +69,13 @@ protected:
 		// set default values for eeprom
 		SetDefaultEEPromValues();
 	}
+	
+	virtual void AppSetupAfter() {
+        // create sensor
+        #if CONFIG_SYSTEM_STATUS_SENSOR        
+        tSensorFactory::Instance->CreateSensor(SENSOR_TYPE_SYSTEM_STATUS, 1, sensorName,1 , NULL, 0, 10, true);
+        #endif
+    }
 };
 
 tHomeAutomation HomeAutomation;
