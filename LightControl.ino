@@ -5,6 +5,11 @@
 #include "src/LightControl/tLightControlOutputProcess.h"
 #include "src/Common_code/Network/httpServer.h"
 
+#include "src/Common_code/sensors/tSensorFactory.h"
+#include "src/Common_code/sensors/tSensorCache.h"
+#include "src/Common_code/sensors/tSensor.h"
+#include "src/Common_code/sensors/tSystemStatusSensor.h"
+
 #if CONFIG_LIGHT_CONTROL_APP
 #include "src/LightControl/tLightControlServlets.h"
 #include "src/LightControl/nodesEepromScanServlet.h"
@@ -59,6 +64,14 @@ protected:
 		// set default values for eeprom
 		SetDefaultEEPromValues();
 	}
+	
+	virtual void AppSetupAfter() {
+
+		#if CONFIG_SYSTEM_STATUS_SENSOR 
+		tSensorFactory::Instance->CreateSensor(SENSOR_TYPE_SYSTEM_STATUS, EEPROM.read(EEPROM_DEVICE_ID_OFFSET), F("SystemStatus"),1,NULL,0,50,true);
+		#endif
+	
+    }
 };
 
 tHomeAutomation HomeAutomation;
