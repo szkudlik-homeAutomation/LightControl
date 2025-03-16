@@ -214,7 +214,6 @@ void tLightControl::HandleMsgSetAction(uint8_t SenderID, tMessageTypeSetAction* 
   }
 }
 
-
 void tLightControl::HandleMsgEepromCrcRequest(uint8_t SenderID)
 {
 #if CONFIG_LIGHT_CONTROL_LOG_INCOMING_EVENTS

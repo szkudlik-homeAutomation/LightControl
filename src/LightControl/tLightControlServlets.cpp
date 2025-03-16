@@ -123,6 +123,5 @@ bool tLightControl_DefaultPageServlet::ProcessAndResponse()
 	return false;
 }
 
-
 #endif // CONFIG_LIGHT_CONTROL_APP_HTTP_SERVLETS
 

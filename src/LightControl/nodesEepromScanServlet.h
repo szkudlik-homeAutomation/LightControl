@@ -31,5 +31,31 @@ private:
 	uint8_t mState;
 };
 
+//class NodeScanWithEEpromStatusTaskHttp : public NodeScanWithEEpromStatusTask
+//{
+//public:
+//	NodeScanWithEEpromStatusTaskHttp(tLightControl_nodesEepromScanServlet *Owner) :
+//		mOwner(Owner), NodeScanWithEEpromStatusTask() {}
+//	virtual ~NodeScanWithEEpromStatusTaskHttp() {}
+//
+//   static bool trigger(tLightControl_nodesEepromScanServlet *pOwner) {
+//	   if (mRunning == NULL)
+//	   {
+//		   tWorkerProcess::Instance->Enqueue(new NodeScanWithEEpromStatusTaskHttp(pOwner));
+//	   } else {
+//		   return false;
+//	   }
+//	   return true;
+//   }
+//
+//protected:
+//   virtual void onFinished()
+//   {
+//	   mOwner->onFinished(mNumberOfActions);
+//   }
+//private:
+//   tLightControl_nodesEepromScanServlet *mOwner;
+//};
+
 #endif CONFIG_NODE_SCAN_EEPROM_STATUS_TASK
 #endif CONFIG_LIGHT_CONTROL_APP_HTTP_SERVLETS
