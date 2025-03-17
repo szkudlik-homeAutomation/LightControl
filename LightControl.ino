@@ -2,7 +2,6 @@
 
 #include "global.h"
 #include "src/Common_code/tApplication.h"
-#include "src/LightControl/tLightControlOutputProcess.h"
 #include "src/Common_code/Network/httpServer.h"
 
 #include "src/Common_code/sensors/tSensorFactory.h"
@@ -14,8 +13,17 @@
 #include "src/LightControl/tLightControlServlets.h"
 #include "src/LightControl/nodesEepromScanServlet.h"
 #include "src/LightControl/tLightControlgetActionsJSONservlet.h"
+#include "src/LightControl/tLightControlOutputProcess.h"
+#include "src/LightControl/tLightControlInputProcess.h"
 
+#if CONFIG_OUTPUT_PROCESS & !CONFIG_OUTPUT_PROCESS_INSTANCE
 tLightControlOutputProcess LightControlOutputProcess;
+#endif
+
+#if CONFIG_INPUT_PROCESS & !CONFIG_INPUT_PROCESS_INSTANCE
+tLightControlInputProcess LightControlInputProcess;
+#endif
+
 #endif CONFIG_LIGHT_CONTROL_APP
 
 #if CONFIG_HTTP_SERVER
