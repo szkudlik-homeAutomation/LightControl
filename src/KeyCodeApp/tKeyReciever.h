@@ -16,16 +16,19 @@
 class tKeyReciever : public tMessageReciever, public Process
 {
 public:
+	static tKeyReciever *Instance;
 	tKeyReciever() : Process(LOW_PRIORITY,CONFIG_KEYCODE_TIMEOUT),
 	    tMessageReciever()
    	   {
 	    	RegisterMessageType(MessageType_SensorEvent);
             RegisterMessageType(MessageType_SerialFrameRecieved);
 	    	deletePendingKeyCode();
+	    	Instance = this;
    	   }
 
    virtual void onMessage(uint8_t type, uint16_t data, void *pData);
    virtual void service();
+   void AppSetupAfter();
 
 
 private:

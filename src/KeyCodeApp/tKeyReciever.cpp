@@ -11,8 +11,28 @@
 #if CONFIG_KEY_CODE_APP
 
 #include "../Common_code/sensors/tWiegandSensor.h"
+#include "../Common_code/sensors/tSensorFactory.h"
 #include "../Common_code/TLE8457_serial/TLE8457_serial_lib.h"
 #include "../Common_code/TLE8457_serial/tOutgoingFrames.h"
+
+
+// app instance
+tKeyReciever KeyReciever;
+tKeyReciever *tKeyReciever::Instance;
+
+
+void tKeyReciever::AppSetupAfter()
+{
+	// create a sensor
+	tWiegandSensor::tConfig Config;
+	Config.PinD0 = CONFIG_WIEGAND_D0_PIN;
+	Config.PinD1 = CONFIG_WIEGAND_D1_PIN;
+
+	// create a sensor, no serial events, 100ms period.
+	tSensorFactory::Instance->CreateSensor(SENSOR_TYPE_WIEGAND, CONFIG_KEYCODE_WINEGRAND_SENSOR_ID, NULL, 1, &Config, sizeof(Config), 1, true, 0);
+
+	add(false);	// add self to scheduling
+}
 
 void tKeyReciever::onMessage(uint8_t type, uint16_t data, void *pData)
 {

@@ -13,11 +13,11 @@ config KEY_CODE_TABLE_SIZE
 config KEY_CODE_APP_TELNET_COMMANDS
 	bool "enable telnet commands for remote keycode application control"
     default n
+	depends on KEY_CODE_APP
     select TLE8457_COMM_LIB
     select TELNET_SERVER
     select NETWORK
-    
-    
+
 config KEYCODE_TIMEOUT 
 	int "Timeout in ms for timeout in entering digits" 
     default 2500
@@ -28,3 +28,10 @@ config KEYCODE_MAX_DIGITS
 	default 4
 	depends on KEY_CODE_APP
 
+config KEYCODE_WINEGRAND_SENSOR_ID
+	int "ID of a sensor reading the data from keypad"
+	default 1
+	depends on KEY_CODE_APP
+	help
+		should be set to an unique ID in the system, 
+		set it in a global config
