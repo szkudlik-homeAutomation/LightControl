@@ -77,7 +77,8 @@ protected:
 
 		#if CONFIG_SYSTEM_STATUS_SENSOR 
 		// create the system status sensor, 1 munute cyle. Set Node ID as a sensor ID
-		tSensorFactory::Instance->CreateSensor(SENSOR_TYPE_SYSTEM_STATUS, EEPROM.read(EEPROM_DEVICE_ID_OFFSET), F("SystemStatus01"),1,NULL,0,600,true, 1 << EV_TYPE_MEASUREMENT_COMPLETED);
+		tSensorFactory::Instance->CreateSensor(SENSOR_TYPE_SYSTEM_STATUS, EEPROM.read(EEPROM_DEVICE_ID_OFFSET), F("SystemStatus01"),
+			1,NULL,0,CONFIG_SYSTEM_STATUS_SENSOR_PERIOD,true, 1 << EV_TYPE_MEASUREMENT_COMPLETED);
 		#endif
 	
     }
