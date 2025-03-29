@@ -9,6 +9,10 @@
 #include "src/Common_code/sensors/tSensor.h"
 #include "src/Common_code/sensors/tSystemStatusSensor.h"
 
+#if CONFIG_KEY_CODE_APP
+#include "src/KeyCodeApp/tKeyReciever.h"
+#endif
+
 #if CONFIG_LIGHT_CONTROL_APP
 #include "src/LightControl/tLightControlServlets.h"
 #include "src/LightControl/nodesEepromScanServlet.h"
@@ -80,6 +84,10 @@ protected:
 			1,NULL,0,CONFIG_SYSTEM_STATUS_SENSOR_PERIOD,true, 1 << EV_TYPE_MEASUREMENT_COMPLETED);
 		#endif // CONFIG_SYSTEM_STATUS_SENSOR_INSTANCE
 	
+
+		#if CONFIG_KEY_CODE_APP
+		tKeyReciever::Instance->AppSetupAfter();
+		#endif
     }
 };
 

@@ -23,6 +23,10 @@ void SetDefaultEEPromValues(bool force)
   }
 #endif //CONFIG_LIGHT_CONTROL_APP
 
+#if CONFIG_KEY_CODE_APP
+  EEPROM.write(KEY_CODE_TABLE_USAGE_OFFSET, 0);
+#endif CONFIG_KEY_CODE_APP
+
 #if CONFIG_NETWORK
   EEPROM.write(EEPROM_IP+0,192);
   EEPROM.write(EEPROM_IP+1,168);
