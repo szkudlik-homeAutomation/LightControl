@@ -12,11 +12,19 @@ config NODE_SCAN_EEPROM_STATUS_TASK
     select WORKER_PROCESS
     select TLE8457_COMM_LIB
 
-
+config SYSTEM_STATUS_SENSOR_INSTANCE
+	bool "Enable an instanve of system status sensor sending data to central node"
+	default n
+	select SENSORS
+	select SYSTEM_STATUS_SENSOR
+	imply SENSOR_SEND_EVENTS_USING_SERIAL
+	help
+		sensors IDs are equal to node ID
+		
 config SYSTEM_STATUS_SENSOR_PERIOD
     int "System status sensor period, in 10ms"
     default 2400
-    depends on SYSTEM_STATUS_SENSOR
+    depends on SYSTEM_STATUS_SENSOR_INSTANCE
     
 
 endmenu
