@@ -45,7 +45,7 @@ public:
 		if (pRequestBuffer->startsWith("/nodeseepromscan")) return new tLightControl_nodesEepromScanServlet();
 #endif CONFIG_NODE_SCAN_EEPROM_STATUS_TASK
 		if (pRequestBuffer->startsWith("/garden")) return new tLightControl_GardenLightsServlet();
-		if (pRequestBuffer->startsWith("/indoorLights")) return new tLightControl_IndoorLightsServlet();
+		if (pRequestBuffer->startsWith("/indoorlights")) return new tLightControl_IndoorLightsServlet();
 #endif CONFIG_LIGHT_CONTROL_APP_HTTP_SERVLETS
 		return NULL;
 	}
