@@ -76,7 +76,7 @@ bool send_GetEepromCrc(Commander &Cmdr)
 	  }
 	  else
 	  {
-	    Cmdr.println(F("Usage: StateOverview dst_dev_id"));
+	    Cmdr.println(F("Usage: GetEepromCrc dst_dev_id"));
 	    return false;
 	  }
 
