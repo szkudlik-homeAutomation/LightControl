@@ -1,8 +1,9 @@
 /.cproject
 /.project
 /*.hex
-/src/Common_code
+
 /src/lib
 
 /.settings
 /build
+/tools

@@ -1,0 +1,62 @@
+{
+"version": "2.0.0",
+"tasks": [
+    {
+    "label": "build_1",
+    "type": "shell",
+    "command": "${workspaceFolder}/build_central.bat",
+    "args": [],
+    "problemMatcher": [],
+    "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+        }
+    },
+    {
+    "label": "build_2",
+    "type": "shell",
+    "command": "${workspaceFolder}/build_node.bat",
+    "args": [],
+    "problemMatcher": [],
+    "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+        }
+    },
+    {
+    "label": "upload_1",
+    "type": "shell",
+    "command": "${workspaceFolder}/upload-atmega.bat",
+    "args": [],
+    "problemMatcher": [],
+    "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+        }
+    },
+    {
+    "label": "upload_2",
+    "type": "shell",
+    "command": "${workspaceFolder}/update.bat",
+    "args": [],
+    "problemMatcher": [],
+    "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+        }
+    }
+    {
+    "label": "monitor_1",
+    "type": "shell",
+    "command": "${workspaceFolder}/monitor.bat",
+    "args": [],
+    "problemMatcher": [],
+    "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+        }
+    }
+]
+}
+
+>
