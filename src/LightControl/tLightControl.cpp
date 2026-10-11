@@ -92,9 +92,9 @@ void tLightControl::HandleMsgButtonPress(uint8_t SenderID, tMessageTypeButtonPre
     DEBUG_PRINTLN_3("===================>MESSAGE_BUTTON_PRESS");
 
     DEBUG_PRINT_3("Dev ID:");
-	DEBUG_3(print(SenderID,HEX));
-	DEBUG_PRINT_3(" ForcedSrc:");
-	DEBUG_3(print(Message->ForceSrcId,HEX));
+	  DEBUG_3(print(SenderID,HEX));
+	  DEBUG_PRINT_3(" ForcedSrc:");
+	  DEBUG_3(print(Message->ForceSrcId,HEX));
     DEBUG_PRINT_3(" short:");
     DEBUG_3(print(Message->ShortClick,BIN));
     DEBUG_PRINT_3(" long:");
@@ -113,21 +113,21 @@ void tLightControl::HandleMsgButtonPress(uint8_t SenderID, tMessageTypeButtonPre
   DEBUG_1(println(i,DEC));
 
 
-  // remeber output state BEFORE performing action set
+  // remeber output state BEFORE performing action set, limited by the outputs mask to 8 bits
   uint8_t OutputState = tOutputProcess::Instance->GetOutputStateMap();
   while (i--)
   {
     EEPROM.get(EEPROM_ACTION_TABLE_OFFSET+(EEPROM_CONFIG_ACTION_TABLE_SIZE*i),Action);
 
     DEBUG_PRINT_1("Eeprom entry #");
-	DEBUG_1(print(i,DEC));
+	  DEBUG_1(print(i,DEC));
 
     DEBUG_PRINT_1(" OutId:");
-	DEBUG_1(print(Action.OutId,DEC));
-	DEBUG_PRINT_1(" SenderDevID:");
-	DEBUG_1(print(Action.SenderDevID,HEX));
+  	DEBUG_1(print(Action.OutId,DEC));
+	  DEBUG_PRINT_1(" SenderDevID:");
+   	DEBUG_1(print(Action.SenderDevID,HEX));
     DEBUG_PRINT_1(" ButtonId:");
-	DEBUG_1(print(Action.SenderDevID,HEX));
+  	DEBUG_1(print(Action.ButtonId,DEC));
     DEBUG_PRINT_1(" TriggerType:");
     DEBUG_1(print(Action.TriggerType,DEC));
     DEBUG_PRINT_1(" ActionType:");
@@ -168,21 +168,26 @@ void tLightControl::HandleMsgButtonPress(uint8_t SenderID, tMessageTypeButtonPre
       EEPROM.get(EEPROM_DEFAULT_TIMER_VALUE_OFFSET+Action.OutId*(sizeof(uint16_t)),Timer);
     }
 
-    DEBUG_PRINTLN_2("Action HIT!!!");
+    DEBUG_PRINT_2(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Action HIT!!!  ");
+    DEBUG_2(println(i,DEC));
+
+
 
     switch (Action.ActionType)
     {
       case BUTTON_ACTION_TYPE_ON:
          // when "turn on" action is triggered bu a button, don't set a timer if it is shorter than current timer
-    	DEBUG_PRINTLN_2("Setting output ");
+    	  DEBUG_PRINTLN_2("Setting output ON");
         tOutputProcess::Instance->SetOutput(Action.OutId,1,Timer,tOutputProcess::TimerLongerOnly);
         break;
 
       case BUTTON_ACTION_TYPE_OFF:
+    	  DEBUG_PRINTLN_2("Setting output OFF");
         tOutputProcess::Instance->SetOutput(Action.OutId,0,0,tOutputProcess::ForceTimer);
         break;
 
       case BUTTON_ACTION_TYPE_TOGGLE:
+    	  DEBUG_PRINTLN_2("Setting output TOGGLE");
         tOutputProcess::Instance->ToggleOutput(Action.OutId,Timer);
         break;
     }
