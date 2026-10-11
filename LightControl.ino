@@ -8,6 +8,7 @@
 #include "src/Common_code/sensors/tSensorCache.h"
 #include "src/Common_code/sensors/tSensor.h"
 #include "src/Common_code/sensors/tSystemStatusSensor.h"
+#include "src/Common_code/sensors/tOutputStateSensor.h"
 
 #if CONFIG_LIGHT_CONTROL_APP
 #include "src/LightControl/tLightControlServlets.h"
@@ -61,6 +62,8 @@ tAppHttpServer AppHttpServer;
 
 #endif CONFIG_HTTP_SERVER
 
+#define SYSTEM_STATUS_SENSOR_ID 1
+#define OUTPUT_STATE_SENSOR_ID 2
 
 class tHomeAutomation: public tApplication {
 public:
@@ -76,12 +79,20 @@ protected:
 	virtual void AppSetupAfter() {
 
 		#if CONFIG_SYSTEM_STATUS_SENSOR 
-		// create the system status sensor, 1 munute cyle. Set Node ID as a sensor ID
-		tSensorFactory::Instance->CreateSensor(SENSOR_TYPE_SYSTEM_STATUS, EEPROM.read(EEPROM_DEVICE_ID_OFFSET), F("SystemStatus01"),
+		// create the system status sensor, 
+		tSensorFactory::Instance->CreateSensor(SENSOR_TYPE_SYSTEM_STATUS, SYSTEM_STATUS_SENSOR_ID, F("SystemStatus01"),
 			1,NULL,0,CONFIG_SYSTEM_STATUS_SENSOR_PERIOD,true, 1 << EV_TYPE_MEASUREMENT_COMPLETED);
+		#endif
+		#if CONFIG_OUTPUT_STATE_SENSOR
+		// create the output state sensor, 1 minute cycle. Set Node ID as a sensor ID
+			tSensorFactory::Instance->CreateSensor(
+					SENSOR_TYPE_OUTPUT_STATES,
+					OUTPUT_STATE_SENSOR_ID,F("GPIOout"),1,
+					NULL,0,640,true, 1 << EV_TYPE_MEASUREMENT_COMPLETED | 1 << EV_TYPE_MEASUREMENT_CHANGE);
 		#endif
 	
     }
 };
 
 tHomeAutomation HomeAutomation;
+	
